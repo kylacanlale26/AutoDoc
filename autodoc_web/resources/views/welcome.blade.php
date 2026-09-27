@@ -8,6 +8,7 @@
 
 <body>
 
+<!-- header -->
 <header>
     <div class="nav-wrap">
         <div class="webname">
@@ -25,7 +26,16 @@
     </div>
 </header>
 
+<!-- landing page banner -->
+<section class="banner">
+    <div class="banner-content">
+        <p class="banner1">Education and Formation</p>
+        <h1>Learn, Grow, and Serve</h1>
+        <p class="banner2">Start Here, Be Successful Anywhere. Mabalacat City College believes education should shape the whole person equipping every Mabalaqueño with the knowledge, skills, and values to build a career, realize their full potential, and serve their community as a responsible, engaged citizen.</p>
+    </div>
+</section>
 
+<script>
 
 </body>
 </html>
