@@ -1,0 +1,209 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    background: #ffffff;
+    color: #111111;
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
+}
+
+/* header */
+header {
+    width: 100%;
+    height: 82px;
+    background: #ffffff;
+    border-bottom: 3px solid #8f1d1d;
+    position: relative;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+}
+
+
+/* nav */
+.nav-wrap {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px 0 10px;
+}
+
+
+
+.webname {
+    display: flex;
+    align-items: center;
+    font-family: "Raleway", sans-serif;
+}
+
+.logo {
+    width: 64px;
+    height: 58px;
+    object-fit: contain;
+    margin-right: 7px;
+}
+
+.auto,
+.doc {
+    font-family: "Raleway", sans-serif;
+    font-size: 27px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.auto {
+    color: #b12a2a;
+}
+
+.doc {
+    color: #111111;
+}
+
+.links {
+    display: flex;
+    align-items: center;
+    gap: 31px;
+    margin-left: auto;
+}
+
+.links a {
+    font-family: "Raleway", sans-serif;
+    color: #111111;
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    transition: color 0.2s ease;
+}
+
+.links a:hover {
+    color: #8f1d1d;
+}
+
+#dark-mode {
+    width: 38px;
+    height: 38px;
+    margin-left: 12px;
+    padding: 4px;
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+#themeIcon {
+    width: 29px;
+    height: 29px;
+    object-fit: contain;
+}
+
+/* banner */
+.banner {
+    width: 100%;
+    min-height: calc(100vh - 82px);
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    background-image: url("../images/mcc-bg.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+.banner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+.banner-content {
+    position: relative;
+    z-index: 2;
+    width: 95%;
+    margin-left: 43px;
+    margin-bottom: 42px;
+    color: #8f1d1d;
+    font-family: "Times New Roman", Times, serif;
+}
+
+.banner1 {
+    font-size: 30px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+}
+
+.banner-content h1 {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 71px;
+    line-height: 1.05;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.banner2 {
+    width: 95%;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 30px;
+    line-height: 1.45;
+    font-weight: bold;
+}
+
+.banner1,
+.banner-content h1,
+.banner2 {
+    text-shadow:
+        0 0 4px rgba(80, 80, 80, 0.25),
+        0 0 8px rgba(80, 80, 80, 0.15);
+}
+
+
+/* dark-mode */
+body.dark {
+    background: #121212;
+    color: #ffffff;
+}
+
+body.dark header {
+    background: #151515;
+}
+
+body.dark .links a {
+    color: #ffffff;
+}
+
+body.dark .links a:hover {
+    color: #d34a4a;
+}
+
+body.dark .doc {
+    color: #ffffff;
+}
+
+body.dark .banner::before {
+    background: rgba(0, 0, 0, 0.60);
+}
+
+body.dark .banner1,
+body.dark .banner-content h1,
+body.dark .banner2 {
+    text-shadow:
+    0 0 6px rgba(255, 255, 255, 0.18),
+    0 0 14px rgba(255, 255, 255, 0.08);
+}

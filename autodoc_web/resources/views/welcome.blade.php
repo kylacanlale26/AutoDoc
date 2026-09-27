@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AutoDoc</title>
+
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
 </head>
 
 <body>
@@ -12,6 +19,7 @@
 <header>
     <div class="nav-wrap">
         <div class="webname">
+            <img id="brandLogo" src="{{ asset('icons/autodoc-logo.svg') }} "alt="AUTODOC Logo" class="logo">
             <span class="auto">AUTO</span><span class="doc">DOC</span>
         </div>
         <nav class="links">
@@ -21,7 +29,7 @@
             <a href="#">Sign In</a>
         </nav>
         <button id="dark-mode">
-            <img src="{{ asset('icons/dark-mode.svg') }}">
+            <img id="themeIcon" src="{{ asset('icons/dark-mode.svg') }}" alt="Toggle Theme">
         </button>
     </div>
 </header>
@@ -35,7 +43,7 @@
     </div>
 </section>
 
-<script src="{{ resources('js/welcome.js')}}"></script>
+<script src="{{ asset('js/welcome.js') }}"></script>
 
 </body>
 </html>
