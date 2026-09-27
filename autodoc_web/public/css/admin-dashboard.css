@@ -1,0 +1,1661 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    font-family: "Arial", sans-serif;
+    background: #f5f5f5;
+    color: #111;
+    overflow: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.top-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 74px;
+
+    background: #fff;
+    border-bottom: 3px solid #a51f1f;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 20px 0 10px;
+
+    z-index: 1000;
+
+    transition:
+        background-color 0.3s ease,
+        border-color 0.3s ease;
+}
+
+
+/* =========================
+   BRAND
+========================= */
+
+.brand {
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+.brand img {
+    width: 58px;
+    height: 58px;
+
+    object-fit: contain;
+
+    margin-right: 7px;
+}
+
+.brand .auto {
+    color: #d82b2b;
+}
+
+.brand .doc {
+    color: #050505;
+
+    transition: color 0.3s ease;
+}
+
+
+/* =========================
+   HEADER ICONS
+========================= */
+
+.header-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+}
+
+.header-icon {
+    width: 34px;
+    height: 34px;
+
+    border: none;
+    background: transparent;
+
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+}
+
+.header-icon img {
+    width: 27px;
+    height: 27px;
+
+    object-fit: contain;
+}
+
+
+/* =========================
+   SIDE NAVIGATION
+========================= */
+
+.side-nav {
+    position: fixed;
+
+    top: 74px;
+    left: 0;
+
+    width: 212px;
+    height: calc(100vh - 74px);
+
+    background: #fff;
+
+    border-right: 3px solid #a51f1f;
+
+    display: flex;
+    flex-direction: column;
+
+    z-index: 900;
+
+    transition:
+        background-color 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.navigation {
+    padding: 28px 23px;
+}
+
+.nav-link {
+    display: block;
+
+    color: #111;
+    text-decoration: none;
+
+    font-size: 16px;
+    font-weight: 500;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 17px;
+
+    transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+    color: #a51f1f;
+}
+
+.nav-link.active {
+    font-weight: 700;
+}
+
+.nav-section {
+    margin-top: 38px;
+}
+
+.nav-title {
+    color: #111;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 17px;
+}
+
+.nav-section .nav-link {
+    margin-bottom: 13px;
+}
+
+.bottom-links {
+    margin-top: 40px;
+}
+
+
+/* =========================
+   LOGGED USER
+========================= */
+
+.logged-user {
+    margin-top: auto;
+
+    min-height: 66px;
+
+    padding: 0 20px 10px 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logged-user-info {
+    display: flex;
+    flex-direction: column;
+
+    gap: 2px;
+}
+
+.logged-user-info span {
+    font-size: 11px;
+    color: #333;
+}
+
+.logged-user-info strong {
+    font-size: 16px;
+    font-weight: 500;
+    color: #111;
+}
+
+.person-icon {
+    width: 38px;
+    height: 38px;
+
+    object-fit: contain;
+}
+
+/* =========================
+   PROFILE BUTTON
+========================= */
+
+.profile-button {
+    width: 42px;
+    height: 42px;
+
+    border: none;
+    background: transparent;
+
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+}
+
+.profile-button .person-icon {
+    width: 38px;
+    height: 38px;
+
+    object-fit: contain;
+}
+
+
+/* =========================
+   PROFILE MENU
+========================= */
+
+.logged-user {
+    position: relative;
+}
+
+.profile-menu {
+    position: absolute;
+
+    right: 15px;
+    bottom: 62px;
+
+    width: 145px;
+
+    background: #fff;
+
+    border: 1px solid #ccc;
+    border-radius: 8px;
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.18);
+
+    overflow: hidden;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateY(5px);
+
+    transition:
+        opacity 0.2s ease,
+        visibility 0.2s ease,
+        transform 0.2s ease;
+
+    z-index: 1100;
+}
+
+.profile-menu.show {
+    opacity: 1;
+    visibility: visible;
+
+    transform: translateY(0);
+}
+
+
+/* =========================
+   PROFILE MENU ITEMS
+========================= */
+
+.profile-menu-item {
+    width: 100%;
+
+    display: block;
+
+    padding: 11px 15px;
+
+    border: none;
+
+    background: transparent;
+
+    color: #111;
+
+    text-decoration: none;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.profile-menu-item:hover {
+    background: #f1f1f1;
+    color: #a51f1f;
+}
+
+.profile-menu form {
+    margin: 0;
+}
+
+/* =========================
+   SCROLLABLE DASHBOARD
+========================= */
+
+.dashboard-content {
+    position: fixed;
+
+    top: 74px;
+    left: 212px;
+
+    width: calc(100% - 212px);
+    height: calc(100vh - 74px);
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    scroll-behavior: smooth;
+}
+
+/* =========================
+   SUBMISSIONS PAGE
+========================= */
+
+.submissions-page {
+    width: 100%;
+    min-height: 100vh;
+
+    background: #fff;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 22px;
+
+    padding: 52px 62px 70px;
+
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
+}
+
+
+/* =========================
+   STAT CARDS
+========================= */
+
+.stats-row {
+    width: 100%;
+
+    display: flex;
+
+    gap: 20px;
+}
+
+.stat-card {
+    flex: 1;
+
+    border-radius: 16px;
+    overflow: hidden;
+
+    border: 1px solid #ddd;
+
+    display: flex;
+    flex-direction: column;
+
+    transition: border-color 0.3s ease;
+}
+
+.stat-card-top {
+    background: #fff;
+
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 18px 22px;
+
+    transition: background-color 0.3s ease;
+}
+
+.stat-icon-circle {
+    width: 44px;
+    height: 44px;
+
+    border: 2px solid #111;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    transition: border-color 0.3s ease;
+}
+
+.stat-icon-circle img {
+    width: 20px;
+    height: 20px;
+
+    object-fit: contain;
+}
+
+.stat-label {
+    font-size: 18px;
+    font-weight: 600;
+
+    color: #111;
+
+    transition: color 0.3s ease;
+}
+
+.stat-card-bottom {
+    background: #b3b3b3;
+
+    color: #fff;
+
+    font-size: 30px;
+    font-weight: 700;
+
+    padding: 14px 22px 18px;
+
+    transition: background-color 0.3s ease;
+}
+
+
+/* =========================
+   SUBMISSIONS PAGE
+========================= */
+ 
+.submissions-page {
+    width: 100%;
+    min-height: 100%;
+ 
+    background: #fff;
+ 
+    display: flex;
+    flex-direction: column;
+ 
+    gap: 22px;
+ 
+    padding: 40px 50px 70px;
+ 
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
+}
+ 
+ 
+/* =========================
+   STAT CARDS
+========================= */
+ 
+.stats-row {
+    width: 100%;
+ 
+    display: flex;
+ 
+    gap: 20px;
+}
+ 
+.stat-card {
+    flex: 1;
+ 
+    border-radius: 16px;
+    overflow: hidden;
+ 
+    display: flex;
+    flex-direction: column;
+}
+ 
+.stat-card-top {
+    background: #fff;
+ 
+    display: flex;
+    align-items: center;
+ 
+    gap: 14px;
+ 
+    padding: 18px 22px;
+ 
+    transition: background-color 0.3s ease;
+}
+ 
+.stat-icon-circle {
+    width: 44px;
+    height: 44px;
+ 
+    border: 2px solid #111;
+    border-radius: 50%;
+ 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ 
+    flex-shrink: 0;
+ 
+    transition: border-color 0.3s ease;
+}
+ 
+.stat-icon-circle img {
+    width: 20px;
+    height: 20px;
+ 
+    object-fit: contain;
+}
+ 
+.stat-label {
+    font-size: 18px;
+    font-weight: 600;
+ 
+    color: #111;
+ 
+    transition: color 0.3s ease;
+}
+ 
+.stat-card-bottom {
+    background: #b3b3b3;
+ 
+    color: #fff;
+ 
+    font-size: 30px;
+    font-weight: 700;
+ 
+    padding: 14px 22px 18px;
+ 
+    transition: background-color 0.3s ease;
+}
+ 
+ 
+/* =========================
+   SUBMISSIONS CARD
+========================= */
+ 
+.submissions-card {
+    width: 100%;
+ 
+    background: #dcdcdc;
+ 
+    border: none;
+    border-radius: 16px;
+ 
+    padding: 18px;
+ 
+    transition: background-color 0.3s ease;
+}
+ 
+.submissions-header {
+    padding: 4px 10px 18px;
+}
+ 
+.submissions-header h2 {
+    font-size: 18px;
+    font-weight: 700;
+ 
+    color: #111;
+ 
+    transition: color 0.3s ease;
+}
+ 
+ 
+/* =========================
+   SCROLLABLE TABLE
+========================= */
+ 
+.submissions-table-wrapper {
+    width: 100%;
+    max-height: 620px;
+ 
+    overflow-y: auto;
+ 
+    background: #fff;
+ 
+    border-radius: 12px;
+ 
+    transition: background-color 0.3s ease;
+}
+ 
+.submissions-table {
+    width: 100%;
+ 
+    border-collapse: collapse;
+ 
+    table-layout: fixed;
+}
+ 
+.submissions-table th,
+.submissions-table td {
+    height: 48px;
+ 
+    border-bottom: 1px solid #777;
+ 
+    text-align: center;
+ 
+    font-size: 13px;
+ 
+    color: #111;
+ 
+    padding: 0 8px;
+ 
+    transition:
+        color 0.3s ease,
+        border-color 0.3s ease;
+}
+ 
+.submissions-table th {
+    font-weight: 700;
+ 
+    position: sticky;
+    top: 0;
+ 
+    background: #fff;
+ 
+    z-index: 1;
+ 
+    transition: background-color 0.3s ease;
+}
+ 
+.submissions-table td {
+    font-weight: 500;
+}
+ 
+.submissions-table td:nth-child(2) {
+    font-weight: 700;
+}
+ 
+ 
+/* =========================
+   ACTION ICONS
+========================= */
+ 
+.action-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ 
+    gap: 12px;
+ 
+    height: 48px;
+}
+ 
+.row-action {
+    width: 26px;
+    height: 26px;
+ 
+    border: none;
+    background: transparent;
+ 
+    padding: 0;
+ 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ 
+    cursor: pointer;
+}
+ 
+.row-action img {
+    width: 20px;
+    height: 20px;
+ 
+    object-fit: contain;
+}
+ 
+.row-action:hover {
+    filter: brightness(0.7);
+}
+
+/* =========================
+   SCHEDULE PAGE
+========================= */
+
+.schedule-page {
+    background: #fff;
+    width: 100%;
+    min-height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 40px 50px;
+
+    transition: background-color 0.3s ease;
+}
+
+.schedule-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 40px;
+
+    flex-wrap: wrap;
+}
+
+.schedule-card {
+    width: 260px;
+    min-height: 300px;
+
+    background: #fff;
+
+    border: 1px solid #222;
+    border-radius: 25px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 14px;
+
+    padding: 30px 24px;
+
+    transition:
+        background-color 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.schedule-card h2 {
+    font-size: 24px;
+    font-weight: 700;
+
+    color: #111;
+
+    text-align: center;
+
+    transition: color 0.3s ease;
+}
+
+.schedule-status {
+    font-size: 15px;
+    font-weight: 500;
+
+    color: #111;
+
+    transition: color 0.3s ease;
+}
+
+.schedule-date {
+    font-size: 16px;
+    font-weight: 600;
+
+    color: #111;
+
+    margin-bottom: 6px;
+
+    transition: color 0.3s ease;
+}
+
+
+/* =========================
+   GRADIENT BUTTON
+========================= */
+
+.update-schedule-button {
+    width: 100%;
+
+    border: none;
+    border-radius: 30px;
+
+    background: linear-gradient(
+        to bottom,
+        #8f1d1d 0%,
+        #b51f24 45%,
+        #ed1c24 100%
+    );
+
+    color: #fff;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+
+    padding: 14px 20px;
+
+    cursor: pointer;
+
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
+
+    transition:
+        transform 0.15s ease,
+        filter 0.2s ease;
+}
+
+.update-schedule-button:hover {
+    filter: brightness(1.05);
+}
+
+.update-schedule-button:active {
+    transform: translateY(1px);
+}
+
+
+/* =========================
+   MODAL
+========================= */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.45);
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 2000;
+}
+
+.modal-overlay.show {
+    display: flex;
+}
+
+.modal-box {
+    width: 340px;
+
+    background: #fff;
+
+    border-radius: 20px;
+
+    padding: 30px 32px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+
+    transition: background-color 0.3s ease;
+}
+
+.modal-box h2 {
+    font-size: 22px;
+    font-weight: 700;
+
+    color: #111;
+
+    text-align: center;
+
+    margin-bottom: 20px;
+
+    transition: color 0.3s ease;
+}
+
+.modal-box form {
+    display: flex;
+    flex-direction: column;
+
+    gap: 6px;
+}
+
+.modal-box label {
+    font-size: 13px;
+    font-weight: 600;
+
+    color: #111;
+
+    margin-top: 8px;
+
+    transition: color 0.3s ease;
+}
+
+.modal-box input {
+    width: 100%;
+
+    border: 1px solid #999;
+    border-radius: 8px;
+
+    padding: 8px 10px;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 14px;
+
+    color: #111;
+
+    background: #fff;
+
+    transition:
+        background-color 0.3s ease,
+        border-color 0.3s ease,
+        color 0.3s ease;
+}
+
+.modal-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    margin-top: 24px;
+}
+
+.modal-cancel-button {
+    flex: 1;
+
+    border: 1px solid #999;
+    border-radius: 30px;
+
+    background: transparent;
+
+    color: #111;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+
+    padding: 12px 16px;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.modal-cancel-button:hover {
+    background: #f1f1f1;
+}
+
+.modal-save-button {
+    flex: 1;
+
+    width: auto;
+}
+
+/* =========================
+   REQUIREMENTS LIST PAGE
+========================= */
+
+.requirements-list-page {
+    background: #fff;
+    width: 100%;
+    min-height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 26px;
+
+    padding: 40px 50px 70px;
+
+    transition: background-color 0.3s ease;
+}
+
+
+/* =========================
+   PANEL (gray outer container)
+========================= */
+
+.requirements-panel {
+    width: 100%;
+
+    background: #dcdcdc;
+
+    border: 1px solid #b5b5b5;
+    border-radius: 18px;
+
+    padding: 14px 16px 18px;
+
+    transition:
+        background-color 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.requirements-panel-title {
+    font-size: 20px;
+    font-weight: 600;
+
+    color: #111;
+
+    padding: 4px 10px 10px;
+
+    transition: color 0.3s ease;
+}
+
+
+/* =========================
+   WHITE REQUIREMENTS CARD
+========================= */
+
+.requirements-list-card {
+    width: 100%;
+
+    background: #fff;
+
+    border: 1px solid #b5b5b5;
+    border-radius: 8px;
+
+    overflow: hidden;
+
+    transition:
+        background-color 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.requirements-list-header {
+    font-size: 13px;
+    font-weight: 700;
+
+    color: #111;
+
+    padding: 8px 16px;
+
+    border-bottom: 1px solid #111;
+
+    transition:
+        color 0.3s ease,
+        border-color 0.3s ease;
+}
+
+
+/* =========================
+   REQUIREMENT ROW
+========================= */
+
+.requirement-row {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 14px 16px;
+
+    border-bottom: 1px solid #ccc;
+}
+
+.requirement-row:last-child {
+    border-bottom: none;
+}
+
+.requirement-name {
+    font-size: 14px;
+    font-weight: 700;
+
+    color: #111;
+
+    transition: color 0.3s ease;
+}
+
+.requirement-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+/* =========================
+   ATTACH BUTTON (red gradient)
+========================= */
+
+.attach-pill-button {
+    width: 90px;
+    height: 32px;
+
+    border: none;
+    border-radius: 6px;
+
+    background: linear-gradient(
+        to bottom,
+        #8f1d1d 0%,
+        #b51f24 45%,
+        #ed1c24 100%
+    );
+
+    color: #fff;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
+
+    transition:
+        transform 0.15s ease,
+        filter 0.2s ease;
+}
+
+.attach-pill-button:hover {
+    filter: brightness(1.05);
+}
+
+.attach-pill-button:active {
+    transform: translateY(1px);
+}
+
+
+/* =========================
+   UPLOAD BUTTON (gray gradient)
+========================= */
+
+.upload-pill-button {
+    width: 90px;
+    height: 32px;
+
+    border: 1px solid #999;
+    border-radius: 6px;
+
+    background: linear-gradient(
+        to bottom,
+        #ffffff 0%,
+        #eeeeee 45%,
+        #c7c7c7 100%
+    );
+
+    color: #111;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.8);
+
+    transition:
+        transform 0.15s ease,
+        filter 0.2s ease;
+}
+
+.upload-pill-button:hover {
+    filter: brightness(0.95);
+}
+
+.upload-pill-button:active {
+    transform: translateY(1px);
+}
+
+/* =========================
+   SUBMISSIONS LIST PAGE
+========================= */
+
+.submissions-list-page {
+    background: #fff;
+    width: 100%;
+    min-height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 20px;
+
+    padding: 40px 50px 70px;
+
+    transition: background-color 0.3s ease;
+}
+
+
+/* =========================
+   HEADER ROW
+========================= */
+
+.submissions-list-header {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.submissions-list-header h1 {
+    font-size: 32px;
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+    color: #111;
+
+    transition: color 0.3s ease;
+}
+
+.submissions-list-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+}
+
+.filter-button {
+    width: 36px;
+    height: 36px;
+
+    border: none;
+    background: transparent;
+
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+}
+
+.filter-button img {
+    width: 24px;
+    height: 24px;
+
+    object-fit: contain;
+}
+
+.submissions-search-box {
+    width: 200px;
+    height: 36px;
+
+    border: 1px solid #999;
+    border-radius: 8px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 12px;
+
+    background: #fff;
+
+    transition:
+        background-color 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.submissions-search-box .search-icon {
+    width: 16px;
+    height: 16px;
+
+    object-fit: contain;
+
+    margin-right: 8px;
+}
+
+.submissions-search-box input {
+    width: 100%;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 13px;
+
+    color: #111;
+}
+
+.submissions-search-box input::placeholder {
+    color: #666;
+}
+
+
+/* =========================
+   PANEL (gray outer container)
+========================= */
+
+.submissions-list-panel {
+    width: 100%;
+
+    background: #dcdcdc;
+
+    border: 1px solid #b5b5b5;
+    border-radius: 18px;
+
+    padding: 16px;
+
+    transition:
+        background-color 0.3s ease,
+        border-color 0.3s ease;
+}
+
+
+/* =========================
+   SCROLLABLE TABLE
+========================= */
+
+.submissions-list-table-wrapper {
+    width: 100%;
+    max-height: 620px;
+
+    overflow-y: auto;
+
+    background: #fff;
+
+    border: 1px solid #b5b5b5;
+    border-radius: 8px;
+
+    transition:
+        background-color 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.submissions-list-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    table-layout: fixed;
+}
+
+.submissions-list-table th,
+.submissions-list-table td {
+    height: 52px;
+
+    border-bottom: 1px solid #ccc;
+
+    text-align: center;
+
+    font-size: 13px;
+
+    color: #111;
+
+    padding: 0 8px;
+
+    transition:
+        color 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.submissions-list-table th {
+    font-weight: 700;
+
+    position: sticky;
+    top: 0;
+
+    background: #fff;
+
+    z-index: 1;
+
+    transition: background-color 0.3s ease;
+}
+
+.submissions-list-table td {
+    font-weight: 500;
+}
+
+.submissions-list-table td:nth-child(2) {
+    font-weight: 700;
+}
+
+
+/* =========================
+   STATUS BADGES
+========================= */
+
+.status-badge {
+    display: inline-block;
+
+    min-width: 88px;
+
+    padding: 6px 14px;
+
+    border-radius: 6px;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    color: #fff;
+}
+
+.status-verified {
+    background: #22b14c;
+}
+
+.status-pending {
+    background: #f2c94c;
+    color: #4a3a00;
+}
+
+.status-flagged {
+    background: #f2994a;
+}
+
+
+/* =========================
+   ACTION ICONS
+========================= */
+
+.submissions-list-table .action-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    height: 52px;
+}
+
+/* =========================
+   DARK MODE
+========================= */
+
+body.dark {
+    background: #121212;
+    color: #fff;
+}
+
+
+/* HEADER */
+
+body.dark .top-header {
+    background: #151515;
+    border-color: #a51f1f;
+}
+
+body.dark .brand .doc {
+    color: #fff;
+}
+
+
+/* SIDE NAV */
+
+body.dark .side-nav {
+    background: #151515;
+    border-color: #a51f1f;
+}
+
+body.dark .nav-link,
+body.dark .nav-title {
+    color: #fff;
+}
+
+body.dark .nav-link:hover {
+    color: #e15a5a;
+}
+
+body.dark .logged-user-info span,
+body.dark .logged-user-info strong {
+    color: #fff;
+}
+
+body.dark .profile-menu {
+    background: #1c1c1c;
+    border-color: #444;
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+body.dark .profile-menu-item {
+    color: #fff;
+}
+
+body.dark .profile-menu-item:hover {
+    background: #2a2a2a;
+    color: #e15a5a;
+}
+
+body.dark .submissions-page {
+    background: #121212;
+}
+ 
+body.dark .stat-card-top {
+    background: #1c1c1c;
+}
+ 
+body.dark .stat-icon-circle {
+    border-color: #ddd;
+}
+ 
+body.dark .stat-label {
+    color: #fff;
+}
+ 
+body.dark .stat-card-bottom {
+    background: #3a3a3a;
+}
+ 
+body.dark .submissions-card {
+    background: #2a2a2a;
+}
+ 
+body.dark .submissions-header h2 {
+    color: #fff;
+}
+ 
+body.dark .submissions-table-wrapper {
+    background: #1c1c1c;
+}
+ 
+body.dark .submissions-table th {
+    background: #1c1c1c;
+    color: #fff;
+}
+ 
+body.dark .submissions-table td {
+    color: #fff;
+    border-color: #777;
+}
+ 
+body.dark .row-action:hover {
+    filter: brightness(1.3);
+}
+
+body.dark .schedule-card {
+    background: #1c1c1c;
+    border-color: #ddd;
+}
+
+body.dark .schedule-card h2,
+body.dark .schedule-status,
+body.dark .schedule-date {
+    color: #fff;
+}
+
+body.dark .modal-box {
+    background: #1c1c1c;
+}
+
+body.dark .modal-box h2,
+body.dark .modal-box label {
+    color: #fff;
+}
+
+body.dark .modal-box input {
+    background: #242424;
+    border-color: #555;
+    color: #fff;
+}
+
+body.dark .modal-cancel-button {
+    border-color: #666;
+    color: #fff;
+}
+
+body.dark .modal-cancel-button:hover {
+    background: #2a2a2a;
+}
+
+body.dark .requirements-panel {
+    background: #242424;
+    border-color: #444;
+}
+
+body.dark .requirements-panel-title {
+    color: #fff;
+}
+
+body.dark .requirements-list-card {
+    background: #1c1c1c;
+    border-color: #444;
+}
+
+body.dark .requirements-list-header {
+    color: #fff;
+    border-color: #ddd;
+}
+
+body.dark .requirement-row {
+    border-color: #444;
+}
+
+body.dark .requirement-name {
+    color: #fff;
+}
+
+body.dark .upload-pill-button {
+    background: linear-gradient(
+        to bottom,
+        #3a3a3a 0%,
+        #303030 45%,
+        #222 100%
+    );
+
+    color: #fff;
+
+    border-color: #666;
+
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.08);
+}
+
+body.dark .submissions-list-header h1 {
+    color: #fff;
+}
+
+body.dark .submissions-search-box {
+    background: #242424;
+    border-color: #555;
+}
+
+body.dark .submissions-search-box input {
+    color: #fff;
+}
+
+body.dark .submissions-search-box input::placeholder {
+    color: #aaa;
+}
+
+body.dark .submissions-list-panel {
+    background: #242424;
+    border-color: #444;
+}
+
+body.dark .submissions-list-table-wrapper {
+    background: #1c1c1c;
+    border-color: #444;
+}
+
+body.dark .submissions-list-table th {
+    background: #1c1c1c;
+    color: #fff;
+}
+
+body.dark .submissions-list-table td {
+    color: #fff;
+    border-color: #444;
+}

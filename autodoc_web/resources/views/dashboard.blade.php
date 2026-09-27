@@ -77,7 +77,7 @@
 </aside>
 
 <!-- main page -->
- <main class="dashboard-content">
+<main class="dashboard-content">
     <div class="dashboard-background"></div>
     <div class="dashboard-overlay"></div>
     <section class="dashboard-inner">
