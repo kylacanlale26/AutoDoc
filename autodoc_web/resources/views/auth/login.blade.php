@@ -20,8 +20,7 @@
     <main class="login-page">
         <div class="login-card">
             <div class="brand-logo">
-                <span class="auto">AUTO</span>
-                <span class="doc">DOC</span>
+                <span class="auto">AUTO</span><span class="doc">DOC</span>
             </div>
             <p class="login-subtitle">Sign in to your MCC Account</p>
 
@@ -61,7 +60,6 @@
                 <button type="submit" class="sign-in-button">Sign In</button>
             </form>
 
-
             <!-- lines -->
             <div class="lines">
                 <span></span>
@@ -69,9 +67,8 @@
                 <span></span>
             </div>
 
-
             <!-- message -->
-            <p>Contact MIS</p>
+            <p class="contact-mis">Contact MIS</p>
         </div>
     </main>
 
