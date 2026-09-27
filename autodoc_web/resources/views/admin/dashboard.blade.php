@@ -43,8 +43,8 @@
         <a href="{{ route('dashboard') }}" class="nav-link active">Dashboard</a>
         <div class="nav-section">
             <a href="#schedule" class="nav-link">Schedule</a>
-            <a href="#forms" class="nav-link">Requirement<br>Forms</a>
-            <a href="#submission" class="nav-link">Submission</a>
+            <a href="#requirements-list" class="nav-link">Requirement<br>Forms</a>
+            <a href="#submissions-list" class="nav-link">Submission</a>
         </div>
     </nav>
 
