@@ -35,7 +35,7 @@
     </div>
 </section>
 
-<script>
+<script src="{{ resources('js/welcome.js')}}"></script>
 
 </body>
 </html>
