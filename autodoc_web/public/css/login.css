@@ -152,6 +152,15 @@ body {
     object-fit: contain;
 }
 
+.form-group input[type="password"]::-ms-reveal,
+.form-group input[type="password"]::-ms-clear {
+    -webkit-appearance: none;
+    appearance: none;
+    display: none;
+}
+
+
+
 .forgot-wrapper {
     display: flex;
     justify-content: flex-end;
