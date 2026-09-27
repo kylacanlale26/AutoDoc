@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="icon" type="image/png" href="{{ asset('images/autodoc-logo.png') }}">
     <title>AutoDoc</title>
 
     <!-- fonts -->
@@ -26,7 +28,7 @@
             <a href="#">Announcement</a>
             <a href="#">Contact</a>
             <a href="#">About Us</a>
-            <a href="#">Sign In</a>
+            <a href="{{ route('login') }}">Sign In</a>
         </nav>
         <button id="dark-mode">
             <img id="themeIcon" src="{{ asset('icons/dark-mode.svg') }}" alt="Toggle Theme">
