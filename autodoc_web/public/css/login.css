@@ -12,10 +12,8 @@ body {
 
 body {
     font-family: "Raleway", sans-serif;
-
     background: #f8f8f8;
     color: #111111;
-
     transition:
         background-color 0.3s ease,
         color 0.3s ease;
@@ -46,7 +44,7 @@ body {
         box-shadow 0.3s ease;
 }
 
-.brand-logo {
+.appName {
     text-align: center;
     font-family: "Raleway", sans-serif;
     font-size: 67px;
@@ -56,15 +54,16 @@ body {
     margin-bottom: 25px;
 }
 
-.brand-logo .auto {
+.appName .auto {
     color: #b12a2a;
 }
 
-.brand-logo .doc {
+.appName .doc {
     color: #111111;
     transition: color 0.3s ease;
 }
 
+/* login */
 .login-subtitle {
     text-align: center;
     font-size: 18px;
@@ -91,7 +90,6 @@ body {
     margin-bottom: 6px;
     transition: color 0.3s ease;
 }
-
 
 .form-group input {
     width: 100%;
@@ -159,8 +157,6 @@ body {
     display: none;
 }
 
-
-
 .forgot-wrapper {
     display: flex;
     justify-content: flex-end;
@@ -179,7 +175,6 @@ body {
 .forgot-wrapper a:hover {
     color: #a51f1f;
 }
-
 
 .sign-in-button {
     width: 100%;
@@ -226,7 +221,6 @@ body {
     font-weight: 500;
 }
 
-
 .lines {
     width: 100%;
     display: flex;
@@ -271,10 +265,10 @@ body.dark {
 body.dark .login-card {
     background: #1c1c1c;
     box-shadow:
-        0 12px 35px rgba(0, 0, 0, 0.45);
+    0 12px 35px rgba(0, 0, 0, 0.45);
 }
 
-body.dark .brand-logo .doc {
+body.dark .appName .doc {
     color: #ffffff;
 }
 
@@ -299,7 +293,7 @@ body.dark .form-group input::placeholder {
 body.dark .form-group input:focus {
     border-color: #d34a4a;
     box-shadow:
-        0 0 0 2px rgba(211, 74, 74, 0.12);
+    0 0 0 2px rgba(211, 74, 74, 0.12);
 }
 
 body.dark .forgot-wrapper a {

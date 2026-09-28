@@ -6,6 +6,7 @@
 
     <title>Authentication - AutoDoc</title>
 
+    <!-- fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -15,18 +16,19 @@
 
 <body>
 
+<!-- authentication -->
 <main class="authentication-page">
-
     <div class="authentication-card">
         <h1>Authentication</h1>
         <p class="authentication-subtitle">Enter the code that was sent to your email.</p>
-
+       
+        <!-- error message -->
         @if ($errors->any())
             <div class="verification-error">{{ $errors->first() }}</div>
         @endif
 
         <form id="verificationForm" method="POST" action="{{ route('authentication.verify') }}">
-            @csrf
+            @csrf 
             <div class="code-inputs">
                 <input type="text" name="code[]" maxlength="1" inputmode="numeric" autocomplete="one-time-code" class="code-input" autofocus>
                 <input type="text" name="code[]" maxlength="1" inputmode="numeric" class="code-input">

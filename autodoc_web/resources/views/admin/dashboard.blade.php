@@ -19,9 +19,8 @@
 
 <!-- header -->
  <header class="top-header">
-
-    <div class="brand">
-        <img id="brandLogo" src="{{ asset('icons/autodoc-logo.svg') }}" alt="AUTODOC Logo">
+    <div class="app">
+        <img id="appLogo" src="{{ asset('icons/autodoc-logo.svg') }}" alt="AUTODOC Logo">
         <span class="auto">AUTO</span><span class="doc">DOC</span>
     </div>
 
@@ -34,7 +33,6 @@
             <img id="themeIcon" src="{{ asset('icons/dark-mode.svg') }}" alt="Toggle Theme">
         </button>
     </div>
-
 </header>
 
 <!-- side nav -->
@@ -70,10 +68,10 @@
     </div>
 </aside>
 
-<!-- main page -->
+<!-- main dashboard -->
 <main class="dashboard-content">
     <!-- summary -->
-    <section id="submissions" class="submissions-page">
+    <section id="summary" class="summary-page">
         <div class="stats-row">
             <div class="stat-card">
                 <div class="stat-card-top">
@@ -218,7 +216,6 @@
     <!-- schedule -->
     <section id="schedule" class="schedule-page">
         <div class="schedule-row">
-
             <div class="schedule-card">
                 <h2>Enlistment</h2>
                 <p class="schedule-status" data-status-for="enlistment">Currently Open</p>
@@ -245,7 +242,6 @@
                     Update Date and Time
                 </button>
             </div>
-
         </div>
     </section>
 
@@ -271,13 +267,10 @@
 
     <!-- requirements list -->
     <section id="requirements-list" class="requirements-list-page">
-
         <div class="requirements-panel">
             <h2 class="requirements-panel-title">Enlistment</h2>
-
             <div class="requirements-list-card">
                 <div class="requirements-list-header">List of Requirements</div>
-
                 <div class="requirement-row">
                     <span class="requirement-name">Prospectus/ Curriculum</span>
                     <div class="requirement-actions">
@@ -306,10 +299,8 @@
 
         <div class="requirements-panel">
             <h2 class="requirements-panel-title">Evaluation</h2>
-
             <div class="requirements-list-card">
                 <div class="requirements-list-header">List of Requirements</div>
-
                 <div class="requirement-row">
                     <span class="requirement-name">Prospectus/ Curriculum</span>
                     <div class="requirement-actions">
@@ -335,12 +326,10 @@
                 </div>
             </div>
         </div>
-
     </section>
 
     <!-- submissions list -->
     <section id="submissions-list" class="submissions-list-page">
-
         <div class="submissions-list-header">
             <h1>SUBMISSIONS</h1>
             <div class="submissions-list-actions">
@@ -522,7 +511,6 @@
                 </table>
             </div>
         </div>
-
     </section>
 </main>
 

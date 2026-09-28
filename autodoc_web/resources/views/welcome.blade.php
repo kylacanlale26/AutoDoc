@@ -20,8 +20,8 @@
 <!-- header -->
 <header>
     <div class="nav-wrap">
-        <div class="webname">
-            <img id="brandLogo" src="{{ asset('icons/autodoc-logo.svg') }} "alt="AUTODOC Logo" class="logo">
+        <div class="appName">
+            <img id="appLogo" src="{{ asset('icons/autodoc-logo.svg') }} "alt="AUTODOC Logo" class="logo">
             <span class="auto">AUTO</span><span class="doc">DOC</span>
         </div>
         <nav class="links">

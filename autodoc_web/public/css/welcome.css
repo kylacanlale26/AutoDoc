@@ -29,7 +29,6 @@ header {
     transition: background-color 0.3s ease;
 }
 
-
 /* nav */
 .nav-wrap {
     width: 100%;
@@ -40,9 +39,7 @@ header {
     padding: 0 20px 0 10px;
 }
 
-
-
-.webname {
+.appName {
     display: flex;
     align-items: center;
     font-family: "Raleway", sans-serif;
@@ -173,7 +170,6 @@ header {
         0 0 4px rgba(80, 80, 80, 0.25),
         0 0 8px rgba(80, 80, 80, 0.15);
 }
-
 
 /* dark-mode */
 body.dark {

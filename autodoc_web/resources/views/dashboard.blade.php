@@ -19,9 +19,8 @@
 
 <!-- header -->
  <header class="top-header">
-
-    <div class="brand">
-        <img id="brandLogo" src="{{ asset('icons/autodoc-logo.svg') }}" alt="AUTODOC Logo">
+    <div class="app">
+        <img id="appLogo" src="{{ asset('icons/autodoc-logo.svg') }}" alt="AUTODOC Logo">
         <span class="auto">AUTO</span><span class="doc">DOC</span>
     </div>
 
@@ -43,7 +42,7 @@
         <a href="{{ route('dashboard') }}" class="nav-link active">Dashboard</a>
         <a href="#" class="nav-link">Announcement</a>
         <div class="nav-section">
-            <p class="nav-title">Status</p>
+            <a href="#status-overview" class="nav-link">Status</a>
             <a href="#enlistment" class="nav-link">Enlistment</a>
             <a href="#evaluation" class="nav-link">Evaluation</a>
             <a href="#enrollment" class="nav-link">Enrollment</a>
@@ -76,10 +75,13 @@
     </div>
 </aside>
 
-<!-- main page -->
+<!-- main dashboard -->
 <main class="dashboard-content">
+
     <div class="dashboard-background"></div>
     <div class="dashboard-overlay"></div>
+
+    <!-- student profile -->
     <section class="dashboard-inner">
         <div class="student-card">
             <div class="student-header">
@@ -90,6 +92,7 @@
                 </div>
             </div>
 
+            <!-- status -->
             <div class="status-container">
                 <div class="status-card">
                     <h3>Enlistment</h3>
@@ -114,6 +117,7 @@
             </div>
         </div>
 
+        <!-- submission history -->
         <div class="documents-card">
             <div class="documents-header">
                 <h2>Documents</h2>
@@ -157,6 +161,27 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+    </section>
+
+    <!-- status overview -->
+    <section id="status-overview" class="status-overview-page">
+        <div class="status-overview-card">
+            <h3>Enlistment</h3>
+            <img src="{{ asset('icons/scan.svg') }}" alt="In Progress" class="status-overview-icon">
+            <p>In Progress</p>
+        </div>
+
+        <div class="status-overview-card">
+            <h3>Evaluation</h3>
+            <img src="{{ asset('icons/lock.svg') }}" alt="Locked" class="status-overview-icon">
+            <p>Opens on &lt;date&gt;</p>
+        </div>
+
+        <div class="status-overview-card">
+            <h3>Enrollment</h3>
+            <img src="{{ asset('icons/lock.svg') }}" alt="Locked" class="status-overview-icon">
+            <p>Opens on &lt;date&gt;</p>
         </div>
     </section>
 
@@ -238,27 +263,6 @@
             Any false information or information that involves using someone else's identity
             may result in legal action for identity theft.
         </p>
-    </section>
-
-    <!-- status overview -->
-    <section id="status-overview" class="status-overview-page">
-        <div class="status-overview-card">
-            <h3>Enlistment</h3>
-            <img src="{{ asset('icons/scan.svg') }}" alt="In Progress" class="status-overview-icon">
-            <p>In Progress</p>
-        </div>
-
-        <div class="status-overview-card">
-            <h3>Evaluation</h3>
-            <img src="{{ asset('icons/lock.svg') }}" alt="Locked" class="status-overview-icon">
-            <p>Opens on &lt;date&gt;</p>
-        </div>
-
-        <div class="status-overview-card">
-            <h3>Enrollment</h3>
-            <img src="{{ asset('icons/lock.svg') }}" alt="Locked" class="status-overview-icon">
-            <p>Opens on &lt;date&gt;</p>
-        </div>
     </section>
 </main>
 
