@@ -18,130 +18,89 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-
-/* =========================
-   HEADER
-========================= */
-
+/* header */
 .top-header {
     position: fixed;
     top: 0;
     left: 0;
-
     width: 100%;
     height: 74px;
-
     background: #fff;
     border-bottom: 3px solid #a51f1f;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     padding: 0 20px 0 10px;
-
     z-index: 1000;
-
     transition:
         background-color 0.3s ease,
         border-color 0.3s ease;
 }
 
-
-/* =========================
-   BRAND
-========================= */
-
-.brand {
+.app {
     height: 100%;
-
     display: flex;
     align-items: center;
-
     font-family: "Raleway", sans-serif;
     font-size: 30px;
     font-weight: 700;
     letter-spacing: -1px;
 }
 
-.brand img {
+.app img {
     width: 58px;
     height: 58px;
-
     object-fit: contain;
-
     margin-right: 7px;
 }
 
-.brand .auto {
+.app .auto {
     color: #d82b2b;
 }
 
-.brand .doc {
+.app .doc {
     color: #050505;
 
     transition: color 0.3s ease;
 }
 
-
-/* =========================
-   HEADER ICONS
-========================= */
-
 .header-actions {
     display: flex;
     align-items: center;
-
     gap: 15px;
 }
 
 .header-icon {
     width: 34px;
     height: 34px;
-
     border: none;
     background: transparent;
-
     padding: 0;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     cursor: pointer;
 }
 
 .header-icon img {
     width: 27px;
     height: 27px;
-
     object-fit: contain;
 }
 
-
-/* =========================
-   SIDE NAVIGATION
-========================= */
-
+/* side nav */
 .side-nav {
     font-family: "Raleway", sans-serif;
     position: fixed;
-
     top: 74px;
     left: 0;
-
     width: 212px;
     height: calc(100vh - 74px);
-
     background: #fff;
-
     border-right: 3px solid #a51f1f;
-
     display: flex;
     flex-direction: column;
-
     z-index: 900;
-
     transition:
         background-color 0.3s ease,
         border-color 0.3s ease;
@@ -153,17 +112,12 @@ body {
 
 .nav-link {
     display: block;
-
     color: #111;
     text-decoration: none;
-
     font-size: 16px;
     font-weight: 500;
-
     letter-spacing: 2px;
-
     margin-bottom: 17px;
-
     transition: color 0.2s ease;
 }
 
@@ -179,17 +133,6 @@ body {
     margin-top: 38px;
 }
 
-.nav-title {
-    color: #111;
-
-    font-size: 16px;
-    font-weight: 700;
-
-    letter-spacing: 2px;
-
-    margin-bottom: 17px;
-}
-
 .nav-section .nav-link {
     margin-bottom: 13px;
 }
@@ -198,18 +141,10 @@ body {
     margin-top: 40px;
 }
 
-
-/* =========================
-   LOGGED USER
-========================= */
-
 .logged-user {
     margin-top: auto;
-
     min-height: 66px;
-
     padding: 0 20px 10px 28px;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -218,7 +153,6 @@ body {
 .logged-user-info {
     display: flex;
     flex-direction: column;
-
     gap: 2px;
 }
 
@@ -240,37 +174,23 @@ body {
     object-fit: contain;
 }
 
-/* =========================
-   PROFILE BUTTON
-========================= */
-
 .profile-button {
     width: 42px;
     height: 42px;
-
     border: none;
     background: transparent;
-
     padding: 0;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     cursor: pointer;
 }
 
 .profile-button .person-icon {
     width: 38px;
     height: 38px;
-
     object-fit: contain;
 }
-
-
-/* =========================
-   PROFILE MENU
-========================= */
 
 .logged-user {
     position: relative;
@@ -278,69 +198,43 @@ body {
 
 .profile-menu {
     position: absolute;
-
     right: 15px;
     bottom: 62px;
-
     width: 145px;
-
     background: #fff;
-
     border: 1px solid #ccc;
     border-radius: 8px;
-
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.18);
-
     overflow: hidden;
-
     opacity: 0;
     visibility: hidden;
-
     transform: translateY(5px);
-
     transition:
         opacity 0.2s ease,
         visibility 0.2s ease,
         transform 0.2s ease;
-
     z-index: 1100;
 }
 
 .profile-menu.show {
     opacity: 1;
     visibility: visible;
-
     transform: translateY(0);
 }
 
-
-/* =========================
-   PROFILE MENU ITEMS
-========================= */
-
 .profile-menu-item {
     width: 100%;
-
     display: block;
-
     padding: 11px 15px;
-
     border: none;
-
     background: transparent;
-
     color: #111;
-
     text-decoration: none;
-
     font-family: "Raleway", sans-serif;
     font-size: 13px;
     font-weight: 500;
-
     text-align: left;
-
     cursor: pointer;
-
     transition:
         background-color 0.2s ease,
         color 0.2s ease;
@@ -355,134 +249,50 @@ body {
     margin: 0;
 }
 
-/* =========================
-   SCROLLABLE DASHBOARD
-========================= */
-
+/* main dashboard */
 .dashboard-content {
     position: fixed;
-
     top: 74px;
     left: 212px;
-
     width: calc(100% - 212px);
     height: calc(100vh - 74px);
-
     overflow-y: auto;
     overflow-x: hidden;
-
     scroll-behavior: smooth;
 }
 
-/* =========================
-   PAGE 1
-========================= */
-
-.dashboard-page {
-    position: relative;
-
-    width: 100%;
-    min-height: 100vh;
-
-    overflow: hidden;
-}
-
 .dashboard-background {
     position: absolute;
-
     inset: 0;
-
-    background-image: url("../images/mcc-bg-main.png");
-
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-
-    z-index: 0;
-}
-
-.dashboard-overlay {
-    position: absolute;
-
-    inset: 0;
-
-    background: rgba(255, 255, 255, 0.25);
-
-    z-index: 1;
-}
-
-.dashboard-inner {
-    position: relative;
-
-    z-index: 2;
-
-    width: 100%;
-
-    min-height: 100vh;
-
-    padding: 52px 62px 70px;
-}
-
-/* =========================
-   BACKGROUND
-========================= */
-
-.dashboard-background {
-    position: absolute;
-
-    inset: 0;
-
     min-height: 100%;
-
     background-image: url("../images/mcc-bg-main.png");
-
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-
     z-index: 0;
 }
 
 .dashboard-overlay {
     position: absolute;
-
     inset: 0;
-
     background: rgba(255, 255, 255, 0.25);
-
     z-index: 1;
-
     transition: background-color 0.3s ease;
 }
 
-
-/* =========================
-   DASHBOARD CONTENT
-========================= */
-
+/* student profile */
 .dashboard-inner {
     position: relative;
-
     z-index: 2;
-
     width: 100%;
     min-height: 100%;
-
     padding: 52px 62px 70px;
 }
 
-
-/* =========================
-   STUDENT CARD
-========================= */
-
 .student-card {
     width: 100%;
-
     background: rgba(255, 255, 255, 0.88);
-
     padding: 16px 28px 30px;
-
     transition:
         background-color 0.3s ease,
         color 0.3s ease;
@@ -491,71 +301,54 @@ body {
 .student-header {
     display: flex;
     align-items: center;
-
     margin-bottom: 25px;
 }
 
 .account-icon {
     width: 61px;
     height: 61px;
-
     object-fit: contain;
-
     margin-right: 28px;
 }
 
 .student-information {
     display: flex;
     align-items: baseline;
-
     gap: 17px;
 }
 
 .student-information h1 {
     font-size: 22px;
     font-weight: 700;
-
     color: #111;
 }
 
 .student-information span {
     font-size: 20px;
     font-weight: 400;
-
     color: #222;
 }
 
-
-/* =========================
-   STATUS
-========================= */
-
+/* status */
 .status-container {
     width: 100%;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     margin-top: 10px;
 }
 
 .status-card {
     width: 235px;
     height: 155px;
-
     background: #fff;
-
     border: 2px solid #111;
     border-radius: 8px;
-
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-
     padding-top: 16px;
-
     transition:
         background-color 0.3s ease,
         border-color 0.3s ease;
@@ -564,58 +357,42 @@ body {
 .status-card h3 {
     font-size: 15px;
     font-weight: 700;
-
     color: #111;
-
     margin-bottom: 9px;
 }
 
 .status-card p {
     font-size: 13px;
     font-weight: 600;
-
     color: #111;
-
     margin-bottom: 11px;
 }
 
 .verified-icon {
     width: 34px;
     height: 34px;
-
     object-fit: contain;
-
     margin-bottom: 6px;
 }
 
 .status-card span {
     font-size: 11px;
     font-weight: 600;
-
     color: #e32626;
 }
 
 .status-line {
     width: 55px;
     height: 4px;
-
     background: #111;
-
     margin: 0 20px;
 }
 
-
-/* =========================
-   DOCUMENTS
-========================= */
-
+/* submission history */
 .documents-card {
     width: 100%;
-
     margin-top: 25px;
-
     background: rgba(255, 255, 255, 0.93);
-
     transition:
         background-color 0.3s ease,
         color 0.3s ease;
@@ -623,49 +400,34 @@ body {
 
 .documents-header {
     min-height: 63px;
-
     padding: 0 15px 0 10px;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     border-bottom: 1px solid #777;
 }
 
 .documents-header h2 {
     font-size: 14px;
     font-weight: 700;
-
     color: #111;
 }
 
 .document-actions {
     display: flex;
     align-items: center;
-
     gap: 12px;
 }
-
-
-/* =========================
-   SEARCH
-========================= */
 
 .search-box {
     width: 177px;
     height: 29px;
-
     border: 1px solid #111;
     border-radius: 6px;
-
     display: flex;
     align-items: center;
-
     padding: 0 8px;
-
     background: #fff;
-
     transition:
         background-color 0.3s ease,
         border-color 0.3s ease;
@@ -674,23 +436,17 @@ body {
 .search-icon {
     width: 17px;
     height: 17px;
-
     object-fit: contain;
-
     margin-right: 6px;
 }
 
 .search-box input {
     width: 100%;
-
     border: none;
     outline: none;
-
     background: transparent;
-
     font-family: "Raleway", sans-serif;
     font-size: 12px;
-
     color: #111;
 }
 
@@ -698,57 +454,36 @@ body {
     color: #555;
 }
 
-
-/* =========================
-   DOWNLOAD
-========================= */
-
 .download-button {
     width: 30px;
     height: 30px;
-
     border: none;
     background: transparent;
-
     padding: 0;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     cursor: pointer;
 }
 
 .download-button img {
     width: 27px;
     height: 27px;
-
     object-fit: contain;
 }
 
-
-/* =========================
-   TABLE
-========================= */
-
 .documents-table {
     width: 100%;
-
     border-collapse: collapse;
-
     table-layout: fixed;
 }
 
 .documents-table th,
 .documents-table td {
     height: 42px;
-
     border-bottom: 1px solid #777;
-
     text-align: center;
-
     font-size: 13px;
-
     color: #111;
 }
 
@@ -765,66 +500,39 @@ body {
     width: 25%;
 }
 
-/* =========================
-   REQUIREMENTS PAGES
-   ENLISTMENT / EVALUATION / ENROLLMENT
-========================= */
-
+/* requirements page - enlistment, evaluation, enrollment */
 .requirements-page {
     width: 100%;
     min-height: 100vh;
-
     background: #fff;
-
     display: flex;
     flex-direction: column;
-
     align-items: center;
     justify-content: center;
-
     padding: 40px 62px;
-
     transition:
         background-color 0.3s ease,
         color 0.3s ease;
 }
 
-
-/* =========================
-   BOX CONTAINER
-========================= */
-
 .requirements-section {
     width: 100%;
-
     display: flex;
-
     align-items: center;
     justify-content: center;
-
     gap: 50px;
 }
-
-
-/* =========================
-   LEFT CARD
-========================= */
 
 .requirement-upload-card {
     width: 310px;
     min-height: 300px;
-
     background: #fff;
-
     border: 1px solid #222;
     border-radius: 25px;
-
     padding: 25px 38px;
-
     display: flex;
     flex-direction: column;
     align-items: center;
-
     transition:
         background-color 0.3s ease,
         border-color 0.3s ease;
@@ -833,48 +541,31 @@ body {
 .requirement-upload-card h2 {
     font-size: 29px;
     line-height: 1.45;
-
     text-align: center;
-
     color: #111;
-
     margin-bottom: 27px;
-
     transition: color 0.3s ease;
 }
-
-
-/* =========================
-   ATTACH BUTTON
-========================= */
 
 .attach-button {
     width: 194px;
     height: 38px;
-
     border: none;
     border-radius: 8px;
-
     background: linear-gradient(
         to bottom,
         #ffffff 0%,
         #eeeeee 45%,
         #c7c7c7 100%
     );
-
     color: #111;
-
     font-family: "Raleway", sans-serif;
     font-size: 13px;
     font-weight: 700;
-
     cursor: pointer;
-
     margin-bottom: 11px;
-
     box-shadow:
         inset 0 1px 2px rgba(255, 255, 255, 0.8);
-
     transition:
         transform 0.15s ease,
         filter 0.2s ease,
@@ -890,38 +581,25 @@ body {
     transform: translateY(1px);
 }
 
-
-/* =========================
-   UPLOAD BUTTON
-========================= */
-
 .upload-button {
     width: 230px;
     height: 39px;
-
     border: none;
     border-radius: 8px;
-
     background: linear-gradient(
         to bottom,
         #8f1d1d 0%,
         #b51f24 45%,
         #ed1c24 100%
     );
-
     color: #fff;
-
     font-family: "Raleway", sans-serif;
     font-size: 13px;
     font-weight: 700;
-
     cursor: pointer;
-
     margin-bottom: 18px;
-
     box-shadow:
         0 2px 4px rgba(0, 0, 0, 0.18);
-
     transition:
         transform 0.15s ease,
         filter 0.2s ease,
@@ -936,40 +614,22 @@ body {
     transform: translateY(1px);
 }
 
-
-/* =========================
-   DEADLINE
-========================= */
-
 .requirement-deadline {
     font-size: 13px;
     font-weight: 500;
-
     color: #111;
-
     margin-top: 0;
-
     transition: color 0.3s ease;
 }
-
-
-/* =========================
-   RIGHT REQUIREMENTS CARD
-========================= */
 
 .requirements-card {
     width: 390px;
     min-height: 300px;
-
     flex: none;
-
     background: #fff;
-
     border: 1px solid #222;
     border-radius: 25px;
-
     padding: 23px 40px;
-
     transition:
         background-color 0.3s ease,
         border-color 0.3s ease;
@@ -978,11 +638,8 @@ body {
 .requirements-card h2 {
     font-size: 29px;
     line-height: 1.2;
-
     color: #111;
-
     margin-bottom: 17px;
-
     transition: color 0.3s ease;
 }
 
@@ -994,67 +651,38 @@ body {
 .requirements-card li {
     font-size: 21px;
     line-height: 1.5;
-
     color: #111;
-
     transition: color 0.3s ease;
 }
-
-
-/* =========================
-   NOTE
-========================= */
 
 .requirement-note {
     width: 100%;
-
     text-align: center;
-
     font-size: 12px;
     line-height: 1.5;
-
     color: #222;
-
     margin-top: 31px;
-
     padding: 0 30px;
-
     transition: color 0.3s ease;
 }
-
-
-/* =========================
-   ENROLLMENT LOCK
-========================= */
 
 .enrollment-lock {
     width: 78px;
     height: 100px;
-
     object-fit: contain;
-
     margin-top: 0;
     margin-bottom: 17px;
 }
 
-/* =========================
-   STATUS OVERVIEW
-========================= */
-
 .status-overview-page {
     width: 100%;
     min-height: 100vh;
-
     background: #fff;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     gap: 60px;
-
     padding: 40px 62px;
-
     transition:
         background-color 0.3s ease,
         color 0.3s ease;
@@ -1063,21 +691,15 @@ body {
 .status-overview-card {
     width: 320px;
     min-height: 400px;
-
     background: #fff;
-
     border: 1px solid #222;
     border-radius: 25px;
-
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
     gap: 28px;
-
     padding: 40px 30px;
-
     transition:
         background-color 0.3s ease,
         border-color 0.3s ease;
@@ -1086,61 +708,45 @@ body {
 .status-overview-card h3 {
     font-size: 29px;
     font-weight: 700;
-
     color: #111;
-
     text-align: center;
-
     transition: color 0.3s ease;
 }
 
 .status-overview-icon {
     width: 130px;
     height: 130px;
-
     object-fit: contain;
 }
 
 .status-overview-card p {
     font-size: 16px;
     font-weight: 500;
-
     color: #111;
-
     transition: color 0.3s ease;
 }
 
-/* =========================
-   DARK MODE
-========================= */
-
+/* dark mode */
 body.dark {
     background: #121212;
     color: #fff;
 }
-
-
-/* HEADER */
 
 body.dark .top-header {
     background: #151515;
     border-color: #a51f1f;
 }
 
-body.dark .brand .doc {
+body.dark .app .doc {
     color: #fff;
 }
-
-
-/* SIDE NAV */
 
 body.dark .side-nav {
     background: #151515;
     border-color: #a51f1f;
 }
 
-body.dark .nav-link,
-body.dark .nav-title {
+body.dark .nav-link {
     color: #fff;
 }
 
@@ -1156,7 +762,6 @@ body.dark .logged-user-info strong {
 body.dark .profile-menu {
     background: #1c1c1c;
     border-color: #444;
-
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
 }
 
@@ -1169,15 +774,9 @@ body.dark .profile-menu-item:hover {
     color: #e15a5a;
 }
 
-
-/* BACKGROUND */
-
 body.dark .dashboard-overlay {
     background: rgba(0, 0, 0, 0.58);
 }
-
-
-/* STUDENT CARD */
 
 body.dark .student-card {
     background: rgba(27, 27, 27, 0.92);
@@ -1187,9 +786,6 @@ body.dark .student-information h1,
 body.dark .student-information span {
     color: #fff;
 }
-
-
-/* STATUS */
 
 body.dark .status-card {
     background: #242424;
@@ -1204,9 +800,6 @@ body.dark .status-card p {
 body.dark .status-line {
     background: #ddd;
 }
-
-
-/* DOCUMENTS */
 
 body.dark .documents-card {
     background: rgba(27, 27, 27, 0.92);
@@ -1244,9 +837,6 @@ body.dark .requirements-page {
     color: #fff;
 }
 
-
-/* LEFT CARD */
-
 body.dark .requirement-upload-card {
     background: #1c1c1c;
     border-color: #ddd;
@@ -1255,9 +845,6 @@ body.dark .requirement-upload-card {
 body.dark .requirement-upload-card h2 {
     color: #fff;
 }
-
-
-/* RIGHT CARD */
 
 body.dark .requirements-card {
     background: #1c1c1c;
@@ -1269,22 +856,13 @@ body.dark .requirements-card li {
     color: #fff;
 }
 
-
-/* DEADLINE */
-
 body.dark .requirement-deadline {
     color: #fff;
 }
 
-
-/* NOTE */
-
 body.dark .requirement-note {
     color: #ccc;
 }
-
-
-/* ATTACH BUTTON */
 
 body.dark .attach-button {
     background: linear-gradient(
@@ -1293,15 +871,10 @@ body.dark .attach-button {
         #303030 45%,
         #222 100%
     );
-
     color: #fff;
-
     box-shadow:
         inset 0 1px 2px rgba(255, 255, 255, 0.08);
 }
-
-
-/* UPLOAD BUTTON */
 
 body.dark .upload-button {
     background: linear-gradient(

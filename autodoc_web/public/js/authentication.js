@@ -1,12 +1,15 @@
 const codeInputs = document.querySelectorAll(".code-input");
 const verificationForm = document.getElementById("verificationForm");
 const requestCode = document.getElementById("requestCode");
+
+// apply saved theme
 const savedTheme = localStorage.getItem("theme");
 
 if (savedTheme === "dark") {
     document.body.classList.add("dark");
 }
 
+// numeric code field and automatic move to next
 codeInputs.forEach((input, index) => {
     input.addEventListener("input", () => {
         input.value = input.value.replace(/\D/g, "");
@@ -14,7 +17,6 @@ codeInputs.forEach((input, index) => {
             codeInputs[index + 1].focus();
         }
     });
-
     input.addEventListener("keydown", (event) => {
         if (
             event.key === "Backspace" &&
@@ -38,6 +40,7 @@ codeInputs.forEach((input, index) => {
     });
 });
 
+// automatic fill from pasted code
 codeInputs[0].addEventListener("paste", (event) => {
     event.preventDefault();
     const pastedCode =
@@ -55,18 +58,19 @@ codeInputs[0].addEventListener("paste", (event) => {
     }
 });
 
+// warning message if incomplete code
 verificationForm.addEventListener("submit", (event) => {
     let code = "";
     codeInputs.forEach(input => {
         code += input.value;
     });
-
     if (code.length !== 4) {
         event.preventDefault();
         alert("Please enter the 4-digit code.");
     }
 });
 
+// request new code
 requestCode.addEventListener("click", () => {
     window.location.href = "/authentication/resend";
 });

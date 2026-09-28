@@ -2,6 +2,8 @@
 const passwordInput = document.getElementById("password");
 const togglePassword = document.getElementById("togglePassword");
 const visibilityIcon = document.getElementById("visibilityIcon");
+
+// apply saved theme
 const savedTheme = localStorage.getItem("theme");
 
 const currentTheme = savedTheme === "dark"
@@ -13,7 +15,6 @@ if (currentTheme === "dark") {
 }
 
 function updateVisibilityIcon(isVisible) {
-
     if (currentTheme === "dark") {
         visibilityIcon.src = isVisible
             ? "/icons/visibility-dark.svg"
@@ -25,14 +26,13 @@ function updateVisibilityIcon(isVisible) {
     }
 }
 
+// default hidden password state
 updateVisibilityIcon(false);
 
+// toggle password visibility
 togglePassword.addEventListener("click", () => {
-
     const isCurrentlyHidden =
         passwordInput.type === "password";
-
-
     if (isCurrentlyHidden) {
         passwordInput.type = "text";
         updateVisibilityIcon(true);
