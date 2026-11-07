@@ -1,0 +1,190 @@
+/* Student Dashboard */
+.student-layout {
+    display: flex;
+    padding-top: 60px;
+    width: 100%;
+    min-height: calc(100vh - 60px);
+    background-color: white;
+}
+
+/* Main Content */
+.student-main-content {
+    flex: 1;
+    min-width: 0;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+    background-color: white;
+    font-family: Arial;
+}
+
+.dashboard-container {
+    padding: 16px 22px;
+}
+
+/* Welcome Section */
+.dashboard-header {
+    margin-bottom: 12px;
+}
+
+.dashboard-header h1 {
+    margin: 0;
+    font-size: 35px;
+    font-weight: 700;
+    color: black;
+}
+
+.dashboard-header p {
+    margin: 2px 0 0;
+    font-size: 15px;
+    color: black;
+}
+
+/* Document Summary Cards */
+.document-summary {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 12px;
+}
+
+.summary-card {
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px 14px;
+    background-color: #dedede;
+    border-radius: 11px;
+    box-sizing: border-box;
+}
+
+.summary-card img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    margin-bottom: 3px;
+}
+
+.summary-card h2 {
+    margin: 0;
+    font-size: 25px;
+    font-weight: 700;
+    color: black;
+}
+
+.summary-card span {
+    margin-top: 2px;
+    font-size: 15px;
+    color: black;
+}
+
+/* Upload Button */
+.dashboard-upload {
+    margin-bottom: 17px;
+}
+
+.upload-button {
+    width: 100%;
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 17px;
+    background-color: #d32f2f;
+    border-radius: 11px;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.upload-button:hover {
+    background-color: #bd2025;
+}
+
+.upload-button-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.upload-button-content img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
+.upload-button-content span {
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.upload-arrow {
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+}
+
+/* Recent Documents */
+.recent-documents h2 {
+    margin: 0 0 10px;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: black;
+}
+
+.recent-documents-table {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.recent-documents-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.recent-documents-table th,
+.recent-documents-table td {
+    padding: 12px 10px;
+    text-align: left;
+    font-size: 13px;
+    color: black;
+}
+
+.recent-documents-table th {
+    font-weight: 600;
+    border-bottom: 1px solid #cccccc;
+}
+
+.recent-documents-table th:last-child,
+.recent-documents-table td:last-child {
+    text-align: right;
+}
+
+/* Empty Table */
+.empty-documents {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 180px;
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 15px;
+    text-align: center;
+}
+
+/* Document Status */
+.document-status {
+    font-weight: 500;
+}
+
+.document-status.verified {
+    color: #007a3f;
+}
+
+.document-status.pending {
+    color: #ffd21f;
+}
+
+.document-status.needs-correction {
+    color: #951f1c;
+}

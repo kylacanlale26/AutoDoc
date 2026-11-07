@@ -1,0 +1,113 @@
+/* ========================================
+   My Account Page
+======================================== */
+.student-layout {
+    display: flex;
+    padding-top: 60px;
+    width: 100%;
+    min-height: calc(100vh - 60px);
+    background-color: white;
+}
+
+/* Main Content */
+.student-main-content {
+    flex: 1;
+    min-width: 0;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+    background-color: white;
+    font-family: Arial;
+}
+
+.account-container {
+    padding: 16px 22px;
+}
+
+/* Page Header */
+.account-header {
+    margin-bottom: 28px;
+}
+
+.account-header h1 {
+    margin: 0;
+    font-size: 35px;
+    font-weight: 700;
+    color: black;
+}
+
+/* Student Profile */
+.account-profile {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Profile Picture */
+.account-profile-picture {
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+    margin-bottom: 10px;
+}
+
+.account-profile-picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Student Information */
+.account-profile-info {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.account-profile-info h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: black;
+}
+
+.account-profile-info p {
+    margin: 2px 0 0;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    color: black;
+}
+
+/* Account Details */
+.account-details {
+    width: 80%;
+    max-width: 80%;
+}
+
+.account-detail-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 10px;
+    text-align: center;
+    border-bottom: 2px dashed #d9d9d9;
+}
+
+.account-detail-item:last-child {
+    border-bottom: none;
+}
+
+.account-detail-item h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 400;
+    color: black;
+}
+
+.account-detail-item p {
+    margin: 3px 0 0;
+    font-size: 15px;
+    color: black;
+}

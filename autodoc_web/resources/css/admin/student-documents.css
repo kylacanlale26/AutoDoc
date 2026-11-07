@@ -1,0 +1,170 @@
+/* Student Documents Page */
+.admin-layout {
+    display: flex;
+    padding-top: 60px;
+    width: 100%;
+    min-height: calc(100vh - 60px);
+    background-color: white;
+}
+
+/* Main Content */
+.admin-main-content {
+    flex: 1;
+    min-width: 0;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+    background-color: white;
+    font-family: Arial;
+}
+
+.student-documents-container {
+    padding: 16px 22px;
+}
+
+/* Page Header */
+.student-documents-header {
+    margin-bottom: 16px;
+}
+
+.student-documents-header h1 {
+    margin: 0;
+    font-size: 35px;
+    font-weight: 700;
+    color: black;
+}
+
+/* Search and Filter */
+.student-search-section {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.student-search {
+    flex: 1;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 12px;
+    border: 1.5px solid black;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.student-search img {
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+}
+
+.student-search input {
+    flex: 1;
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 15px;
+    letter-spacing: 1px;
+    color: black;
+}
+
+.student-search input::placeholder {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+/* Filter Button */
+.filter-button {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1.5px solid black;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.filter-button:hover {
+    background-color: #eeeeee;
+}
+
+.filter-button img {
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+}
+
+/* Student Documents List */
+.student-documents-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: 1px solid #737373;
+    border-radius: 11px;
+    box-sizing: border-box;
+}
+
+/* Individual Student */
+.student-document-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 81px;
+    padding: 12px 10px;
+    gap: 15px;
+    border: 1px solid #737373;
+    box-sizing: border-box;
+    transition: background-color 0.2s ease;
+}
+
+.student-document-item:last-child {
+    border-bottom: none;
+}
+
+/* Student Information */
+.student-document-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.student-document-info h2 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: black;
+    overflow-wrap: anywhere;
+}
+
+/* Right Arrow */
+.student-document-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 25px;
+    flex-shrink: 0;
+}
+
+.student-document-action img {
+    width: 17px;
+    height: 17px;
+    object-fit: contain;
+}
+
+/* Empty State */
+.empty-student-documents {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 180px;
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 15px;
+    text-align: center;
+}

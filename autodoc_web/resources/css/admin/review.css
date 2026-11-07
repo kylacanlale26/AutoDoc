@@ -1,0 +1,274 @@
+/* Document Review Page */
+.admin-layout {
+    display: flex;
+    padding-top: 60px;
+    width: 100%;
+    min-height: calc(100vh - 60px);
+    background-color: white;
+}
+
+/* Main Content */
+.admin-main-content {
+    flex: 1;
+    min-width: 0;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+    background-color: white;
+    font-family: Arial;
+}
+
+.review-container {
+    padding: 16px 22px;
+}
+
+/* Page Header */
+.review-header {
+    margin-bottom: 5px;
+}
+
+.review-header h1 {
+    margin: 0;
+    font-size: 35px;
+    font-weight: 700;
+    color: black;
+}
+
+/* Review Content Layout */
+.review-content {
+    display: grid;
+    grid-template-columns: 1fr 0.88fr;
+    gap: 15px;
+    align-items: stretch;
+}
+
+/* Left Panel: Document Preview */
+.document-review-panel {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 500px;
+    padding: 15px;
+    background-color: #dedede;
+    border-radius: 12px;
+    box-sizing: border-box;
+}
+
+/* Document Header */
+.document-review-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.document-info {
+    min-width: 0;
+}
+
+.document-info h2 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: black;
+    overflow-wrap: anywhere;
+}
+
+.document-info p {
+    margin: 2px 0 0;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    color: black;
+}
+
+/* Pending Status */
+.document-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+}
+
+.document-status.pending {
+    background-color: #ffd21f;
+    color: #ff751f;
+}
+
+/* Document Preview Placeholder */
+.document-preview-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    min-height: 210px;
+    margin-bottom: 9px;
+    background-color: white;
+    border: 1px dashed #aaaaaa;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.preview-placeholder-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 15px;
+    text-align: center;
+}
+
+.preview-file-icon {
+    width: 48px;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #b51f24;
+    border-radius: 5px;
+    background-color: #ffffff;
+}
+
+.preview-file-icon span {
+    font-size: 13px;
+    font-weight: 700;
+    color: #b51f24;
+}
+
+.preview-placeholder-content h3 {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 700;
+    color: #555555;
+}
+
+.preview-placeholder-content p {
+    margin: 0;
+    font-size: 11px;
+    color: #888888;
+}
+
+/* Open Full Preview Button */
+.open-full-preview {
+    width: 100%;
+    min-height: 37px;
+    padding: 7px 12px;
+    border: 1px solid black;
+    border-radius: 25px;
+    background-color: transparent;
+    color: black;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.open-full-preview:hover {
+    background-color: #cccccc;
+}
+
+/* Right Panel: Verification */
+.verification-review-panel {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 15px;
+    background-color: #dedede;
+    border-radius: 12px;
+    box-sizing: border-box;
+}
+
+/* Verification Findings */
+.verification-findings {
+    margin-bottom: 8px;
+}
+
+.verification-findings h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: black;
+}
+
+.findings-placeholder {
+    margin: 2px 0 0;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    line-height: 1.5;
+    color: black;
+}
+
+/* Administrator Notes */
+.administrator-notes {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 9px;
+}
+
+.administrator-notes label {
+    margin-bottom: 5px;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: black;
+}
+
+.administrator-notes textarea {
+    width: 100%;
+    min-height: 250px;
+    padding: 9px;
+    border: 1px solid black;
+    border-radius: 6px;
+    outline: none;
+    background-color: white;
+    color: black;
+    font-family: inherit;
+    font-size: 13px;
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+.administrator-notes textarea:focus {
+    border-color: #b51f24;
+}
+
+.administrator-notes textarea::placeholder {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+/* Review Action Buttons */
+.review-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.review-actions button {
+    width: 100%;
+    min-height: 30px;
+    padding: 5px 10px;
+    border: 1px solid black;
+    border-radius: 25px;
+    background-color: transparent;
+    color: black;
+    font-family: inherit;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.approve-document:hover {
+    background-color: #007a3f;
+    border-color: #007a3f;
+    color: white;
+}
+
+.request-correction:hover {
+    background-color: #951f1c;
+    border-color: #951f1c;
+    color: white;
+}

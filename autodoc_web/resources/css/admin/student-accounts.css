@@ -1,0 +1,190 @@
+/* Student Accounts Page */
+.admin-layout {
+    display: flex;
+    padding-top: 60px;
+    width: 100%;
+    min-height: calc(100vh - 60px);
+    background-color: white;
+}
+
+/* Main Content */
+.admin-main-content {
+    flex: 1;
+    min-width: 0;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+    background-color: white;
+    font-family: Arial;
+}
+
+.student-accounts-container {
+    padding: 16px 22px;
+}
+
+/* Page Header */
+.student-accounts-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.student-accounts-header h1 {
+    margin: 0;
+    font-size: 35px;
+    font-weight: 700;
+    color: black;
+}
+
+/* Add Account Button */
+.add-account-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 174px;
+    min-height: 33px;
+    padding: 7px 15px;
+    border: none;
+    border-radius: 11px;
+    background-color: #d32f2f;
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.add-account-button:hover {
+    background-color: #b51f24;
+}
+
+/* Search and Filter */
+.student-search-section {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.student-search {
+    flex: 1;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 12px;
+    border: 1.5px solid black;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.student-search img {
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+}
+
+.student-search input {
+    flex: 1;
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 15px;
+    letter-spacing: 1px;
+    color: black;
+}
+
+.student-search input::placeholder {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+/* Filter Button */
+.filter-button {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1.5px solid black;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.filter-button:hover {
+    background-color: #eeeeee;
+}
+
+.filter-button img {
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+}
+
+
+/* Student Accounts List */
+.student-accounts-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: 1px solid #737373;
+    border-radius: 11px;
+    box-sizing: border-box;
+}
+
+/* Individual Account Row */
+.student-account-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    width: 100%;
+    min-height: 48px;
+    padding: 10px;
+    gap: 12px;
+    border-bottom: 1px solid #737373;
+    box-sizing: border-box;
+}
+
+.student-account-item:last-child {
+    border-bottom: none;
+}
+
+/* Student Name */
+.account-student-name {
+    min-width: 0;
+}
+
+.account-student-name h2 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: black;
+    overflow-wrap: anywhere;
+}
+
+/* Student Number & Email */
+.account-student-number,
+.account-student-email {
+    min-width: 0;
+    font-size: 15px;
+    color: black;
+    overflow-wrap: anywhere;
+}
+
+/* Empty State */
+.empty-student-accounts {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 180px;
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 15px;
+    text-align: center;
+}

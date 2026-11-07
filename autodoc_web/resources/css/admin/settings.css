@@ -1,0 +1,246 @@
+/* Admin Settings Page */
+.admin-layout {
+    display: flex;
+    padding-top: 60px;
+    width: 100%;
+    min-height: calc(100vh - 60px);
+    background-color: white;
+}
+
+/* Main Content */
+.admin-main-content {
+    flex: 1;
+    min-width: 0;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+    background-color: white;
+    font-family: Arial;
+}
+
+.settings-container {
+    padding: 16px 22px;
+}
+
+/* Page Header */
+.settings-header {
+    margin-bottom: 12px;
+}
+
+.settings-header h1 {
+    margin: 0;
+    font-size: 35px;
+    font-weight: 700;
+    color: black;
+}
+
+.settings-header p {
+    margin: 2px 0 0;
+    font-size: 15px;
+    letter-spacing: 0.8px;
+    color: black;
+}
+
+/* Section Headings */
+.document-types-section h2,
+.upload-rules-section h2 {
+    margin: 0 0 7px;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: black;
+}
+
+/* Document Types */
+.document-types-section {
+    margin-bottom: 20px;
+}
+
+.document-types-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+/* Individual Document Type */
+.document-type-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 50px;
+    padding: 8px 10px;
+    border-bottom: 1px solid #737373;
+    box-sizing: border-box;
+}
+
+.document-type-item:last-child {
+    border-bottom: none;
+}
+
+.document-type-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: black;
+}
+
+/* Edit Button */
+.edit-document-type {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 27px;
+    height: 27px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.edit-document-type img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.edit-document-type:hover {
+    opacity: 0.6;
+}
+
+/* Empty Document Types */
+.empty-document-types {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80px;
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 15px;
+}
+
+/* Add Document Type */
+.add-document-type {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin-top: 10px;
+}
+
+.add-document-type input {
+    flex: 1;
+    min-width: 0;
+    height: 50px;
+    padding: 4px 8px;
+    border: 1px solid black;
+    border-radius: 5px;
+    outline: none;
+    background-color: white;
+    color: black;
+    font-family: inherit;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.add-document-type input:focus {
+    border-color: #b51f24;
+}
+
+.add-document-type input::placeholder {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+/* Add Button */
+.add-document-button {
+    width: 148px;
+    height: 50px;
+    flex-shrink: 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #d32f2f;
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.add-document-button:hover {
+    background-color: #b51f24;
+}
+
+/* Upload Rules */
+.upload-rules-section {
+    margin-bottom: 15px;
+}
+
+.upload-rules-section h2 {
+    margin-bottom: 12px;
+}
+
+/* Individual Rule */
+.upload-rule-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 13px;
+}
+
+/* Rule Information */
+.upload-rule-info {
+    min-width: 0;
+}
+
+.upload-rule-info h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: black;
+}
+
+.upload-rule-info p {
+    margin: 1px 0 0;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    color: black;
+}
+
+
+/* Rule Input */
+.upload-rule-input {
+    width: 148px;
+    height: 29px;
+    flex-shrink: 0;
+    padding: 4px 8px;
+    border: 1px solid black;
+    border-radius: 5px;
+    outline: none;
+    background-color:white;
+    color: black;
+    font-size: 12px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.upload-rule-input:focus {
+    border-color: #b51f24;
+}
+
+/* Save Changes Button */
+.save-settings-button {
+    display: block;
+    width: 100%;
+    min-height:50px;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #d32f2f;
+    color: white;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.save-settings-button:hover {
+    background-color: #b51f24;
+}

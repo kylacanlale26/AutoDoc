@@ -1,0 +1,220 @@
+/* Administrator Dashboard */
+.admin-layout {
+    display: flex;
+    padding-top: 60px;
+    width: 100%;
+    min-height: calc(100vh - 60px);
+    background-color: white;
+}
+
+/* Main Content */
+.admin-main-content {
+    flex: 1;
+    min-width: 0;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+    background-color: white;
+    font-family: Arial;
+}
+
+.admin-dashboard-container {
+    padding: 16px 22px;
+}
+
+/* Dashboard Header */
+.admin-dashboard-header {
+    margin-bottom: 12px;
+}
+
+.admin-dashboard-header h1 {
+    margin: 0;
+    font-size: 35px;
+    font-weight: 700;
+    color: black;
+}
+
+.admin-dashboard-header p {
+    margin: 2px 0 0;
+    font-size: 15px;
+    letter-spacing: 0.8px;
+    color: black;
+}
+
+/* Summary Cards */
+.admin-summary {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 12px;
+}
+
+.admin-summary-card {
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px 14px;
+    background-color: #dedede;
+    border-radius: 11px;
+    box-sizing: border-box;
+}
+
+.admin-summary-card span {
+    font-size: 15px;
+    color: black;
+}
+
+.admin-summary-card h2 {
+    margin: 3px 0 0;
+    font-size: 35px;
+    font-weight: 700;
+    color: black;
+}
+
+/* Bottom Dashboard Sections */
+.admin-dashboard-bottom {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 10px;
+    align-items: stretch;
+}
+
+/* Recent Submissions */
+.recent-submissions {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background-color: #dedede;
+    border-radius: 11px;
+    overflow: hidden;
+}
+
+.recent-submissions h2 {
+    margin: 0;
+    padding: 8px 10px;
+    font-size: 20px;
+    font-weight: 700;
+    color: black;
+}
+
+/* Submission List */
+.recent-submissions-list {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.submission-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    min-height: 62px;
+    padding: 9px 10px;
+    border-bottom: 1px solid #b4b4b4;
+}
+
+.submission-item:last-child {
+    border-bottom: none;
+}
+
+/* Submission Information */
+.submission-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.submission-info h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: black;
+}
+
+.submission-info p {
+    margin: 2px 0 0;
+    font-size: 12px;
+    color: black;
+}
+
+/* Submission Status */
+.submission-status {
+    flex-shrink: 0;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+/* Verified */
+.submission-status.verified {
+    color: #007a3f;
+}
+
+/* Pending */
+.submission-status.pending {
+    color: #ffd21f;
+}
+
+/* Flagged */
+.submission-status.flagged {
+    color: #951f1c;
+}
+
+/* Empty Submissions */
+.empty-submissions {
+    min-height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    font-size: 15px;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+/* Quick Actions */
+.admin-quick-actions {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 8px;
+    background-color: #dedede;
+    border-radius: 11px;
+}
+
+.admin-quick-actions h2 {
+    margin: 0 0 12px;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: black;
+}
+
+.quick-actions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Quick Action Links */
+.quick-action-link {
+    width: 100%;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border: 1px solid black;
+    border-radius: 25px;
+    background-color: transparent;
+    color: black;
+    font-size: 15px;
+    text-align: center;
+    box-sizing: border-box;
+    transition: 0.2s ease;
+}
+
+.quick-action-link:hover {
+    background-color: #c9c9c9;
+    border-color: #b51f24;
+    color: #b51f24;
+}

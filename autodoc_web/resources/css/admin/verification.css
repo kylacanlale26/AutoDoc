@@ -1,0 +1,115 @@
+/* Document Verification Page */
+.admin-layout {
+    display: flex;
+    padding-top: 60px;
+    width: 100%;
+    min-height: calc(100vh - 60px);
+    background-color: white;
+}
+
+/* Main Content */
+.admin-main-content {
+    flex: 1;
+    min-width: 0;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+    background-color: white;
+    font-family: Arial;
+}
+
+.verification-container {
+    padding: 16px 22px;
+}
+
+/* Page Header */
+.verification-header {
+    margin-bottom: 5px;
+}
+
+.verification-header h1 {
+    margin: 0;
+    font-size: 35px;
+    font-weight: 700;
+    color: black;
+}
+
+/* Review Submissions List */
+.review-submissions-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: 1px solid #737373;
+    border-radius: 11px;
+    box-sizing: border-box;
+}
+
+/* Individual Submission */
+.review-submission-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 81px;
+    padding: 12px 10px;
+    gap: 15px;
+    border: 1px solid #737373;
+    box-sizing: border-box;
+}
+
+.review-submission-item:last-child {
+    border-bottom: none;
+}
+
+/* Submission Details */
+.review-submission-details {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.review-submission-details h2 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: black;
+    overflow-wrap: anywhere;
+}
+
+.review-submission-details h2 span {
+    font-weight: 400;
+}
+
+.review-submission-status,
+.review-submission-date {
+    margin: 2px 0 0;
+    font-size: 13px;
+    color: black;
+}
+
+
+/* Right Arrow */
+.review-submission-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 35px;
+    flex-shrink: 0;
+}
+
+.review-submission-action img {
+    width: 19px;
+    height: 19px;
+    object-fit: contain;
+}
+
+/* Empty State */
+.empty-review-submissions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 180px;
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 15px;
+    text-align: center;
+}

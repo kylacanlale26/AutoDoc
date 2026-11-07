@@ -1,0 +1,55 @@
+.top-header {
+    position: fixed;
+    width: 100%;
+    height: 60px;
+    background: white;
+    border-bottom: 3px solid #951f1c;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px 0 10px;
+    z-index: 1000;
+}
+
+.app {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-family: 'Arial', sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.app img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    margin-right: 7px;
+}
+
+.app .auto {
+    color: #d32f2f;
+}
+
+.app .doc {
+    color: #000000;
+}
+
+/* theme toggle */
+.theme {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.theme-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.theme-icon img {
+    width: 27px;
+    height: 27px;
+}

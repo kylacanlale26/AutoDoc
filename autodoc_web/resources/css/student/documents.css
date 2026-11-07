@@ -1,0 +1,162 @@
+/* My Documents Page */
+.student-layout {
+    display: flex;
+    padding-top: 60px;
+    width: 100%;
+    min-height: calc(100vh - 60px);
+    background-color: white;
+}
+
+/* Main Content */
+.student-main-content {
+    flex: 1;
+    min-width: 0;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+    background-color: white;
+    font-family: Arial;
+}
+
+.documents-container {
+    padding: 16px 22px;
+}
+
+/* Page Header */
+.documents-header {
+    margin-bottom: 12px;
+}
+
+.documents-header h1 {
+    margin: 0;
+    font-size: 35px;
+    font-weight: 700;
+    color: black;
+}
+
+/* Search and Filter */
+.documents-search-section {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.documents-search {
+    flex: 1;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 12px;
+    border: 1.5px solid black;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.documents-search img {
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+}
+
+.documents-search input {
+    flex: 1;
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 15px;
+    letter-spacing: 1px;
+    color: black;
+}
+
+.documents-search input::placeholder {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+/* Filter Button */
+.filter-button {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1.5px solid black;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.filter-button:hover {
+    background-color: #eeeeee;
+}
+
+.filter-button img {
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+}
+
+/* Status Filter Chips */
+.documents-filters {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+    margin-bottom: 16px;
+}
+
+.filter-chip {
+    padding: 3px 9px;
+    border: none;
+    border-radius: 20px;
+    background-color: #dedede;
+    color: black;
+    font-family: inherit;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.filter-chip:hover {
+    background-color: #c8c8c8;
+}
+
+.filter-chip.active {
+    background-color: #bdbdbd;
+    font-weight: 600;
+}
+
+/* Document List */
+.documents-list-section {
+    width: 100%;
+}
+
+.documents-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.documents-table tbody tr {
+    border-bottom: 1px solid transparent;
+}
+
+.documents-table td {
+    padding: 14px 10px;
+    color: black;
+}
+
+/* Empty State */
+.empty-documents {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 180px;
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 15px;
+    text-align: center;
+}
