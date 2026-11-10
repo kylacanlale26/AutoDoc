@@ -10,7 +10,7 @@
 @section('content')
 <div class="student-layout">
 
-    @include('components.student-sidebar')
+    @include('sidebar.student-sidebar')
 
     <main class="student-main-content">
 

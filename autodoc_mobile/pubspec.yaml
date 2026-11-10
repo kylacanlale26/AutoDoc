@@ -34,6 +34,9 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  flutter_svg: ^2.3.2
+  file_picker: ^13.3.2
+  dotted_border: ^3.1.0
 
 dev_dependencies:
   flutter_test:
@@ -76,10 +79,10 @@ flutter:
   fonts:
     - family: Arial
       fonts:
-        - asset: fonts/arial.ttf 
-        - asset: fonts/arialbd.ttf
-        - asset: fonts/arialbi.ttf
-        - asset: fonts/ariali.ttf
+        - asset: assets/fonts/arial.ttf 
+        - asset: assets/fonts/arialbd.ttf
+        - asset: assets/fonts/arialbi.ttf
+        - asset: assets/fonts/ariali.ttf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

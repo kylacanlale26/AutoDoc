@@ -12,8 +12,8 @@
 
 <div class="admin-layout">
 
-    @include('components.admin-sidebar')
-
+    @include('sidebar.admin-sidebar')
+    
     <main class="admin-main-content">
 
         <div class="student-accounts-container">

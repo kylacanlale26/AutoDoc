@@ -11,8 +11,8 @@
 
 <div class="student-layout">
 
-    @include('components.student-sidebar')
-
+    @include('sidebar.student-sidebar')
+    
     <main class="student-main-content">
 
         <div class="documents-container">
@@ -76,7 +76,7 @@
 
                     @empty
                         <div class="empty-documents">
-                            No Document Uploaded Recently
+                            No Document Uploaded
                         </div>
 
                     @endforelse

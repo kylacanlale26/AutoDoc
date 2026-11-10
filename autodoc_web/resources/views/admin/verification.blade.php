@@ -12,7 +12,7 @@
 
 <div class="admin-layout">
 
-    @include('components.admin-sidebar')
+    @include('sidebar.admin-sidebar')
 
     <main class="admin-main-content">
 
