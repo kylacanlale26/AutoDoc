@@ -1,8 +1,6 @@
-```dart
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:dotted_border/dotted_border.dart';
-import '../navigation/student-nav.dart';
 
 class Upload extends StatefulWidget {
   const Upload({super.key});
@@ -17,10 +15,6 @@ class _UploadState extends State<Upload> {
 
   final List<String> categories = [
     'Birth Certificate',
-    'Student Profile',
-    'Clearance',
-    'Good Moral Certificate',
-    'Other Documents',
   ];
 
   Future<void> pickFile() async {
@@ -56,18 +50,21 @@ class _UploadState extends State<Upload> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Navigation(),
 
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const SizedBox(height: 12),
+
                     const Text(
                       'Upload Documents',
                       style: TextStyle(
@@ -128,7 +125,7 @@ class _UploadState extends State<Upload> {
                       radius: const Radius.circular(8),
                       child: Container(
                         width: double.infinity,
-                        height: 240,
+                        height: 300,
                         padding: const EdgeInsets.symmetric(
                           horizontal: 15,
                           vertical: 25,
@@ -139,7 +136,7 @@ class _UploadState extends State<Upload> {
                             const Icon(
                               Icons.file_upload_outlined,
                               color: Color(0xFF951F1C),
-                              size: 55,
+                              size: 70,
                             ),
 
                             const SizedBox(height: 15),
@@ -239,7 +236,7 @@ class _UploadState extends State<Upload> {
 
                     SizedBox(
                       width: double.infinity,
-                      height: 36,
+                      height: 50,
                       child: ElevatedButton(
                         onPressed: selectedFile == null
                             ? null
@@ -281,4 +278,3 @@ class _UploadState extends State<Upload> {
     );
   }
 }
-```

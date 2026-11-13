@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import '../student-nav.dart';
 
 class Account extends StatelessWidget {
   const Account({super.key});
@@ -9,57 +8,6 @@ class Account extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        titleSpacing: 15,
-        title: RichText(
-          text: const TextSpan(
-            children: [
-              TextSpan(
-                text: 'AUTO',
-                style: TextStyle(
-                  color: Color(0xFFD32F2F),
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              TextSpan(
-                text: 'DOC',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
-        ),
-        actions: [
-          Builder(
-            builder: (context) => IconButton(
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
-              icon: const Icon(
-                Icons.menu,
-                color: Colors.black,
-                size: 32,
-              ),
-            ),
-          ),
-          const SizedBox(width: 12),
-        ],
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(4),
-          child: Container(
-            height: 4,
-            color: const Color(0xFF951F1C),
-          ),
-        ),
-      ),
 
       body: SafeArea(
         child: SingleChildScrollView(
@@ -88,16 +36,9 @@ class Account extends StatelessWidget {
                       Container(
                         width: 122,
                         height: 122,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: const Color(0xFFE5252A),
-                            width: 8,
-                          ),
-                        ),
                         child: const Icon(
-                          Icons.account_circle_outlined,
-                          size: 106,
+                          Icons.account_circle,
+                          size: 120,
                           color: Color(0xFFE5252A),
                         ),
                       ),

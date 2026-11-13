@@ -29,15 +29,21 @@
 
     </nav>
 
-    <div class="sidebar-user">
+    <div class="sidebar-user" onclick="toggleLogoutPopup()">
 
         <div class="sidebar-user-info">
             <span>Logged in as:</span>
             <strong>STUDENT</strong>
         </div>
 
-        <img src="{{ asset('icons/profile.svg') }}" alt="Profile" class="sidebar-profile-icon">
-
+        <div class="profile-popup">
+            <img src="{{ asset('icons/profile.svg') }}" alt="Profile" class="sidebar-profile-icon" id="profileToggle">
+            <div class="logout-popup" id="logoutPopup">
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit">Sign Out</button>
+                </form>
+            </div>
     </div>
 
 </aside>

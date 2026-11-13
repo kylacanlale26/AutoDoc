@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'navigation/student-nav.dart';
+import '../screens/welcome.dart';
 
 class AutoDoc extends StatelessWidget {
   const AutoDoc({super.key});
@@ -9,7 +9,7 @@ class AutoDoc extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'AutoDoc',
-      home: const Navigation(),
+      home: const Welcome(),
     );
   }
 }

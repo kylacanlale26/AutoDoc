@@ -18,7 +18,7 @@
         <div class="dashboard-container">
 
             <section class="dashboard-header">
-                <h1>Hello, Student!</h1>
+                <h1>Hello, {{ Auth::student()->firstName }}!</h1>
                 <p>Manage your documents in one place.</p>
             </section>
 

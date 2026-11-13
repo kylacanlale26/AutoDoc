@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import '../navigation/student-nav.dart';
 
 class DocumentItem {
   final String name;
@@ -19,7 +18,7 @@ class MyDocuments extends StatefulWidget {
 
   const MyDocuments({
     super.key,
-    required this.documents,
+    this.documents = const [],
   });
 
   @override
@@ -57,7 +56,6 @@ class _MyDocumentsState extends State<MyDocuments> {
       body: SafeArea(
         child: Column(
           children: [
-            Navigation(),
 
             Expanded(
               child: Padding(
@@ -82,7 +80,7 @@ class _MyDocumentsState extends State<MyDocuments> {
                       children: [
                         Expanded(
                           child: SizedBox(
-                            height: 38,
+                            height: 40,
                             child: TextField(
                               controller: searchController,
                               onChanged: (value) {
@@ -91,7 +89,7 @@ class _MyDocumentsState extends State<MyDocuments> {
                               decoration: InputDecoration(
                                 hintText: 'Search Document',
                                 hintStyle: const TextStyle(
-                                  fontSize: 14,
+                                  fontSize: 15,
                                   letterSpacing: 1,
                                 ),
                                 prefixIcon: const Icon(
@@ -191,7 +189,7 @@ class _MyDocumentsState extends State<MyDocuments> {
                                 child: Text(
                                   filter,
                                   style: const TextStyle(
-                                    fontSize: 10,
+                                    fontSize: 12,
                                     color: Colors.black,
                                   ),
                                 ),

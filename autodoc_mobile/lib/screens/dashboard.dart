@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../navigation/student-nav.dart';
 
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
@@ -10,56 +9,6 @@ class Dashboard extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        titleSpacing: 15,
-        title: RichText(
-          text: const TextSpan(
-            children: [
-              TextSpan(
-                text: 'AUTO',
-                style: TextStyle(
-                  color: Color(0xFFD32F2F),
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              TextSpan(
-                text: 'DOC',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
-        ),
-        actions: [
-          Builder(
-            builder: (context) => IconButton(
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
-              icon: const Icon(
-                Icons.menu,
-                color: Colors.black,
-                size: 32,
-              ),
-            ),
-          ),
-          const SizedBox(width: 12),
-        ],
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(4),
-          child: Container(
-            height: 4,
-            color: const Color(0xFF951F1C),
-          ),
-        ),
-      ),
 
       body: SafeArea(
         child: SingleChildScrollView(
@@ -147,7 +96,7 @@ class Dashboard extends StatelessWidget {
 
                 SizedBox(
                   width: double.infinity,
-                  height: 39,
+                  height: 50,
                   child: ElevatedButton(
                     onPressed: () {
                       // Upload functionality
@@ -241,7 +190,7 @@ class Dashboard extends StatelessWidget {
     required String label,
   }) {
     return Container(
-      height: 103,
+      height: 150,
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: const Color(0xFFE0E0E0),

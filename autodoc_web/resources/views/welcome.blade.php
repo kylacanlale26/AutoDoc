@@ -42,7 +42,27 @@
                     Please use your official school email.
                 </p>
 
-                <a href="#"
+                @if (session('error'))
+                    <p class="error">
+                        {{session('error')}}
+                    </p>
+                @endif
+
+                @if (session('success'))
+                    <p>
+                        {{session('success')}}
+                    </p>
+                @endif
+
+                @if ($errors->any())
+                    <div class="error">
+                        @foreach($errors->any() as $error)
+                            <p>{{$error}}</p>
+                        @endforeach
+                    </div>
+                @endif
+
+                <a href="{{ route('microsoft.login') }}"
                     class="microsoft-button">
                     Login with Microsoft
                 </a>

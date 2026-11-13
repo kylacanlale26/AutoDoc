@@ -1,10 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../screens/dashboard.dart';
 import '../screens/documents.dart';
-import '../screens/uploads.dart';
+import '../screens/upload.dart';
 import '../screens/notifications.dart';
 import '../screens/account.dart';
 
@@ -18,7 +17,6 @@ class Navigation extends StatefulWidget {
 class _NavState extends State<Navigation> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  bool menuOpen = false;
   int selectedIndex = 0;
 
   final List<String> menuItems = [
@@ -42,12 +40,6 @@ class _NavState extends State<Navigation> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.white,
-
-      onDrawerChanged: (isOpened) {
-        setState(() {
-          menuOpen = isOpened;
-        });
-      },
 
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -98,16 +90,11 @@ class _NavState extends State<Navigation> {
 
           const SizedBox(width: 10),
 
+          // Always just opens the drawer (the drawer has its own close button)
           IconButton(
-            onPressed: () {
-              if (menuOpen) {
-                Navigator.pop(context);
-              } else {
-                scaffoldKey.currentState?.openDrawer();
-              }
-            },
-            icon: Icon(
-              menuOpen ? Icons.close : Icons.menu,
+            onPressed: () => scaffoldKey.currentState?.openDrawer(),
+            icon: const Icon(
+              Icons.menu,
               color: Colors.black,
               size: 28,
             ),
@@ -121,6 +108,22 @@ class _NavState extends State<Navigation> {
         child: SafeArea(
           child: Column(
             children: [
+              // NEW: close button inside the drawer
+              Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 12, top: 4),
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.close,
+                      color: Colors.black,
+                      size: 28,
+                    ),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ),
+              ),
+
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
