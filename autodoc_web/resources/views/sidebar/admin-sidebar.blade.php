@@ -13,7 +13,7 @@
         </a>
 
         <a href="{{ route('admin.verification') }}"
-           class="sidebar-link {{ request()->routeIs('admin.verification') ? 'active' : '' }}">
+           class="sidebar-link {{ request()->routeIs('admin.verification',  'admin.review', 'admin.review.*') ? 'active' : '' }}">
             Document Verification
         </a>
 
@@ -41,8 +41,29 @@
             <strong>ADMIN</strong>
         </div>
 
-        <img src="{{ asset('icons/profile.svg') }}" alt="Profile" class="sidebar-profile-icon">
+        <div class="sidebar-profile-menu">
+            <button
+                type="button"
+                class="sidebar-profile-toggle"
+                aria-label="Open profile menu"
+                aria-expanded="false"
+                aria-controls="rofileLogoutMenu"
+            >
+                <img src="{{ asset('icons/profile.svg') }}" alt="" class="sidebar-profile-icon" id="profileToggle">
+            </button>
+
+            <div class="sidebar-logout-menu" id="profileLogoutMenu" hidden>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit">Log out</button>
+                </form>
+            </div>
+        </div>
 
     </div>
 
 </aside>
+
+@push('scripts')
+    @vite('resources/js/sidebar/admin-sidebar.js')
+@endpush

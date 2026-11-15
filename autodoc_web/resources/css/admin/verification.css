@@ -38,9 +38,6 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    border: 1px solid #737373;
-    border-radius: 11px;
-    box-sizing: border-box;
 }
 
 /* Individual Submission */
@@ -52,12 +49,7 @@
     min-height: 81px;
     padding: 12px 10px;
     gap: 15px;
-    border: 1px solid #737373;
-    box-sizing: border-box;
-}
-
-.review-submission-item:last-child {
-    border-bottom: none;
+    border-bottom: 1px solid #cccccc;
 }
 
 /* Submission Details */

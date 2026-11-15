@@ -2,7 +2,7 @@
 
 @push('styles')
     @vite([
-        'resources/css/components/admin-sidebar.css',
+        'resources/css/sidebar/admin-sidebar.css',
         'resources/css/admin/dashboard.css'
     ])
 @endpush
@@ -31,7 +31,7 @@
 
                     <span>Total Submissions</span>
 
-                    <h2>0</h2>
+                    <h2>{{ $documentCounts['total'] ?? 0 }}</h2>
 
                 </div>
 
@@ -39,7 +39,7 @@
 
                     <span>Awaiting Review</span>
 
-                    <h2>0</h2>
+                    <h2>{{ $documentCounts['pending'] ?? 0 }}</h2>
 
                 </div>
 
@@ -47,7 +47,7 @@
 
                     <span>Verified</span>
 
-                    <h2>0</h2>
+                    <h2>{{ $documentCounts['verified'] ?? 0 }}</h2>
 
                 </div>
 
@@ -55,7 +55,7 @@
 
                     <span>Flagged</span>
 
-                    <h2>0</h2>
+                    <h2>{{ $documentCounts['flagged'] ?? 0 }}</h2>
 
                 </div>
 
@@ -75,13 +75,17 @@
 
                                 <div class="submission-info">
                                     
-                                    <h3>{{ $submission->student_name }}</h3>
+                                    <h3>{{ $submission->student->name ?? 'Unknown student' }}</h3>
                                     
                                     <p>{{ $submission->document_name }}</p>
                                 
                                 </div>
 
-                                <span class="submission-status {{ strtolower($submission->status) }}">{{ $submission->status }}</span>
+                                @php
+                                    $normalizedStatus = strtolower(str_replace([' ', '-'], '_', $submission->status));
+                                    $statusClass = $normalizedStatus === 'needs_correction' ? 'flagged' : $normalizedStatus;
+                                @endphp
+                                <span class="submission-status {{ $statusClass }}">{{ str_replace('_', ' ', ucfirst($normalizedStatus)) }}</span>
 
                             </div>
 

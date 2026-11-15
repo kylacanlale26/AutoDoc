@@ -33,7 +33,7 @@ class Account extends StatelessWidget {
                 Center(
                   child: Column(
                     children: [
-                      Container(
+                      SizedBox(
                         width: 122,
                         height: 122,
                         child: const Icon(

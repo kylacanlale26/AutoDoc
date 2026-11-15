@@ -20,27 +20,46 @@ class MicrosoftAuthController extends Controller
     public function callback () {
         try {
             $microsoftUser = Socialite::driver('microsoft') -> user();
+            $microsoftName = $microsoftUser->getName()
+                ?? $microsoftUser->getNickname();
+            $displayName = $microsoftName ?? 'Microsoft User';
+            $nameParts = $microsoftName
+                ? preg_split('/\\s+/', trim($microsoftName), 2)
+                : [];
             $user = User::where(
-                'microsofty_id',
+                'microsoft_id',
                 $microsoftUser -> getId()
             ) -> first();
             if (!$user) {
-                $user = User::where(
+                $user = User::where( 
                     'email',
                     $microsoftUser -> getEmail()
                 ) -> first();
 
                 if ($user) {
-                    $user -> update([
+                    $updates = [
                         'microsoft_id' => $microsoftUser -> getId(),
-                    ]);
+                    ];
+
+                    if (blank($user->name)) {
+                        $updates['name'] = $displayName;
+                    }
+                    if (blank($user->first_name) && filled($nameParts[0] ?? null)) {
+                        $updates['first_name'] = $nameParts[0];
+                    }
+                    if (blank($user->last_name) && filled($nameParts[1] ?? null)) {
+                        $updates['last_name'] = $nameParts[1];
+                    }
+
+                    $user->update($updates);
                 } else {
                     $user = User::create ([
-                        'name' => $microsoftUser -> getName()
-                            ?? $microsoftUser -> getNickname()
-                            ?? 'Microsoft User',
+                        'name' => $displayName,
+                        'first_name' => $nameParts[0] ?? null,
+                        'last_name' => $nameParts[1] ?? null,
                         'email' => $microsoftUser -> getEmail(),
                         'microsoft_id' => $microsoftUser -> getId(),
+                        'account_role' => 'student',
                         'password' => bcrypt(
                             Str::random(32)
                         ),

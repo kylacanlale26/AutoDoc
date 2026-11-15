@@ -10,9 +10,7 @@
     @vite([
     'resources/css/app.css',
     'resources/css/layouts/master.css',
-    'resources/css/layouts/darkmode.css',
     'resources/js/app.js',
-    'resources/js/layouts/master.js'
     ])
 
     @stack('styles')

@@ -98,7 +98,7 @@
     border: 2px dashed #951f1c;
     border-radius: 11px;
     box-sizing: border-box;
-    transition: background-color 0.2s ease,
+    transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .upload-dropzone.drag-over {
@@ -129,6 +129,27 @@
 }
 
 /* Browse Files Input */
+.browse-file-control {
+    position: relative;
+}
+
+.visually-hidden-file-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.visually-hidden-file-input:focus-visible + .browse-input-wrapper {
+    outline: 3px solid #111111;
+    outline-offset: 3px;
+}
+
 .browse-input-wrapper {
     position: relative;
     width: 200px;
@@ -144,6 +165,10 @@
 
 .browse-input-wrapper:hover {
     background-color: #bd2025;
+}
+
+.browse-input-wrapper {
+    cursor: pointer;
 }
 
 .browse-input-wrapper span {
@@ -234,6 +259,11 @@
     width: 19px;
     height: 19px;
     object-fit: contain;
+}
+
+.remove-file {
+    color: #951f1c;
+    font-size: 24px;
 }
 
 .remove-file:hover {

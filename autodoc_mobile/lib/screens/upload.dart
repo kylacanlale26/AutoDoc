@@ -18,27 +18,27 @@ class _UploadState extends State<Upload> {
   ];
 
   Future<void> pickFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
+    final result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['pdf'],
     );
 
-    if (result != null) {
-      PlatformFile file = result.files.first;
+    if (!mounted || result == null) return;
 
-      if (file.size > 10 * 1024 * 1024) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('File must not exceed 10 MB.'),
-          ),
-        );
-        return;
-      }
+    final file = result.files.first;
 
-      setState(() {
-        selectedFile = file;
-      });
+    if (file.size > 10 * 1024 * 1024) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('File must not exceed 10 MB.'),
+        ),
+      );
+      return;
     }
+
+    setState(() {
+      selectedFile = file;
+    });
   }
 
   void removeFile() {
@@ -84,7 +84,7 @@ class _UploadState extends State<Upload> {
                     const SizedBox(height: 14),
 
                     DropdownButtonFormField<String>(
-                      value: selectedCategory,
+                      initialValue: selectedCategory,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
                           horizontal: 8,

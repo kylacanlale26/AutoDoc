@@ -128,7 +128,6 @@
 
 .filter-chip.active {
     background-color: #bdbdbd;
-    font-weight: 600;
 }
 
 /* Document List */
@@ -159,4 +158,111 @@
     color: rgba(0, 0, 0, 0.7);
     font-size: 15px;
     text-align: center;
+}
+
+/* Uploaded document rows */
+.document-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 10px;
+    border-bottom: 1px solid #cccccc;
+    color: black;
+}
+
+.document-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.document-info h3 {
+    overflow-wrap: anywhere;
+    font-weight: 700;
+}
+
+.document-info small {
+    color: rgba(0, 0, 0, 0.65);
+}
+
+.document-status {
+    flex-shrink: 0;
+    font-size: 13px;
+}
+
+.document-status.verified {
+    color: #007a3f;
+}
+
+.document-status.pending {
+    color: #9a7600;
+}
+
+.document-status.needs-correction {
+    color: #951f1c;
+}
+
+
+/* Document actions menu */
+.document-actions {
+    position: relative;
+    flex: 0 0 auto;
+}
+
+.submission-more-button {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.submission-more-button:hover,
+.submission-more-button[aria-expanded="true"] {
+    background: #eeeeee;
+}
+
+.submission-more-button img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+}
+
+.document-actions-menu {
+    position: absolute;
+    z-index: 20;
+    top: calc(100% + 4px);
+    right: 0;
+    min-width: 190px;
+    padding: 5px;
+    border: 1px solid #d4d4d4;
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.15);
+}
+
+.document-actions-menu[hidden] {
+    display: none;
+}
+
+.document-actions-menu a {
+    display: block;
+    padding: 10px 12px;
+    border-radius: 5px;
+    color: #222222;
+    font-size: 14px;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.document-actions-menu a:hover,
+.document-actions-menu a:focus-visible {
+    background: #f1f1f1;
+    outline: none;
 }

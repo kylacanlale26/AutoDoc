@@ -2,7 +2,7 @@
 
 @push('styles')
     @vite([
-        'resources/css/components/student-sidebar.css',
+        'resources/css/sidebar/student-sidebar.css',
         'resources/css/student/account.css'
     ])
 @endpush
@@ -28,20 +28,25 @@
                 </div>
 
                 <div class="account-profile-info">
-                    <h2>Student Name</h2>
-                    <p>BS Information Technology, 3rd Year, Section A</p>
+                    <h2>{{ Auth::user()->name }}</h2>
+                    <p>{{ Auth::user()->student_number }}</p>
                 </div>
 
                 <div class="account-details">
 
                     <div class="account-detail-item">
-                        <h3>Student ID</h3>
-                        <p>2026-00000</p>
+                        <h3>Program</h3>
+                        <p>{{ Auth::user()->course }}</p>
+                    </div>
+
+                    <div class="account-detail-item">
+                        <h3>Year Level and Section</h3>
+                        <p>{{ Auth::user()->year_level }} - {{ Auth::user()->section }}</p>
                     </div>
 
                     <div class="account-detail-item">
                         <h3>MCC Email</h3>
-                        <p>student@mcc.edu.ph</p>
+                        <p>{{ Auth::user()->email }}</p>
                     </div>
 
                 </div>

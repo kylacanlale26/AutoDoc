@@ -1,0 +1,128 @@
+.sidebar {
+    width: 200px;
+    height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #ffffff;
+    border-right: 3px solid #951f1c;
+    padding: 12px 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* nav */
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    color: #000000;
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: 400;
+    transition: 0.2s ease;
+}
+
+.sidebar-link:hover {
+    color: #b51f24;
+}
+
+.sidebar-link.active {
+    color: #951f1c;
+    font-weight: 600;
+}
+
+/* nav - bottom part */
+.sidebar-user {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 45px 0 15px;
+}
+
+.sidebar-user-info {
+    display: flex;
+    flex-direction: column;
+    font-size: 13px;
+    line-height: 20px;
+    color: #000000;
+}
+
+.sidebar-user-info strong {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.sidebar-profile-icon {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+}
+
+/* Student profile logout menu */
+.sidebar-profile-menu {
+    position: relative;
+    flex: 0 0 auto;
+}
+
+.sidebar-profile-toggle {
+    display: grid;
+    place-items: center;
+    width: 45px;
+    height: 45px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+}
+
+.sidebar-profile-toggle:hover,
+.sidebar-profile-toggle[aria-expanded="true"] {
+    background: #eeeeee;
+}
+
+.sidebar-logout-menu {
+    position: absolute;
+    z-index: 30;
+    right: 0;
+    bottom: calc(100% + 8px);
+    min-width: 150px;
+    padding: 5px;
+    border: 1px solid #d4d4d4;
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.15);
+}
+
+.sidebar-logout-menu[hidden] {
+    display: none;
+}
+
+.sidebar-logout-menu form,
+.sidebar-logout-menu button {
+    width: 100%;
+}
+
+.sidebar-logout-menu button {
+    padding: 10px 12px;
+    border: 0;
+    border-radius: 5px;
+    background: transparent;
+    color: #951f1c;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.sidebar-logout-menu button:hover,
+.sidebar-logout-menu button:focus-visible {
+    background: #f1f1f1;
+    outline: none;
+}

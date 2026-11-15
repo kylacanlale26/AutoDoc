@@ -2,7 +2,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DocumentUploadController;
 use App\Http\Controllers\MicrosoftAuthController;
+use App\Models\Document;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -30,16 +32,28 @@ Route::middleware('auth')->group(function () {
     Route::prefix('student')->name('student.')->group(function () {
 
         Route::get('/dashboard', function () {
-            return view('student.dashboard');
+            $documents = Document::where('user_id', auth()->id())
+                ->latest()
+                ->limit(5)
+                ->get();
+
+            return view('student.dashboard', compact('documents'));
         })->name('dashboard');
 
         Route::get('/documents', function () {
-            return view('student.documents');
+            $documents = Document::where('user_id', auth()->id())
+                ->latest()
+                ->get();
+
+            return view('student.documents', compact('documents'));
         })->name('documents');
 
         Route::get('/upload', function () {
             return view('student.upload');
         })->name('upload');
+
+        Route::post('/upload', [DocumentUploadController::class, 'store'])
+            ->name('upload.store');
 
         Route::get('/notifications', function () {
             return view('student.notifications');

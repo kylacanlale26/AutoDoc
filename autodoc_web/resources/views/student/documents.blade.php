@@ -2,9 +2,13 @@
 
 @push('styles')
     @vite([
-        'resources/css/components/student-sidebar.css',
+        'resources/css/sidebar/student-sidebar.css',
         'resources/css/student/documents.css'
     ])
+@endpush
+
+@push('scripts')
+    @vite('resources/js/students/documents.js')
 @endpush
 
 @section('content')
@@ -25,7 +29,7 @@
 
                 <div class="documents-search">
                     <img src="{{ asset('icons/search-light.svg') }}" alt="Search">
-                    <input type="text" placeholder="Search Document">
+                    <input id="documentSearch" type="text" placeholder="Search Document">
                 </div>
 
                 <button type="button" class="filter-button">
@@ -36,19 +40,19 @@
 
             <section class="documents-filters">
 
-                <button type="button" class="filter-chip active">
+                <button type="button" class="filter-chip active" data-status-filter="all" aria-pressed="true">
                     All
                 </button>
 
-                <button type="button" class="filter-chip">
+                <button type="button" class="filter-chip" data-status-filter="verified" aria-pressed="false">
                     Verified
                 </button>
 
-                <button type="button" class="filter-chip">
+                <button type="button" class="filter-chip" data-status-filter="pending" aria-pressed="false">
                     Pending
                 </button>
 
-                <button type="button" class="filter-chip">
+                <button type="button" class="filter-chip" data-status-filter="needs_correction" aria-pressed="false">
                     Needs Correction
                 </button>
 
@@ -60,26 +64,52 @@
 
                     @forelse(($documents ?? []) as $uploads)
 
-                        <div class="document-item">
+                        <div class="document-item" data-status="{{ strtolower(str_replace([' ', '-'], '_', $uploads->status)) }}">
 
                             <div class="document-info">
-                                <span>{{ $uploads->student_name }}</span>
-                                <span>{{ $uploads->document_name }}</span>
-                                <span>{{ $uploads->status }}</span>
+                                <h3>{{ $uploads->document_name }}</h3>
+                                <small>Uploaded {{ $uploads->created_at->format('M d, Y') }}</small>
+                                <span class="document-status {{ strtolower(str_replace([' ', '_'], '-', $uploads->status)) }}">{{ str_replace('_', ' ', ucfirst($uploads->status)) }}</span>
                             </div>
 
-                            <button type="button" class="submission-more-button" aria-label="More actions">
-                                <img src="{{ asset('icons/more-light.svg') }}" alt="">
-                            </button>
+                            <div class="document-actions">
+                                <button
+                                    type="button"
+                                    class="submission-more-button"
+                                    aria-label="More actions for {{ $uploads->document_name }}"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                                    aria-controls="document-actions-menu-{{ $uploads->id }}"
+                                >
+                                    <img src="{{ asset('icons/more-light.svg') }}" alt="">
+                                </button>
+
+                                <div
+                                    class="document-actions-menu"
+                                    id="document-actions-menu-{{ $uploads->id }}"
+                                    role="menu"
+                                    hidden
+                                >
+                                    <a href="{{ route('student.documents.preview', $uploads) }}" target="_blank" rel="noopener noreferrer" role="menuitem">
+                                        Preview File
+                                    </a>
+                                    <a href="{{ route('student.documents.download', $uploads) }}" role="menuitem">
+                                        Export File
+                                    </a>
+                                </div>
+                            </div>
 
                         </div>
 
                     @empty
-                        <div class="empty-documents">
+                        <div class="empty-documents" style="display: none;">
                             No Document Uploaded
                         </div>
-
                     @endforelse
+
+                    <div class="empty-documents" id="filterEmpty" style="display: none;">
+                        No documents match your search or filter.
+                    </div>
 
                 </div>
 

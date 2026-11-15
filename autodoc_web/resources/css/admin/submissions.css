@@ -129,7 +129,6 @@
 
 .filter-chip.active {
     background-color: #bdbdbd;
-    font-weight: 600;
 }
 
 /* Student Submissions List */
@@ -149,6 +148,7 @@
     padding: 10px 8px;
     gap: 12px;
     box-sizing: border-box;
+    border-bottom: 1px solid #cccccc;
 }
 
 /* Submission Details */

@@ -154,6 +154,9 @@
 
 /* Open Full Preview Button */
 .open-full-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     min-height: 37px;
     padding: 7px 12px;
@@ -162,6 +165,8 @@
     background-color: transparent;
     color: black;
     font-size: 15px;
+    text-decoration: none;
+    box-sizing: border-box;
     cursor: pointer;
     transition: 0.2s ease;
 }
@@ -186,22 +191,6 @@
     margin-bottom: 8px;
 }
 
-.verification-findings h2 {
-    margin: 0;
-    font-size: 20px;
-    font-weight: 700;
-    letter-spacing: 1.2px;
-    color: black;
-}
-
-.findings-placeholder {
-    margin: 2px 0 0;
-    font-size: 13px;
-    letter-spacing: 0.5px;
-    line-height: 1.5;
-    color: black;
-}
-
 /* Administrator Notes */
 .administrator-notes {
     display: flex;
@@ -210,8 +199,8 @@
 }
 
 .administrator-notes label {
-    margin-bottom: 5px;
-    font-size: 15px;
+    margin-bottom: 10px;
+    font-size: 20px;
     font-weight: 700;
     letter-spacing: 1.2px;
     color: black;
@@ -219,7 +208,7 @@
 
 .administrator-notes textarea {
     width: 100%;
-    min-height: 250px;
+    min-height: 340px;
     padding: 9px;
     border: 1px solid black;
     border-radius: 6px;

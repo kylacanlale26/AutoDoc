@@ -3,7 +3,7 @@
 
 @push('styles')
     @vite([
-        'resources/css/components/admin-sidebar.css',
+        'resources/css/sidebar/admin-sidebar.css',
         'resources/css/admin/verification.css'
     ])
 @endpush
@@ -30,7 +30,7 @@
 
                         <div class="review-submission-details">
                             <h2>
-                                {{ $document->student_name }}
+                                {{ $document->student->name }}
                                 <span>- {{ $document->document_name }}</span>
                             </h2>
                             <p class="review-submission-status">{{ $document->status }}</p>
@@ -38,7 +38,7 @@
                         </div>
 
                         <div class="review-submission-action">
-                            <a href="{{ route('admin.review') }}">
+                            <a href="{{ route('admin.review', ['document' => $document->id]) }}">
                                 <img
                                     src="{{ asset('icons/arrow-right-light.svg') }}"
                                     alt="View submission"
