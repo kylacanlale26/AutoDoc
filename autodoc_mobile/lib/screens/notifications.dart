@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../services/api_client.dart';
+import '../widgets/autodoc_loading.dart';
 
 class Notifications extends StatefulWidget {
-  const Notifications({super.key, required this.onOpenDocument});
+  const Notifications({super.key, required this.onOpenDocument, this.onLoadingChanged});
   final Future<void> Function(String id, {String? message}) onOpenDocument;
+  final ValueChanged<bool>? onLoadingChanged;
   @override
   State<Notifications> createState() => _NotificationsState();
 }
@@ -24,6 +26,7 @@ class _NotificationsState extends State<Notifications> {
       loading = true;
       error = null;
     });
+    _notifyLoading(items.isEmpty);
     try {
       final response = await ApiClient.instance.get('/mobile/notifications');
       items = List<Map<String, dynamic>>.from(
@@ -34,8 +37,19 @@ class _NotificationsState extends State<Notifications> {
     } catch (e) {
       error = e.toString();
     } finally {
-      if (mounted) setState(() => loading = false);
+      if (mounted) {
+        setState(() => loading = false);
+        _notifyLoading(false);
+      }
     }
+  }
+
+  void _notifyLoading(bool isLoading) {
+    final callback = widget.onLoadingChanged;
+    if (callback == null) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) callback(isLoading);
+    });
   }
 
   Future<void> _markAllRead() async {
@@ -70,6 +84,9 @@ class _NotificationsState extends State<Notifications> {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final unread = items.any((item) => item['read_at'] == null);
+    if (loading && items.isEmpty) {
+      return const SafeArea(child: AutoDocLoading());
+    }
     return SafeArea(
       child: RefreshIndicator(
         onRefresh: _load,
@@ -102,12 +119,7 @@ class _NotificationsState extends State<Notifications> {
                 padding: const EdgeInsets.all(8),
                 child: Text(error!, style: TextStyle(color: scheme.error)),
               ),
-            if (loading && items.isEmpty)
-              const Padding(
-                padding: EdgeInsets.all(40),
-                child: Center(child: CircularProgressIndicator()),
-              )
-            else if (items.isEmpty)
+            if (items.isEmpty)
               const Padding(
                 padding: EdgeInsets.only(top: 100),
                 child: Center(child: Text('No notifications yet.')),

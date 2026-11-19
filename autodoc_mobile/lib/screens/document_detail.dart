@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../services/api_client.dart';
+import '../widgets/autodoc_loading.dart';
 
 class DocumentDetail extends StatefulWidget {
   const DocumentDetail({
@@ -70,7 +71,9 @@ class _DocumentDetailState extends State<DocumentDetail> {
     final status =
         document['status']?.toString().replaceAll('_', ' ') ?? 'pending';
     return Scaffold(
-      appBar: AppBar(
+      appBar: loading
+          ? null
+          : AppBar(
         title: const Text('Document Details'),
         actions: [
           TextButton(
@@ -78,9 +81,9 @@ class _DocumentDetailState extends State<DocumentDetail> {
             child: const Text('My Documents'),
           ),
         ],
-      ),
+            ),
       body: loading
-          ? const Center(child: CircularProgressIndicator())
+          ? const AutoDocLoading()
           : error != null
           ? Center(
               child: Padding(

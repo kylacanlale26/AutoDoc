@@ -101,16 +101,13 @@ class _WelcomeState extends State<Welcome> {
           Padding(
             padding: const EdgeInsets.only(right: 15),
             child: IconButton(
-              style: IconButton.styleFrom(
-                backgroundColor: const Color(0xFFD32F2F),
-              ),
               onPressed: widget.onToggleTheme,
               icon: Icon(
                 widget.isDarkMode
                     ? Icons.light_mode_outlined
                     : Icons.dark_mode_outlined,
+                color: widget.isDarkMode ? Colors.white : Colors.black,
               ),
-              color: Colors.white,
             ),
           ),
         ],

@@ -424,3 +424,8 @@
     background-color: #472326;
     color: #ffaaa5;
 }
+
+/* Student dashboard and document list statuses are text-only in dark mode. */
+:root[data-theme="dark"] :is(.dashboard-container, .documents-container) .document-status {
+    background-color: transparent;
+}

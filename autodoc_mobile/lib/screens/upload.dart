@@ -3,9 +3,11 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 import '../services/api_client.dart';
+import '../widgets/autodoc_loading.dart';
 
 class Upload extends StatefulWidget {
-  const Upload({super.key});
+  const Upload({super.key, this.onLoadingChanged});
+  final ValueChanged<bool>? onLoadingChanged;
 
   @override
   State<Upload> createState() => _UploadState();
@@ -30,6 +32,7 @@ class _UploadState extends State<Upload> {
   }
 
   Future<void> _loadRules() async {
+    _notifyLoading(_loadingRules);
     try {
       final response = await ApiClient.instance.get('/mobile/document-types');
       final categories = List<String>.from(
@@ -67,8 +70,19 @@ class _UploadState extends State<Upload> {
     } catch (error) {
       if (mounted) setState(() => _error = error.toString());
     } finally {
-      if (mounted) setState(() => _loadingRules = false);
+      if (mounted) {
+        setState(() => _loadingRules = false);
+        _notifyLoading(false);
+      }
     }
+  }
+
+  void _notifyLoading(bool isLoading) {
+    final callback = widget.onLoadingChanged;
+    if (callback == null) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) callback(isLoading);
+    });
   }
 
   Future<void> _pickFiles() async {
@@ -153,7 +167,7 @@ class _UploadState extends State<Upload> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: _loadingRules
-            ? const Center(child: CircularProgressIndicator())
+            ? const AutoDocLoading()
             : RefreshIndicator(
                 onRefresh: _loadRules,
                 child: ListView(

@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 
 import '../services/api_client.dart';
+import '../widgets/autodoc_loading.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({
     super.key,
     required this.onUpload,
     required this.onOpenDocument,
+    this.onLoadingChanged,
   });
 
   final VoidCallback onUpload;
   final Future<void> Function(String id, {String? message}) onOpenDocument;
+  final ValueChanged<bool>? onLoadingChanged;
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -32,13 +35,25 @@ class _DashboardState extends State<Dashboard> {
       _loading = true;
       _error = null;
     });
+    _notifyLoading(_data.isEmpty);
     try {
       _data = await ApiClient.instance.get('/mobile/dashboard');
     } catch (error) {
       _error = error.toString();
     } finally {
-      if (mounted) setState(() => _loading = false);
+      if (mounted) {
+        setState(() => _loading = false);
+        _notifyLoading(false);
+      }
     }
+  }
+
+  void _notifyLoading(bool loading) {
+    final callback = widget.onLoadingChanged;
+    if (callback == null) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) callback(loading);
+    });
   }
 
   @override
@@ -59,7 +74,9 @@ class _DashboardState extends State<Dashboard> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: SafeArea(
+      body: _loading && _data.isEmpty
+          ? const SafeArea(child: AutoDocLoading())
+          : SafeArea(
         child: RefreshIndicator(
           onRefresh: _load,
           child: ListView(
@@ -79,12 +96,7 @@ class _DashboardState extends State<Dashboard> {
                 const SizedBox(height: 12),
                 _MessageBox(message: _error!, onRetry: _load),
               ],
-              if (_loading && _data.isEmpty)
-                const Padding(
-                  padding: EdgeInsets.all(36),
-                  child: Center(child: CircularProgressIndicator()),
-                )
-              else ...[
+              ...[
                 const SizedBox(height: 16),
                 Row(
                   children: [

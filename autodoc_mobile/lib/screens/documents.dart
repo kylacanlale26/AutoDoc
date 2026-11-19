@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../services/api_client.dart';
+import '../widgets/autodoc_loading.dart';
 
 class MyDocuments extends StatefulWidget {
-  const MyDocuments({super.key, required this.onOpenDocument});
+  const MyDocuments({super.key, required this.onOpenDocument, this.onLoadingChanged});
   final Future<void> Function(String id, {String? message}) onOpenDocument;
+  final ValueChanged<bool>? onLoadingChanged;
   @override
   State<MyDocuments> createState() => _MyDocumentsState();
 }
@@ -34,6 +36,7 @@ class _MyDocumentsState extends State<MyDocuments> {
       loading = true;
       error = null;
     });
+    _notifyLoading(documents.isEmpty);
     try {
       final response = await ApiClient.instance.get('/mobile/documents');
       documents = List<Map<String, dynamic>>.from(
@@ -44,8 +47,19 @@ class _MyDocumentsState extends State<MyDocuments> {
     } catch (e) {
       error = e.toString();
     } finally {
-      if (mounted) setState(() => loading = false);
+      if (mounted) {
+        setState(() => loading = false);
+        _notifyLoading(false);
+      }
     }
+  }
+
+  void _notifyLoading(bool isLoading) {
+    final callback = widget.onLoadingChanged;
+    if (callback == null) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) callback(isLoading);
+    });
   }
 
   String _normal(String value) =>
@@ -88,6 +102,9 @@ class _MyDocumentsState extends State<MyDocuments> {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final items = filtered;
+    if (loading && documents.isEmpty) {
+      return const SafeArea(child: AutoDocLoading());
+    }
     return SafeArea(
       child: RefreshIndicator(
         onRefresh: _load,
@@ -163,9 +180,7 @@ class _MyDocumentsState extends State<MyDocuments> {
                   child: Text(error!, style: TextStyle(color: scheme.error)),
                 ),
               Expanded(
-                child: loading && documents.isEmpty
-                    ? const Center(child: CircularProgressIndicator())
-                    : items.isEmpty
+                child: items.isEmpty
                     ? Center(
                         child: Text(
                           documents.isEmpty

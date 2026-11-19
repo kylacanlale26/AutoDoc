@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../services/api_client.dart';
+import '../widgets/autodoc_loading.dart';
+import '../widgets/profile_avatar.dart';
 
 class Account extends StatefulWidget {
-  const Account({super.key});
+  const Account({super.key, this.onLoadingChanged});
+  final ValueChanged<bool>? onLoadingChanged;
+
   @override
   State<Account> createState() => _AccountState();
 }
@@ -14,6 +18,7 @@ class _AccountState extends State<Account> {
   List<String> types = [];
   bool loading = true;
   String? error;
+
   @override
   void initState() {
     super.initState();
@@ -25,6 +30,7 @@ class _AccountState extends State<Account> {
       loading = true;
       error = null;
     });
+    _notifyLoading(user.isEmpty);
     try {
       final results = await Future.wait([
         ApiClient.instance.get('/mobile/me'),
@@ -45,19 +51,30 @@ class _AccountState extends State<Account> {
     } catch (e) {
       error = e.toString();
     } finally {
-      if (mounted) setState(() => loading = false);
+      if (mounted) {
+        setState(() => loading = false);
+        _notifyLoading(false);
+      }
     }
+  }
+
+  void _notifyLoading(bool isLoading) {
+    final callback = widget.onLoadingChanged;
+    if (callback == null) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) callback(isLoading);
+    });
   }
 
   String val(dynamic v) =>
       v?.toString().trim().isNotEmpty == true ? v.toString() : 'Not provided';
+
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final fullName = [
-      user['first_name'],
-      user['last_name'],
-    ].where((v) => v != null && v.toString().trim().isNotEmpty).join(' ');
+    final fullName = [user['first_name'], user['last_name']]
+        .where((v) => v != null && v.toString().trim().isNotEmpty)
+        .join(' ');
     final submittedTypes = documents
         .map((d) => d['document_type']?.toString())
         .whereType<String>()
@@ -75,6 +92,11 @@ class _AccountState extends State<Account> {
     final unsubmitted = types
         .where((t) => !submittedTypes.contains(t))
         .toList();
+
+    if (loading && user.isEmpty) {
+      return const SafeArea(child: AutoDocLoading());
+    }
+
     return SafeArea(
       child: RefreshIndicator(
         onRefresh: _load,
@@ -84,30 +106,22 @@ class _AccountState extends State<Account> {
           children: [
             Text(
               'My Account',
-              style: Theme.of(context).textTheme.headlineSmall
-                  ?.copyWith(fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
             ),
             if (error != null)
               Padding(
                 padding: const EdgeInsets.only(top: 12),
                 child: Text(error!, style: TextStyle(color: scheme.error)),
               ),
-            if (loading && user.isEmpty)
-              const Padding(
-                padding: EdgeInsets.all(50),
-                child: Center(child: CircularProgressIndicator()),
-              )
-            else ...[
+            ...[
               const SizedBox(height: 24),
               Center(
-                child: CircleAvatar(
+                child: ProfileAvatar(
+                  imageUrl: user['profile_picture_url']?.toString(),
                   radius: 56,
-                  backgroundImage: user['profile_picture_url'] != null
-                      ? NetworkImage(user['profile_picture_url'].toString())
-                      : null,
-                  child: user['profile_picture_url'] == null
-                      ? const Icon(Icons.person, size: 55)
-                      : null,
+                  iconSize: 55,
                 ),
               ),
               const SizedBox(height: 10),
@@ -175,6 +189,7 @@ class _AccountState extends State<Account> {
       ],
     ),
   );
+
   Widget _docSection(
     BuildContext c,
     String title,
@@ -191,6 +206,7 @@ class _AccountState extends State<Account> {
         .toList(),
     empty,
   );
+
   Widget _simpleSection(
     BuildContext c,
     String title,
@@ -203,8 +219,9 @@ class _AccountState extends State<Account> {
       children: [
         Text(
           title,
-          style: Theme.of(c).textTheme.titleMedium
-              ?.copyWith(fontWeight: FontWeight.bold),
+          style: Theme.of(c).textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
         ),
         const SizedBox(height: 7),
         if (list.isEmpty)
