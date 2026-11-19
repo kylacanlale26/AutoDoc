@@ -45,8 +45,8 @@ class AuthService {
 
     final authResult = await _appAuth.authorizeAndExchangeCode(
       AuthorizationTokenRequest(
-        'bf0950d0-4428-4e9d-b310-7172bb24509a',
-        'autodocmobile://auth',
+        clientId,
+        redirectUri,
         discoveryUrl:
             'https://login.microsoftonline.com/$tenant/v2.0/.well-known/openid-configuration',
         scopes: const [
@@ -56,7 +56,7 @@ class AuthService {
           'offline_access',
           'User.Read',
         ],
-        additionalParameters: const {'prompt': 'select_account'},
+        promptValues: const ['select_account'],
       ),
     ).timeout(
       const Duration(seconds: 60),
