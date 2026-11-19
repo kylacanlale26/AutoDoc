@@ -362,3 +362,65 @@
     background-color: #3a2021;
     border-color: #a84d52;
 }
+
+/* Keep all text and controls on the admin review page readable in dark mode. */
+:root[data-theme="dark"] .review-header h1,
+:root[data-theme="dark"] .document-info h2,
+:root[data-theme="dark"] .document-info p,
+:root[data-theme="dark"] .administrator-notes label,
+:root[data-theme="dark"] .document-analysis-panel,
+:root[data-theme="dark"] .document-analysis-panel pre,
+:root[data-theme="dark"] .open-full-preview,
+:root[data-theme="dark"] .review-actions button {
+    color: #eceff1;
+}
+
+:root[data-theme="dark"] .document-analysis-panel {
+    background-color: #17191c;
+    border-color: #41474d;
+}
+
+:root[data-theme="dark"] .analysis-disclaimer {
+    color: #b8c0c7;
+}
+
+:root[data-theme="dark"] .administrator-notes textarea {
+    background-color: #202327;
+    border-color: #737b82;
+    color: #eceff1;
+}
+
+:root[data-theme="dark"] .open-full-preview,
+:root[data-theme="dark"] .review-actions button {
+    border-color: #737b82;
+}
+
+:root[data-theme="dark"] .open-full-preview:hover,
+:root[data-theme="dark"] .open-full-preview:focus-visible {
+    background-color: #3a2021;
+    border-color: #a84d52;
+    color: #ffb8b5;
+}
+
+:root[data-theme="dark"] .review-header [role="status"] {
+    color: #8ce0aa;
+}
+
+:root[data-theme="dark"] .review-header [role="alert"] {
+    color: #ffb8b5;
+}
+
+:root[data-theme="dark"] .document-status.pending {
+    background-color: #4d3b0f;
+    color: #ffd75e;
+}
+
+:root[data-theme="dark"] .document-status.verified {
+    background-color: #173b2b;
+    color: #8ce0aa;
+}
+
+:root[data-theme="dark"] .document-status.needs-correction {
+    background-color: #472326;
+    color: #ffaaa5;
+}

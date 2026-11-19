@@ -45,8 +45,8 @@ class AuthService {
 
     final authResult = await _appAuth.authorizeAndExchangeCode(
       AuthorizationTokenRequest(
-        clientId,
-        redirectUri,
+        'bf0950d0-4428-4e9d-b310-7172bb24509a',
+        'autodocmobile://auth',
         discoveryUrl:
             'https://login.microsoftonline.com/$tenant/v2.0/.well-known/openid-configuration',
         scopes: const [

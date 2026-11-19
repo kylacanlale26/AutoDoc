@@ -54,11 +54,19 @@
                     </div>
 
                     <div class="document-preview-placeholder">
-                        <iframe
-                            class="review-document-iframe"
-                            src="{{ route('admin.documents.preview', $document) }}"
-                            title="Preview of {{ $document->document_name }}"
-                        ></iframe>
+                        @if (str_starts_with(strtolower((string) $document->mime_type), 'image/'))
+                            <img
+                                class="review-document-image"
+                                src="{{ route('admin.documents.preview', $document) }}"
+                                alt="Preview of {{ $document->document_name }}"
+                            >
+                        @else
+                            <iframe
+                                class="review-document-iframe"
+                                src="{{ route('admin.documents.preview', $document) }}"
+                                title="Preview of {{ $document->document_name }}"
+                            ></iframe>
+                        @endif
                     </div>
 
                     <a class="open-full-preview" href="{{ route('admin.documents.preview', $document) }}" target="_blank" rel="noopener">
