@@ -127,38 +127,58 @@
 /* Recent Documents */
 .recent-documents h2 {
     margin: 0 0 10px;
-    font-size: 20px;
+    font-size: 25px;
     font-weight: 700;
     letter-spacing: 1px;
     color: black;
-}
-
-.recent-documents-table {
     width: 100%;
     overflow-x: auto;
-}
-
-.recent-documents-table table {
     width: 100%;
     border-collapse: collapse;
 }
 
-.recent-documents-table th,
-.recent-documents-table td {
-    padding: 12px 10px;
-    text-align: left;
-    font-size: 13px;
-    color: black;
-}
-
-.recent-documents-table th {
-    font-weight: 600;
+.recent-documents-table {
+    font-size: 20px;
     border-bottom: 1px solid #cccccc;
 }
 
-.recent-documents-table th:last-child,
-.recent-documents-table td:last-child {
+.recent-documents-table.is-empty {
+    border-bottom: none;
+}
+
+.submission-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    width: 100%;
+    color: inherit;
+    text-decoration: none;
+    border-left: 4px solid transparent;
+    box-sizing: border-box;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.submission-item:hover,
+.submission-item:focus-visible {
+    background-color: #fbe9e9;
+    border-left-color: #951f1c;
+    outline: none;
+}
+
+.submission-item .document-status {
+    margin-left: auto;
     text-align: right;
+    white-space: nowrap;
+}
+
+.submission-item h3 {
+    padding: 12px 10px;
+    color: black;
+}
+
+.submission-item span {
+    padding: 12px 10px;
 }
 
 /* Empty Table */

@@ -1,0 +1,364 @@
+:root[data-theme="dark"] {
+    color-scheme: dark;
+}
+
+:root[data-theme="dark"] body {
+    background: #111315;
+    color: #eceff1;
+}
+
+:root[data-theme="dark"] :is(.top-header, .sidebar, .student-layout, .admin-layout, .student-main-content, .admin-main-content) {
+    background-color: #17191c;
+    color: #eceff1;
+}
+
+:root[data-theme="dark"] #submissionFilterEmpty { color: #eceff1; }
+
+:root[data-theme="dark"] :is(h1, h2, h3, h4, p, label, small, strong, td, th, .sidebar-link, .notification-time, .submission-item h3, .empty-documents, .empty-notifications) {
+    color: #eceff1;
+}
+
+:root[data-theme="dark"] .app .doc {
+    color: #eceff1;
+}
+
+:root[data-theme="dark"] .dashboard-container :is(h1, h2, h3, p, span, small) {
+    color: #fff;
+}
+
+:root[data-theme="dark"] .dashboard-container .document-status.verified {
+    color: #59d58a;
+}
+
+:root[data-theme="dark"] .dashboard-container .document-status.pending {
+    color: #ffd75e;
+}
+
+:root[data-theme="dark"] .dashboard-container .document-status.needs-correction {
+    color: #ff8f89;
+}
+
+:root[data-theme="dark"] .welcome-page {
+    background-image: linear-gradient(rgba(15, 17, 20, 0.78), rgba(15, 17, 20, 0.78)), url("../images/mcc-bg-light.svg");
+}
+
+:root[data-theme="dark"] .welcome-container {
+    background: rgba(28, 31, 35, 0.50);
+}
+
+:root[data-theme="dark"] :is(.portal-label, .contact-section a) {
+    color: #eceff1;
+}
+
+:root[data-theme="dark"] .contact-divider::before,
+:root[data-theme="dark"] .contact-divider::after {
+    background-color: #eceff1;
+}
+
+:root[data-theme="dark"] .welcome-login .error {
+    background-color: #3a2021;
+    border-color: #82454a;
+    color: #ffb8b5;
+}
+
+:root[data-theme="dark"] :is(.summary-card, .notification-item, .document-item, .student-account-item, .student-document-item, .settings-section, .settings-card, .document-detail-recommendation, .document-detail-message, .document-type-item, .document-type-edit-panel, .upload-rule-item, .selected-file, .upload-dropzone, .document-review-panel, .administrator-notes, .document-analysis-panel, .analysis-status, .analysis-disclaimer, .verification-review-panel, .verification-findings, .review-content, .document-preview-placeholder, .document-actions-menu, .sidebar-logout-menu) {
+    background-color: #22262a;
+    border-color: #41474d;
+}
+
+:root[data-theme="dark"] :is(.documents-search, .filter-button, input, select, textarea) {
+    background-color: #202327;
+    border-color: #596168;
+    color: #eceff1;
+}
+
+:root[data-theme="dark"] :is(.review-container, .settings-container, .document-types-section, .upload-rules-section, .upload-container, .documents-container, .dashboard-container, .notifications-container, .student-accounts-container, .submissions-container, .student-docs-container, .verification-container) {
+    color: #eceff1;
+}
+
+:root[data-theme="dark"] :is(.document-type-name, .upload-rule-info, .selected-file-name, .selected-file-size, .selected-file-details, .sidebar-user-info, .sidebar-logout-menu a, .document-actions-menu a, .document-info, .student-account-info, .document-detail-header h1) {
+    color: #eceff1;
+}
+
+:root[data-theme="dark"] :is(.sidebar-profile-toggle:hover, .sidebar-profile-toggle[aria-expanded="true"], .sidebar-logout-menu button:hover, .sidebar-logout-menu button:focus-visible, .document-actions-menu a:hover, .document-actions-menu a:focus-visible) {
+    background-color: #34383d;
+}
+
+:root[data-theme="dark"] :is(.upload-dropzone, .selected-file, .document-type-edit-panel, .document-type-edit-form) {
+    border-color: #41474d;
+}
+
+:root[data-theme="dark"] input::placeholder,
+:root[data-theme="dark"] textarea::placeholder {
+    color: #aeb6bd;
+}
+
+:root[data-theme="dark"] :is(.sidebar-link:hover, .sidebar-link.active, .submission-item:hover, .submission-item:focus-visible, .document-item:hover, .document-item:focus-visible, .notification-item:hover, .notification-item:focus-visible, .notification-item.is-unread) {
+    background-color: #3a2021;
+    color: #ffb8b5;
+}
+
+:root[data-theme="dark"] :is(.document-detail-header p, .document-detail-preview iframe) {
+    color: #eceff1;
+    background-color: #202327;
+}
+
+:root[data-theme="dark"] .document-status.verified {
+    color: #59d58a;
+}
+
+:root[data-theme="dark"] .document-status.pending {
+    color: #ffd75e;
+}
+
+:root[data-theme="dark"] .document-status.needs-correction {
+    color: #ff8f89;
+}
+
+:root[data-theme="dark"] .upload-success-dialog {
+    background-color: #22262a;
+    color: #eceff1;
+}
+
+:root[data-theme="dark"] .upload-success-dialog h2,
+:root[data-theme="dark"] .upload-success-dialog p {
+    color: #eceff1;
+}
+
+:root[data-theme="dark"] .document-detail-preview iframe {
+    border-color: #41474d;
+}
+
+:root[data-theme="dark"] .document-detail-back {
+    color: #ff8f89;
+}
+
+.theme-icon {
+    width: 42px;
+    height: 42px;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    transition: background-color 0.2s ease;
+}
+
+.theme-icon:hover,
+.theme-icon:focus-visible {
+    background-color: #fbe9e9;
+    outline: none;
+}
+
+:root[data-theme="dark"] .theme-icon:hover,
+:root[data-theme="dark"] .theme-icon:focus-visible {
+    background-color: #3a2021;
+}
+
+.submission-item:focus-visible,
+.notification-item:focus-visible {
+    outline: 2px solid #951f1c;
+    outline-offset: -2px;
+}
+
+/* Admin list rows and filters use the same red accent as notifications. */
+.student-submission-item:hover,
+.student-submission-item:focus-visible,
+.review-submission-item:hover,
+.review-submission-item:focus-visible,
+.student-document-item:hover,
+.student-document-item:focus-visible,
+.student-account-item:hover,
+.student-account-item:focus-visible {
+    background-color: #fbe9e9;
+    color: #951f1c;
+}
+
+.student-submission-item:hover :is(h2, h3, time),
+.student-submission-item:focus-visible :is(h2, h3, time),
+.review-submission-item:hover :is(h2, h3, p, time),
+.review-submission-item:focus-visible :is(h2, h3, p, time),
+.student-document-item:hover :is(h2, p),
+.student-document-item:focus-visible :is(h2, p),
+.student-account-item:hover :is(h2, div),
+.student-account-item:focus-visible :is(h2, div) {
+    color: #951f1c;
+}
+
+.admin-layout .filter-button:hover,
+.admin-layout .filter-button:focus-visible,
+.admin-layout .filter-button[aria-expanded="true"] {
+    background-color: #fbe9e9;
+    border-color: #951f1c;
+    outline-color: #951f1c;
+}
+
+:is(.admin-layout, .student-layout) .filter-chip:hover,
+:is(.admin-layout, .student-layout) .filter-chip.active {
+    background-color: #fbe9e9;
+    color: #951f1c;
+}
+
+:root[data-theme="dark"] :is(
+    .submissions-header h1,
+    .submission-details h2,
+    .submission-details h3,
+    .submission-date,
+    .review-submission-details h2,
+    .review-submission-details h3,
+    .review-submission-status,
+    .review-submission-date,
+    .student-documents-header h1,
+    .student-document-info h2,
+    .student-document-info p,
+    .student-accounts-header h1,
+    .account-student-name h2,
+    .account-student-number,
+    .account-student-email,
+    .student-docs-header h1,
+    .student-docs-header p,
+    .student-docs-profile small,
+    .empty-submissions,
+    .empty-review-submissions,
+    .empty-student-documents,
+    .empty-student-accounts,
+    .student-course-filter label,
+    .account-course-filter label
+) {
+    color: #eceff1;
+}
+
+:root[data-theme="dark"] :is(.back-to-verification, .back-to-student-list) {
+    color: #ff8f89;
+}
+
+:root[data-theme="dark"] .back-to-student-list:hover,
+:root[data-theme="dark"] .back-to-student-list:focus-visible {
+    background-color: #3a2021;
+    border-color: #a84d52;
+    color: #ffb8b5;
+}
+
+:root[data-theme="dark"] .student-submission-item,
+:root[data-theme="dark"] .review-submission-item {
+    border-color: #41474d;
+}
+
+:root[data-theme="dark"] .student-submission-item:hover,
+:root[data-theme="dark"] .student-submission-item:focus-visible,
+:root[data-theme="dark"] .review-submission-item:hover,
+:root[data-theme="dark"] .review-submission-item:focus-visible,
+:root[data-theme="dark"] .student-document-item:hover,
+:root[data-theme="dark"] .student-document-item:focus-visible,
+:root[data-theme="dark"] .student-account-item:hover,
+:root[data-theme="dark"] .student-account-item:focus-visible {
+    background-color: #3a2021;
+    color: #ffb8b5;
+}
+
+:root[data-theme="dark"] .student-submission-item:hover :is(h2, h3, time),
+:root[data-theme="dark"] .student-submission-item:focus-visible :is(h2, h3, time),
+:root[data-theme="dark"] .review-submission-item:hover :is(h2, h3, p, time),
+:root[data-theme="dark"] .review-submission-item:focus-visible :is(h2, h3, p, time),
+:root[data-theme="dark"] .student-document-item:hover :is(h2, p),
+:root[data-theme="dark"] .student-document-item:focus-visible :is(h2, p),
+:root[data-theme="dark"] .student-account-item:hover :is(h2, div),
+:root[data-theme="dark"] .student-account-item:focus-visible :is(h2, div) {
+    color: #ffb8b5;
+}
+
+:root[data-theme="dark"] .admin-layout .filter-button:hover,
+:root[data-theme="dark"] .admin-layout .filter-button:focus-visible,
+:root[data-theme="dark"] .admin-layout .filter-button[aria-expanded="true"],
+:root[data-theme="dark"] :is(.admin-layout, .student-layout) .filter-chip:hover,
+:root[data-theme="dark"] :is(.admin-layout, .student-layout) .filter-chip.active {
+    background-color: #3a2021;
+    border-color: #a84d52;
+    color: #ffb8b5;
+}
+
+:root[data-theme="dark"] .admin-layout :is(.student-search, .submission-search) {
+    border-color: #737b82;
+}
+
+:root[data-theme="dark"] .admin-layout :is(.student-course-filter select, .account-course-filter select) {
+    background-color: #202327;
+    border-color: #737b82;
+    color: #eceff1;
+}
+
+:root[data-theme="dark"] .student-document-status.verified { color: #59d58a; }
+:root[data-theme="dark"] .student-document-status.pending { color: #ffd75e; }
+:root[data-theme="dark"] .student-document-status.needs-correction { color: #ff8f89; }
+:root[data-theme="dark"] .submission-status.verified { color: #59d58a; }
+:root[data-theme="dark"] .submission-status.pending { color: #ffd75e; }
+:root[data-theme="dark"] .submission-status.flagged { color: #ff8f89; }
+
+/* Keep each document and student entry visually distinct as its own row. */
+:is(
+    .document-item,
+    .submission-item,
+    .student-document-item,
+    .student-account-item,
+    .student-submission-item,
+    .review-submission-item,
+    .account-document-row,
+    .document-type-item
+) {
+    margin-bottom: 10px;
+    border: 1px solid #d1d1d1;
+    border-radius: 10px;
+}
+
+:is(
+    .document-item,
+    .submission-item,
+    .student-document-item,
+    .student-account-item,
+    .student-submission-item,
+    .review-submission-item,
+    .account-document-row,
+    .document-type-item
+):last-child {
+    border-bottom: 1px solid #d1d1d1;
+}
+
+:root[data-theme="dark"] :is(
+    .document-item,
+    .submission-item,
+    .student-document-item,
+    .student-account-item,
+    .student-submission-item,
+    .review-submission-item,
+    .account-document-row,
+    .document-type-item
+) {
+    border-color: #41474d;
+}
+
+:is(.student-layout, .admin-layout) .filter-button {
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    border: 1.5px solid #111;
+    border-radius: 8px;
+    background: transparent;
+    box-sizing: border-box;
+}
+
+:is(.student-layout, .admin-layout) .filter-button:hover,
+:is(.student-layout, .admin-layout) .filter-button:focus-visible,
+:is(.student-layout, .admin-layout) .filter-button[aria-expanded="true"] {
+    background-color: #fbe9e9;
+    border-color: #951f1c;
+    outline-color: #951f1c;
+}
+
+:root[data-theme="dark"] :is(.student-layout, .admin-layout) .filter-button {
+    border-color: #737b82;
+}
+
+:root[data-theme="dark"] :is(.student-layout, .admin-layout) .filter-button:hover,
+:root[data-theme="dark"] :is(.student-layout, .admin-layout) .filter-button:focus-visible,
+:root[data-theme="dark"] :is(.student-layout, .admin-layout) .filter-button[aria-expanded="true"] {
+    background-color: #3a2021;
+    border-color: #a84d52;
+}

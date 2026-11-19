@@ -2,7 +2,7 @@
 
 @push('styles')
     @vite([
-        'resources/css/components/student-sidebar.css',
+        'resources/css/sidebar/student-sidebar.css',
         'resources/css/student/dashboard.css'
     ])
 @endpush
@@ -18,7 +18,7 @@
         <div class="dashboard-container">
 
             <section class="dashboard-header">
-                <h1>Hello, {{ Auth::student()->firstName }}!</h1>
+                <h1>Hello, {{ auth()->user()->first_name }}!</h1>
                 <p>Manage your documents in one place.</p>
             </section>
 
@@ -26,25 +26,25 @@
 
                 <div class="summary-card">
                     <img src="{{ asset('icons/document-light.svg') }}" alt="Documents">
-                    <h2>0</h2>
+                    <h2>{{ $documentCounts['total'] ?? 0 }}</h2>
                     <span>Total Documents</span>
                 </div>
 
                 <div class="summary-card">
                     <img src="{{ asset('icons/verified-light.svg') }}" alt="Verified">
-                    <h2>0</h2>
+                    <h2>{{ $documentCounts['verified'] ?? 0 }}</h2>
                     <span>Verified</span>
                 </div>
 
                 <div class="summary-card">
                     <img src="{{ asset('icons/pending-light.svg') }}" alt="Pending">
-                    <h2>0</h2>
+                    <h2>{{ $documentCounts['pending'] ?? 0 }}</h2>
                     <span>Pending</span>
                 </div>
 
                 <div class="summary-card">
                     <img src="{{ asset('icons/correction-light.svg') }}" alt="Needs Correction">
-                    <h2>0</h2>
+                    <h2>{{ $documentCounts['needs_correction'] ?? 0 }}</h2>
                     <span>Needs Correction</span>
                 </div>
 
@@ -52,7 +52,7 @@
 
             <section class="dashboard-upload">
 
-                <a href="#" class="upload-button">
+                <a href="{{ route('student.upload') }}" class="upload-button">
 
                     <div class="upload-button-content">
                         <img src="{{ asset('icons/upload.svg') }}" alt="">
@@ -69,27 +69,21 @@
 
                 <h2>Recent Documents</h2>
 
-                <div class="recent-documents-table">
+                <div class="recent-documents-table {{ count($documents ?? []) === 0 ? 'is-empty' : '' }}">
 
                     @forelse(($documents ?? []) as $recent)
 
-                        <div class="submission-item">
-                            <div>
-                                <strong>{{ $recent->student_name }}</strong>
-                                <br>
-                                <span>{{ $recent->document_name }}</span>
-                            </div>
-
-                            <span class="document-status {{ strtolower($recent->status) }}">
-                                {{ $recent->status }}
+                        <a class="submission-item" href="{{ route('student.documents.show', $recent) }}">
+                            <h3>{{ $recent->document_name }}</h3>
+                            <span class="document-status {{ strtolower(str_replace([' ', '_'], '-', $recent->status)) }}">
+                                {{ str_replace('_', ' ', ucfirst($recent->status)) }}
                             </span>
-                        </div>
+                        </a>
 
                     @empty
                         <div class="empty-documents">
                             No Recent Submissions
                         </div>
-
                     @endforelse
 
                 </div>

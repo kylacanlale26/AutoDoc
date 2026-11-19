@@ -3,7 +3,7 @@
 
 @push('styles')
     @vite([
-        'resources/css/components/admin-sidebar.css',
+        'resources/css/sidebar/admin-sidebar.css',
         'resources/css/admin/verification.css'
     ])
 @endpush
@@ -26,27 +26,17 @@
 
                 @forelse (($flaggedDocuments ?? []) as $document)
 
-                    <div class="review-submission-item">
+                    <a class="review-submission-item" href="{{ route('admin.review.document', $document) }}">
 
                         <div class="review-submission-details">
-                            <h2>
-                                {{ $document->student_name }}
-                                <span>- {{ $document->document_name }}</span>
-                            </h2>
+                            <h2>{{ $document->student->name ?? 'Unknown student' }}</h2>
+                            <h3>{{ $document->document_name }}</h3>
                             <p class="review-submission-status">{{ $document->status }}</p>
-                            <p class="review-submission-date">{{ $document->created_at->format('M d, Y') }}</p>
+                            <time class="review-submission-date" datetime="{{ $document->created_at->toIso8601String() }}">{{ $document->created_at->format('M d, Y · g:i A') }}</time>
                         </div>
 
-                        <div class="review-submission-action">
-                            <a href="{{ route('admin.review') }}">
-                                <img
-                                    src="{{ asset('icons/arrow-right-light.svg') }}"
-                                    alt="View submission"
-                                >
-                            </a>
-                        </div>
-
-                    </div>
+                        <span class="review-submission-action" aria-hidden="true">Review&nbsp;›</span>
+                    </a>
 
                 @empty
                     <div class="empty-review-submissions">No Flagged Documents Needing Review</div>

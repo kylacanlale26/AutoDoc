@@ -1,6 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
+
+import '../services/api_client.dart';
 
 class Upload extends StatefulWidget {
   const Upload({super.key});
@@ -10,61 +12,153 @@ class Upload extends StatefulWidget {
 }
 
 class _UploadState extends State<Upload> {
-  String selectedCategory = 'Birth Certificate';
-  PlatformFile? selectedFile;
+  static const _fallbackExtensions = ['pdf', 'png', 'jpg', 'jpeg'];
+  List<String> _categories = [];
+  Set<String> _unavailableCategories = {};
+  List<String> _extensions = _fallbackExtensions;
+  List<PlatformFile> _files = [];
+  String? _selectedCategory;
+  String? _error;
+  int _maxSizeMb = 10;
+  bool _loadingRules = true;
+  bool _uploading = false;
 
-  final List<String> categories = [
-    'Birth Certificate',
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _loadRules();
+  }
 
-  Future<void> pickFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['pdf'],
-    );
-
-    if (result != null) {
-      PlatformFile file = result.files.first;
-
-      if (file.size > 10 * 1024 * 1024) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('File must not exceed 10 MB.'),
-          ),
-        );
-        return;
-      }
-
+  Future<void> _loadRules() async {
+    try {
+      final response = await ApiClient.instance.get('/mobile/document-types');
+      final categories = List<String>.from(
+        (response['document_types'] as List? ?? const []).map(
+          (item) => item.toString(),
+        ),
+      );
+      final unavailableCategories = Set<String>.from(
+        (response['unavailable_document_types'] as List? ?? const []).map(
+          (item) => item.toString(),
+        ),
+      );
+      final availableCategories = categories
+          .where((name) => !unavailableCategories.contains(name))
+          .toList();
+      final rules = response['upload_rules'] is Map
+          ? Map<String, dynamic>.from(response['upload_rules'] as Map)
+          : <String, dynamic>{};
+      final formats = List<String>.from(
+        (rules['accepted_formats'] as List? ?? _fallbackExtensions).map(
+          (item) => item.toString().toLowerCase().replaceFirst('.', ''),
+        ),
+      );
+      if (!mounted) return;
       setState(() {
-        selectedFile = file;
+        _categories = categories;
+        _unavailableCategories = unavailableCategories;
+        _selectedCategory = availableCategories.isEmpty
+            ? null
+            : availableCategories.first;
+        _extensions = formats.isEmpty ? _fallbackExtensions : formats;
+        _maxSizeMb =
+            int.tryParse(rules['max_file_size_mb']?.toString() ?? '') ?? 10;
       });
+    } catch (error) {
+      if (mounted) setState(() => _error = error.toString());
+    } finally {
+      if (mounted) setState(() => _loadingRules = false);
     }
   }
 
-  void removeFile() {
+  Future<void> _pickFiles() async {
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: _extensions,
+      allowMultiple: false,
+      withData: true,
+    );
+    if (!mounted || result == null) return;
+    if (result.files.any((file) => file.size > _maxSizeMb * 1024 * 1024)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Each file must be no larger than $_maxSizeMb MB.'),
+        ),
+      );
+      return;
+    }
     setState(() {
-      selectedFile = null;
+      _files = result.files.take(1).toList();
+      _error = null;
     });
+  }
+
+  Future<void> _submit() async {
+    final category = _selectedCategory;
+    if (category == null || _files.isEmpty || _uploading) return;
+    setState(() {
+      _uploading = true;
+      _error = null;
+    });
+    try {
+      final response = await ApiClient.instance.uploadDocuments(
+        documentType: category,
+        files: _files,
+      );
+      if (!mounted) return;
+      final message =
+          response['message']?.toString() ??
+          'Successfully uploaded, wait for your status';
+      setState(() => _files = []);
+      await showDialog<void>(
+        context: context,
+        builder: (dialogContext) => AlertDialog(
+          insetPadding: const EdgeInsets.symmetric(
+            horizontal: 24,
+            vertical: 24,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          icon: const Icon(
+            Icons.check_circle_outline,
+            color: Color(0xFF16834A),
+            size: 42,
+          ),
+          title: const Text('Upload successful', textAlign: TextAlign.center),
+          content: Text(message, textAlign: TextAlign.center),
+          actionsAlignment: MainAxisAlignment.center,
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+      await _loadRules();
+    } catch (error) {
+      if (mounted) setState(() => _error = error.toString());
+    } finally {
+      if (mounted) setState(() => _uploading = false);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final extensionsLabel = _extensions
+        .map((value) => value.toUpperCase())
+        .join(' · ');
     return Scaffold(
-      backgroundColor: Colors.white,
-
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+        child: _loadingRules
+            ? const Center(child: CircularProgressIndicator())
+            : RefreshIndicator(
+                onRefresh: _loadRules,
+                child: ListView(
+                  padding: const EdgeInsets.all(15),
                   children: [
-                    const SizedBox(height: 12),
-
                     const Text(
                       'Upload Documents',
                       style: TextStyle(
@@ -72,209 +166,162 @@ class _UploadState extends State<Upload> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-
+                    const SizedBox(height: 4),
                     const Text(
-                      'Choose a document category and upload the required file.',
-                      style: TextStyle(
-                        fontSize: 14,
-                        letterSpacing: 1,
-                      ),
+                      'Choose a document category and upload one file.',
                     ),
-
-                    const SizedBox(height: 14),
-
-                    DropdownButtonFormField<String>(
-                      value: selectedCategory,
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 3,
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      icon: const Icon(
-                        Icons.keyboard_arrow_down,
-                        color: Colors.black,
-                        size: 35,
-                      ),
-                      items: categories.map((category) {
-                        return DropdownMenuItem(
-                          value: category,
+                    const SizedBox(height: 6),
+                    const Text(
+                      'Capture or scan the document clearly, with all text and signatures visible, to avoid incorrect data or an invalid submission.',
+                      style: TextStyle(color: Color(0xFF7A1F1F)),
+                    ),
+                    const SizedBox(height: 4),
+                    const Text(
+                      'Only one file can be submitted per document type. If it needs correction, you can upload a replacement.',
+                    ),
+                    if (_error != null) ...[
+                      const SizedBox(height: 12),
+                      _ErrorMessage(_error!),
+                    ],
+                    const SizedBox(height: 16),
+                    if (_categories.isEmpty)
+                      const Text(
+                        'No document types are available. Contact an administrator.',
+                      )
+                    else ...[
+                      if (_selectedCategory == null)
+                        const Padding(
+                          padding: EdgeInsets.only(bottom: 8),
                           child: Text(
-                            category,
-                            style: const TextStyle(fontSize: 14),
+                            'All document types have already been submitted or are awaiting review.',
                           ),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          selectedCategory = value!;
-                        });
-                      },
-                    ),
-
+                        ),
+                      DropdownButtonFormField<String>(
+                        initialValue: _selectedCategory,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        items: _categories.map((name) {
+                          final unavailable = _unavailableCategories.contains(
+                            name,
+                          );
+                          return DropdownMenuItem(
+                            value: name,
+                            enabled: !unavailable,
+                            child: Text(
+                              unavailable ? '$name — Already submitted' : name,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: _uploading
+                            ? null
+                            : (value) =>
+                                  setState(() => _selectedCategory = value),
+                      ),
+                    ],
                     const SizedBox(height: 15),
-
                     DottedBorder(
                       color: const Color(0xFF951F1C),
                       strokeWidth: 1.5,
                       dashPattern: const [6, 3],
                       borderType: BorderType.RRect,
                       radius: const Radius.circular(8),
-                      child: Container(
+                      child: SizedBox(
                         width: double.infinity,
-                        height: 300,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 15,
-                          vertical: 25,
-                        ),
+                        height: 235,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Icon(
                               Icons.file_upload_outlined,
                               color: Color(0xFF951F1C),
-                              size: 70,
+                              size: 60,
                             ),
-
-                            const SizedBox(height: 15),
-
-                            const Text(
-                              'Choose a file from your device',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 1,
-                              ),
-                            ),
-
-                            const SizedBox(height: 22),
-
-                            SizedBox(
-                              width: 192,
-                              height: 46,
-                              child: ElevatedButton(
-                                onPressed: pickFile,
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFFD32F2F),
-                                  foregroundColor: Colors.white,
-                                  elevation: 0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(7),
-                                  ),
-                                ),
-                                child: const Text(
-                                  'Browse Files',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ),
-
                             const SizedBox(height: 12),
-
-                            const Text(
-                              'PDF · Maximum 10 MB per file',
-                              style: TextStyle(
-                                fontSize: 13,
-                                letterSpacing: 1,
-                              ),
+                            const Text('Choose files from your device'),
+                            const SizedBox(height: 14),
+                            ElevatedButton(
+                              onPressed: _uploading ? null : _pickFiles,
+                              child: const Text('Browse Files'),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              '$extensionsLabel · Maximum $_maxSizeMb MB per file',
                             ),
                           ],
                         ),
                       ),
                     ),
-
-                    if (selectedFile != null) ...[
-                      const SizedBox(height: 15),
-
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  selectedFile!.name,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: 1,
-                                  ),
-                                ),
-
-                                Text(
-                                  '${(selectedFile!.size / (1024 * 1024)).toStringAsFixed(1)} MB · Ready to upload',
-                                  style: const TextStyle(
-                                    fontSize: 10,
-                                    letterSpacing: 1,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          IconButton(
-                            onPressed: removeFile,
-                            icon: const Icon(
-                              Icons.close,
-                              color: Colors.black,
-                              size: 28,
-                            ),
-                          ),
-                        ],
+                    for (var index = 0; index < _files.length; index++)
+                      ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        title: Text(
+                          _files[index].name,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        subtitle: Text(
+                          '${(_files[index].size / (1024 * 1024)).toStringAsFixed(1)} MB',
+                        ),
+                        trailing: IconButton(
+                          onPressed: _uploading
+                              ? null
+                              : () => setState(() => _files.removeAt(index)),
+                          icon: const Icon(Icons.close),
+                        ),
                       ),
-                    ],
-
-                    const SizedBox(height: 15),
-
+                    const SizedBox(height: 12),
                     SizedBox(
-                      width: double.infinity,
                       height: 50,
                       child: ElevatedButton(
-                        onPressed: selectedFile == null
+                        onPressed:
+                            _files.isEmpty ||
+                                _selectedCategory == null ||
+                                _uploading
                             ? null
-                            : () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text(
-                                      'Ready to submit your document.',
-                                    ),
-                                  ),
-                                );
-                              },
+                            : _submit,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFD32F2F),
                           foregroundColor: Colors.white,
-                          disabledBackgroundColor: const Color(0xFFD32F2F),
-                          disabledForegroundColor: Colors.white,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(7),
-                          ),
                         ),
-                        child: const Text(
-                          'Submit Documents',
-                          style: TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                        child: _uploading
+                            ? const SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: Colors.white,
+                                ),
+                              )
+                            : const Text('Submit Documents'),
                       ),
                     ),
                   ],
                 ),
               ),
-            ],
-          ),
-        ),
       ),
     );
   }
+}
+
+class _ErrorMessage extends StatelessWidget {
+  const _ErrorMessage(this.message);
+  final String message;
+
+  @override
+  Widget build(BuildContext context) => Container(
+    padding: const EdgeInsets.all(12),
+    decoration: BoxDecoration(
+      color: Theme.of(context).colorScheme.errorContainer,
+      borderRadius: BorderRadius.circular(8),
+    ),
+    child: Text(
+      message,
+      style: TextStyle(color: Theme.of(context).colorScheme.onErrorContainer),
+    ),
+  );
 }

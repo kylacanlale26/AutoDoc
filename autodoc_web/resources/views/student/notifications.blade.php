@@ -2,7 +2,7 @@
 
 @push('styles')
     @vite([
-        'resources/css/components/student-sidebar.css',
+        'resources/css/sidebar/student-sidebar.css',
         'resources/css/student/notifications.css'
     ])
 @endpush
@@ -19,26 +19,39 @@
 
             <section class="notifications-header">
                 <h1>Notifications</h1>
-                <a href="#" class="mark-all-read">Mark all as read</a>
+                @if ($notifications->contains(fn ($notification) => $notification->read_at === null))
+                    <form method="POST" action="{{ route('student.notifications.read-all') }}">
+                        @csrf
+                        <button type="submit" class="mark-all-read">Mark all as read</button>
+                    </form>
+                @endif
             </section>
 
             <section class="notifications-list">
 
                 @forelse (($notifications ?? []) as $notification)
 
-                    <div class="notification-item">
+                    <a class="notification-item {{ $notification->read_at === null ? 'is-unread' : '' }}"
+                       href="{{ route('student.notifications.open', $notification->id) }}">
 
                         <div class="notification-content">
-                            <h2>{{ $notification->title }}</h2>
-                            <p>{{ $notification->message }}</p>
+                            <h2 class="notification-status-heading">
+                                {{ isset($notification->data['status']) ? str_replace('_', ' ', ucfirst($notification->data['status'])) : 'Document update' }}
+                            </h2>
+                            <p>
+                                {{ $notification->data['document_type'] ?? 'Document' }}
+                                @if (!empty($notification->data['document_name']))
+                                    · {{ $notification->data['document_name'] }}
+                                @endif
+                            </p>
                             <span class="notification-time">{{ $notification->created_at->diffForHumans() }}</span>
                         </div>
 
-                        @if (!$notification->is_read)
+                        @if ($notification->read_at === null)
                             <img src="{{ asset('icons/unread.svg') }}" alt="Unread" class="unread-indicator">
                         @endif
 
-                    </div>
+                    </a>
 
                 @empty
                     <div class="empty-notifications">No Notifications</div>

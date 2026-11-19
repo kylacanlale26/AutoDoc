@@ -64,6 +64,7 @@
 /* Individual Document Type */
 .document-type-item {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     width: 100%;
@@ -104,6 +105,58 @@
 
 .edit-document-type:hover {
     opacity: 0.6;
+}
+
+.document-type-edit-panel {
+    display: flex;
+    flex: 1 0 100%;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 0;
+}
+
+.document-type-edit-panel[hidden] {
+    display: none;
+}
+
+.document-type-edit-form {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+}
+
+.document-type-edit-form input {
+    flex: 1;
+    min-width: 0;
+    height: 40px;
+    padding: 4px 8px;
+    border: 1px solid black;
+    border-radius: 5px;
+    font: inherit;
+}
+
+.document-type-edit-form .add-document-button {
+    width: auto;
+    height: 40px;
+    padding: 0 12px;
+}
+
+.delete-document-type {
+    min-height: 40px;
+    padding: 0 12px;
+    border: 1px solid #951f1c;
+    border-radius: 5px;
+    background: white;
+    color: #951f1c;
+    font: inherit;
+    cursor: pointer;
+}
+
+.delete-document-type:hover {
+    background: #951f1c;
+    color: white;
 }
 
 /* Empty Document Types */
