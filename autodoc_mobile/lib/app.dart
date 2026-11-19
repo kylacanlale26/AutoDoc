@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'services/api_client.dart';
@@ -7,6 +6,7 @@ import 'services/auth_service.dart';
 import 'navigation/student_nav.dart';
 import 'screens/welcome.dart';
 import 'screens/complete_profile.dart';
+import 'widgets/autodoc_loading.dart';
 
 class AutoDoc extends StatefulWidget {
   const AutoDoc({super.key});
@@ -119,7 +119,7 @@ class _AutoDocState extends State<AutoDoc> {
         appBarTheme: const AppBarTheme(centerTitle: false),
       ),
       home: _loading
-          ? const _AutoDocLoadingScreen()
+          ? const AutoDocLoading()
           : _signedIn
           ? !_profileComplete
                 ? CompleteProfile(onCompleted: _profileCompleted)
@@ -133,72 +133,6 @@ class _AutoDocState extends State<AutoDoc> {
               isDarkMode: _darkMode,
               onToggleTheme: _toggleTheme,
             ),
-    );
-  }
-}
-
-class _AutoDocLoadingScreen extends StatefulWidget {
-  const _AutoDocLoadingScreen();
-
-  @override
-  State<_AutoDocLoadingScreen> createState() => _AutoDocLoadingScreenState();
-}
-
-class _AutoDocLoadingScreenState extends State<_AutoDocLoadingScreen>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _bobController;
-
-  @override
-  void initState() {
-    super.initState();
-    _bobController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1500),
-    )..repeat(reverse: true);
-  }
-
-  @override
-  void dispose() {
-    _bobController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Semantics(
-        label: 'Loading AutoDoc',
-        liveRegion: true,
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              AnimatedBuilder(
-                animation: _bobController,
-                builder: (context, child) => Transform.translate(
-                  offset: Offset(0, -5 * _bobController.value),
-                  child: child,
-                ),
-                child: SizedBox(
-                  width: 104,
-                  height: 104,
-                  child: SvgPicture.asset(
-                    Theme.of(context).brightness == Brightness.dark
-                        ? 'assets/logo/autodoc-logo-darkmode.svg'
-                        : 'assets/logo/autodoc-logo.svg',
-                  ),
-                ),
-              ),
-              const SizedBox(height: 14),
-              Text(
-                'Loading AutoDoc',
-                style: Theme.of(context).textTheme.titleSmall
-                    ?.copyWith(fontWeight: FontWeight.w600, letterSpacing: 0.5),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

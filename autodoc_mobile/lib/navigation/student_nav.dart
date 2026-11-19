@@ -8,6 +8,7 @@ import '../screens/documents.dart';
 import '../screens/notifications.dart';
 import '../screens/upload.dart';
 import '../services/api_client.dart';
+import '../widgets/profile_avatar.dart';
 
 class Navigation extends StatefulWidget {
   const Navigation({
@@ -26,6 +27,13 @@ class Navigation extends StatefulWidget {
 class _NavState extends State<Navigation> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   int selectedIndex = 0;
+  final Map<int, bool> _pageLoading = {
+    0: true,
+    1: true,
+    2: true,
+    3: true,
+    4: true,
+  };
   Map<String, dynamic> student = {};
   final menuItems = const [
     'Dashboard',
@@ -48,6 +56,18 @@ class _NavState extends State<Navigation> {
     } catch (_) {}
   }
 
+  void _setPageLoading(int index, bool loading) {
+    if (!mounted || _pageLoading[index] == loading) return;
+    setState(() => _pageLoading[index] = loading);
+  }
+
+  void _selectPage(int index) {
+    setState(() {
+      selectedIndex = index;
+      _pageLoading[index] = true;
+    });
+  }
+
   Future<void> _openDocument(String id, {String? message}) async {
     await Navigator.of(context).push<void>(
       MaterialPageRoute<void>(
@@ -62,13 +82,20 @@ class _NavState extends State<Navigation> {
     final scheme = Theme.of(context).colorScheme;
     final pages = <Widget>[
       Dashboard(
-        onUpload: () => setState(() => selectedIndex = 2),
+        onUpload: () => _selectPage(2),
         onOpenDocument: _openDocument,
+        onLoadingChanged: (loading) => _setPageLoading(0, loading),
       ),
-      MyDocuments(onOpenDocument: _openDocument),
-      const Upload(),
-      Notifications(onOpenDocument: _openDocument),
-      const Account(),
+      MyDocuments(
+        onOpenDocument: _openDocument,
+        onLoadingChanged: (loading) => _setPageLoading(1, loading),
+      ),
+      Upload(onLoadingChanged: (loading) => _setPageLoading(2, loading)),
+      Notifications(
+        onOpenDocument: _openDocument,
+        onLoadingChanged: (loading) => _setPageLoading(3, loading),
+      ),
+      Account(onLoadingChanged: (loading) => _setPageLoading(4, loading)),
     ];
     final fullName = [
       student['first_name'],
@@ -77,7 +104,9 @@ class _NavState extends State<Navigation> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: AppBar(
+      appBar: _pageLoading[selectedIndex] == true
+          ? null
+          : AppBar(
         backgroundColor: scheme.surface,
         elevation: 0,
         automaticallyImplyLeading: false,
@@ -85,7 +114,7 @@ class _NavState extends State<Navigation> {
           bottom: BorderSide(color: Color(0xFF951F1C), width: 3),
         ),
         title: GestureDetector(
-          onTap: () => setState(() => selectedIndex = 0),
+          onTap: () => _selectPage(0),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -119,15 +148,12 @@ class _NavState extends State<Navigation> {
         ),
         actions: [
           IconButton(
-            style: IconButton.styleFrom(
-              backgroundColor: const Color(0xFFD32F2F),
-            ),
             onPressed: widget.onToggleTheme,
             icon: Icon(
               widget.isDarkMode
                   ? Icons.light_mode_outlined
                   : Icons.dark_mode_outlined,
-              color: Colors.white,
+              color: widget.isDarkMode ? Colors.white : Colors.black,
             ),
           ),
           IconButton(
@@ -135,7 +161,7 @@ class _NavState extends State<Navigation> {
             icon: Icon(Icons.menu, color: scheme.onSurface),
           ),
         ],
-      ),
+            ),
       drawer: Drawer(
         width: MediaQuery.sizeOf(context).width,
         backgroundColor: scheme.surface,
@@ -153,16 +179,9 @@ class _NavState extends State<Navigation> {
                 padding: const EdgeInsets.fromLTRB(20, 0, 20, 18),
                 child: Row(
                   children: [
-                    CircleAvatar(
+                    ProfileAvatar(
+                      imageUrl: student['profile_picture_url']?.toString(),
                       radius: 28,
-                      backgroundImage: student['profile_picture_url'] != null
-                          ? NetworkImage(
-                              student['profile_picture_url'].toString(),
-                            )
-                          : null,
-                      child: student['profile_picture_url'] == null
-                          ? const Icon(Icons.person)
-                          : null,
                     ),
                     const SizedBox(width: 12),
                     Expanded(
@@ -209,7 +228,7 @@ class _NavState extends State<Navigation> {
                         ),
                       ),
                       onTap: () {
-                        setState(() => selectedIndex = index);
+                        _selectPage(index);
                         Navigator.pop(context);
                       },
                     ),
