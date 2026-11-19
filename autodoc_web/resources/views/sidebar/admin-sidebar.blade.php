@@ -47,7 +47,7 @@
                 class="sidebar-profile-toggle"
                 aria-label="Open profile menu"
                 aria-expanded="false"
-                aria-controls="rofileLogoutMenu"
+                aria-controls="profileLogoutMenu"
             >
                 <img src="{{ asset('icons/profile.svg') }}" alt="" class="sidebar-profile-icon" id="profileToggle">
             </button>

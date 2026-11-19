@@ -1,132 +1,238 @@
-
 import 'package:flutter/material.dart';
 
-class Account extends StatelessWidget {
-  const Account({super.key});
+import '../services/api_client.dart';
 
+class Account extends StatefulWidget {
+  const Account({super.key});
+  @override
+  State<Account> createState() => _AccountState();
+}
+
+class _AccountState extends State<Account> {
+  Map<String, dynamic> user = {};
+  List<Map<String, dynamic>> documents = [];
+  List<String> types = [];
+  bool loading = true;
+  String? error;
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    setState(() {
+      loading = true;
+      error = null;
+    });
+    try {
+      final results = await Future.wait([
+        ApiClient.instance.get('/mobile/me'),
+        ApiClient.instance.get('/mobile/documents'),
+        ApiClient.instance.get('/mobile/document-types'),
+      ]);
+      user = results[0];
+      documents = List<Map<String, dynamic>>.from(
+        (results[1]['documents'] as List? ?? const []).whereType<Map>().map(
+          (e) => Map<String, dynamic>.from(e),
+        ),
+      );
+      types = List<String>.from(
+        (results[2]['document_types'] as List? ?? const []).map(
+          (e) => e.toString(),
+        ),
+      );
+    } catch (e) {
+      error = e.toString();
+    } finally {
+      if (mounted) setState(() => loading = false);
+    }
+  }
+
+  String val(dynamic v) =>
+      v?.toString().trim().isNotEmpty == true ? v.toString() : 'Not provided';
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 15,
-              vertical: 15,
+    final scheme = Theme.of(context).colorScheme;
+    final fullName = [
+      user['first_name'],
+      user['last_name'],
+    ].where((v) => v != null && v.toString().trim().isNotEmpty).join(' ');
+    final submittedTypes = documents
+        .map((d) => d['document_type']?.toString())
+        .whereType<String>()
+        .toSet();
+    final verified = documents
+        .where((d) => d['status']?.toString().toLowerCase() == 'verified')
+        .toList();
+    final pending = documents
+        .where(
+          (d) =>
+              d['status']?.toString().toLowerCase().replaceAll(' ', '_') ==
+              'needs_correction',
+        )
+        .toList();
+    final unsubmitted = types
+        .where((t) => !submittedTypes.contains(t))
+        .toList();
+    return SafeArea(
+      child: RefreshIndicator(
+        onRefresh: _load,
+        child: ListView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          padding: const EdgeInsets.all(15),
+          children: [
+            Text(
+              'My Account',
+              style: Theme.of(context).textTheme.headlineSmall
+                  ?.copyWith(fontWeight: FontWeight.bold),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'My Account',
-                  style: TextStyle(
-                    fontSize: 29,
+            if (error != null)
+              Padding(
+                padding: const EdgeInsets.only(top: 12),
+                child: Text(error!, style: TextStyle(color: scheme.error)),
+              ),
+            if (loading && user.isEmpty)
+              const Padding(
+                padding: EdgeInsets.all(50),
+                child: Center(child: CircularProgressIndicator()),
+              )
+            else ...[
+              const SizedBox(height: 24),
+              Center(
+                child: CircleAvatar(
+                  radius: 56,
+                  backgroundImage: user['profile_picture_url'] != null
+                      ? NetworkImage(user['profile_picture_url'].toString())
+                      : null,
+                  child: user['profile_picture_url'] == null
+                      ? const Icon(Icons.person, size: 55)
+                      : null,
+                ),
+              ),
+              const SizedBox(height: 10),
+              Center(
+                child: Text(
+                  fullName.isEmpty ? val(user['name']) : fullName,
+                  style: const TextStyle(
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
                   ),
                 ),
-
-                const SizedBox(height: 32),
-
-                Center(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        width: 122,
-                        height: 122,
-                        child: const Icon(
-                          Icons.account_circle,
-                          size: 120,
-                          color: Color(0xFFE5252A),
-                        ),
-                      ),
-
-                      const SizedBox(height: 12),
-
-                      const Text(
-                        '<student name>',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 1,
-                          color: Colors.black,
-                        ),
-                      ),
-
-                      const Text(
-                        '<student program, level, and section>',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 12,
-                          letterSpacing: 0.5,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 40),
-
-                const Center(
-                  child: Column(
-                    children: [
-                      Text(
-                        'Student ID',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                        ),
-                      ),
-
-                      Text(
-                        '<id number>',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 15),
-
-                const Divider(
-                  color: Color(0xFFEEEEEE),
-                  thickness: 1,
-                ),
-
-                const SizedBox(height: 15),
-
-                const Center(
-                  child: Column(
-                    children: [
-                      Text(
-                        'MCC Email',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                        ),
-                      ),
-
-                      Text(
-                        '<email>',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
+              ),
+              const SizedBox(height: 18),
+              _field(context, 'Student Number', val(user['student_number'])),
+              _field(context, 'Email', val(user['email'])),
+              _field(context, 'Program', val(user['course'])),
+              _field(context, 'Year Level', val(user['year_level'])),
+              _field(context, 'Section', val(user['section'])),
+              const SizedBox(height: 15),
+              _docSection(
+                context,
+                'Verified Documents',
+                verified,
+                'No verified documents yet.',
+              ),
+              _docSection(
+                context,
+                'Needs Correction',
+                pending,
+                'No documents need correction.',
+              ),
+              _simpleSection(
+                context,
+                'Unsubmitted Documents',
+                unsubmitted,
+                'All document types have been submitted.',
+              ),
+            ],
+          ],
         ),
       ),
     );
   }
+
+  Widget _field(BuildContext c, String label, String value) => Container(
+    margin: const EdgeInsets.only(top: 7),
+    padding: const EdgeInsets.all(13),
+    decoration: BoxDecoration(
+      color: Theme.of(c).colorScheme.surface,
+      borderRadius: BorderRadius.circular(12),
+      border: Border.all(color: Theme.of(c).dividerColor),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            color: Theme.of(c).colorScheme.onSurfaceVariant,
+            fontSize: 12,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(value, style: const TextStyle(fontWeight: FontWeight.w600)),
+      ],
+    ),
+  );
+  Widget _docSection(
+    BuildContext c,
+    String title,
+    List<Map<String, dynamic>> list,
+    String empty,
+  ) => _simpleSection(
+    c,
+    title,
+    list
+        .map(
+          (d) =>
+              '${d['document_type'] ?? 'Document'} — ${d['document_name'] ?? ''}',
+        )
+        .toList(),
+    empty,
+  );
+  Widget _simpleSection(
+    BuildContext c,
+    String title,
+    List<String> list,
+    String empty,
+  ) => Padding(
+    padding: const EdgeInsets.only(top: 18),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: Theme.of(c).textTheme.titleMedium
+              ?.copyWith(fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 7),
+        if (list.isEmpty)
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(
+              color: Theme.of(c).colorScheme.surface,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: Theme.of(c).dividerColor),
+            ),
+            child: Text(empty),
+          )
+        else
+          ...list.map(
+            (item) => Container(
+              width: double.infinity,
+              margin: const EdgeInsets.only(bottom: 7),
+              padding: const EdgeInsets.all(13),
+              decoration: BoxDecoration(
+                color: Theme.of(c).colorScheme.surface,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Theme.of(c).dividerColor),
+              ),
+              child: Text(item),
+            ),
+          ),
+      ],
+    ),
+  );
 }

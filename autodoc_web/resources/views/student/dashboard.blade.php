@@ -69,24 +69,21 @@
 
                 <h2>Recent Documents</h2>
 
-                <div class="recent-documents-table">
+                <div class="recent-documents-table {{ count($documents ?? []) === 0 ? 'is-empty' : '' }}">
 
                     @forelse(($documents ?? []) as $recent)
 
-                        <div class="submission-item">
-
+                        <a class="submission-item" href="{{ route('student.documents.show', $recent) }}">
                             <h3>{{ $recent->document_name }}</h3>
-
                             <span class="document-status {{ strtolower(str_replace([' ', '_'], '-', $recent->status)) }}">
                                 {{ str_replace('_', ' ', ucfirst($recent->status)) }}
                             </span>
-                        </div>
+                        </a>
 
                     @empty
                         <div class="empty-documents">
                             No Recent Submissions
                         </div>
-
                     @endforelse
 
                 </div>

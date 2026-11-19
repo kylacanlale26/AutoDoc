@@ -1,0 +1,137 @@
+.student-layout {
+    display: flex;
+    padding-top: 60px;
+    width: 100%;
+    min-height: calc(100vh - 60px);
+    background-color: #fff;
+}
+
+.student-main-content {
+    flex: 1;
+    min-width: 0;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+    background-color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+.document-detail-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 18px 24px 32px;
+    font-family: Arial, sans-serif;
+}
+
+.document-detail-back {
+    display: inline-block;
+    margin-bottom: 18px;
+    color: #951f1c;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.document-detail-back:hover,
+.document-detail-back:focus-visible {
+    text-decoration: underline;
+}
+
+.document-detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.document-detail-header p {
+    margin: 0 0 6px;
+    color: #666;
+}
+
+.document-detail-header h1 {
+    margin: 0 0 8px;
+    overflow-wrap: anywhere;
+}
+
+.document-detail-download {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 0 16px;
+    border-radius: 8px;
+    background: #951f1c;
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.document-detail-message,
+.document-detail-recommendation {
+    margin-bottom: 16px;
+    padding: 14px 16px;
+    border-left: 4px solid #951f1c;
+    border-radius: 6px;
+    background: #fff7f7;
+}
+
+.document-detail-message {
+    font-weight: 600;
+}
+
+.document-detail-recommendation h2,
+.document-detail-preview h2 {
+    margin: 0 0 10px;
+    font-size: 20px;
+}
+
+.document-detail-recommendation p {
+    margin: 0;
+    line-height: 1.55;
+    white-space: pre-wrap;
+}
+
+.document-detail-preview iframe {
+    display: block;
+    width: min(100%, 900px);
+    height: min(62vh, 680px);
+    min-height: 360px;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #f3f3f3;
+}
+
+.document-detail-image {
+    display: block;
+    width: auto;
+    max-width: min(100%, 900px);
+    height: auto;
+    max-height: min(62vh, 680px);
+    margin: 0 auto;
+    object-fit: contain;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #f3f3f3;
+}
+
+@media (max-width: 640px) {
+    .document-detail-container {
+        padding: 16px;
+    }
+
+    .document-detail-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .document-detail-preview iframe {
+        min-height: 52vh;
+        height: 52vh;
+    }
+
+    .document-detail-image {
+        max-height: 52vh;
+    }
+}

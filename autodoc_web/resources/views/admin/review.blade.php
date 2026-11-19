@@ -19,6 +19,7 @@
         <div class="review-container">
 
             <section class="review-header">
+                <a class="back-to-verification" href="{{ route('admin.verification') }}">← Back to Document Verification</a>
                 <h1>Review Submission</h1>
                 @if (session('success'))
                     <p role="status">{{ session('success') }}</p>
@@ -53,10 +54,11 @@
                     </div>
 
                     <div class="document-preview-placeholder">
-                        <div class="preview-placeholder-content">
-                            <h3>Document Preview</h3>
-                            <p>Uploaded document will appear here.</p>
-                        </div>
+                        <iframe
+                            class="review-document-iframe"
+                            src="{{ route('admin.documents.preview', $document) }}"
+                            title="Preview of {{ $document->document_name }}"
+                        ></iframe>
                     </div>
 
                     <a class="open-full-preview" href="{{ route('admin.documents.preview', $document) }}" target="_blank" rel="noopener">
@@ -66,6 +68,103 @@
                 </div>
 
                 <div class="verification-review-panel">
+
+                    @php
+                        $analysis = $document->analysis;
+                        $analysisResult = $analysis?->result ?? [];
+                        $classification = $analysisResult['documentClassification'] ?? [];
+                        $extraction = $analysisResult['extraction'] ?? [];
+                        $verification = $analysisResult['verification'] ?? [];
+                        $signatures = $extraction['signatures'] ?? [];
+                    @endphp
+
+                    <section class="document-analysis-panel" aria-labelledby="document-analysis-title">
+                        <h2 id="document-analysis-title">Document analysis</h2>
+                        @if ($analysis)
+                            <p class="analysis-status">Analysis: {{ str_replace('_', ' ', ucfirst($analysis->status)) }}</p>
+
+                            @if ($analysis->status === 'processing')
+                                <p>AI analysis is still running. This page will check again automatically.</p>
+                                @push('scripts')
+                                    <script>
+                                        (() => {
+                                            const key = 'autodoc-analysis-polls-{{ $document->id }}';
+                                            const attempts = Number(sessionStorage.getItem(key) || 0);
+                                            if (attempts < 24) {
+                                                sessionStorage.setItem(key, String(attempts + 1));
+                                                window.setTimeout(() => window.location.reload(), 5000);
+                                            } else {
+                                                sessionStorage.removeItem(key);
+                                            }
+                                        })();
+                                    </script>
+                                @endpush
+                            @else
+                                @push('scripts')
+                                    <script>sessionStorage.removeItem('autodoc-analysis-polls-{{ $document->id }}');</script>
+                                @endpush
+                            @endif
+
+                            @if (!empty($analysisResult['error']))
+                                <p role="status">
+                                    <strong>Analysis error:</strong> {{ $analysisResult['error'] }}
+                                    Please review the uploaded file manually. If the error says the model is busy, retry the analysis later.
+                                </p>
+                            @else
+                                @if (!empty($classification['summary']))
+                                    <p>{{ $classification['summary'] }}</p>
+                                @endif
+
+                                @if (!empty($verification['verdictSummary']))
+                                    <p><strong>AI review suggestion:</strong> {{ $verification['verdictSummary'] }}</p>
+                                @endif
+
+                                @if (!empty($verification['checks']))
+                                    <h3>Checks</h3>
+                                    <ul>
+                                        @foreach ($verification['checks'] as $check)
+                                            <li>
+                                                <strong>{{ $check['checkName'] ?? 'Check' }}</strong>
+                                                ({{ str_replace('_', ' ', $check['status'] ?? 'inconclusive') }}):
+                                                {{ $check['detail'] ?? '' }}
+                                                @if (!empty($check['evidence']))
+                                                    <span> Evidence: {{ $check['evidence'] }}</span>
+                                                @endif
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @endif
+
+                                <h3>Signatures ({{ count($signatures) }})</h3>
+                                @if ($signatures)
+                                    <ul>
+                                        @foreach ($signatures as $signature)
+                                            <li>
+                                                {{ $signature['signerName'] ?? 'Signer not identified' }}
+                                                @if (!empty($signature['roleOrLabel'])) · {{ $signature['roleOrLabel'] }} @endif
+                                                @if (!empty($signature['signedDate'])) · {{ $signature['signedDate'] }} @endif
+                                                @if (isset($signature['matchesPrintedName']))
+                                                    · Name check: {{ str_replace('_', ' ', $signature['matchesPrintedName']) }}
+                                                @endif
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @else
+                                    <p>No signatures were reported by the analysis.</p>
+                                @endif
+
+                                @if (!empty($extraction['rawText']))
+                                    <details>
+                                        <summary>View extracted text</summary>
+                                        <pre>{{ $extraction['rawText'] }}</pre>
+                                    </details>
+                                @endif
+                            @endif
+                        @else
+                            <p>No analysis is available for this document.</p>
+                        @endif
+                        <p class="analysis-disclaimer">AI results are suggestions for review. Make the final decision by checking the original document.</p>
+                    </section>
 
                     <form method="POST" action="{{ route('admin.documents.status.update', $document) }}">
                         @csrf

@@ -43,6 +43,19 @@ return new class extends Migration
 
     public function down(): void
     {
-        //
+        if (! Schema::hasTable('users')) {
+            return;
+        }
+
+        $columns = array_values(array_filter(
+            ['first_name', 'last_name', 'student_number', 'course', 'year_level', 'section', 'account_role'],
+            fn (string $column): bool => Schema::hasColumn('users', $column)
+        ));
+
+        if ($columns !== []) {
+            Schema::table('users', function (Blueprint $table) use ($columns): void {
+                $table->dropColumn($columns);
+            });
+        }
     }
 };

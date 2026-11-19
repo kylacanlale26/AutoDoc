@@ -23,26 +23,34 @@
         <div class="student-docs-container">
 
             <section class="student-docs-header">
-                <h1>Student Documents</h1>
-                <p>Student: <span>{{ $student->name ?: trim(($student->first_name ?? '') . ' ' . ($student->last_name ?? '')) }}</span></p>
+                <div class="student-docs-heading-group">
+                    <h1>Student Documents</h1>
+                    <div class="student-docs-profile">
+                        <img src="{{ $student->profile_picture_url ?? asset('icons/profile_placeholder.svg') }}" alt="">
+                        <div>
+                            <p><strong>Student Name:</strong> <span>{{ $student->name ?: trim(($student->first_name ?? '') . ' ' . ($student->last_name ?? '')) }}</span></p>
+                            <small><strong>Student Number:</strong> {{ $student->student_number ?: 'Not provided' }}</small>
+                            <small><strong>Program:</strong> {{ $student->course ?: 'Not provided' }}</small>
+                        </div>
+                    </div>
+                </div>
+                <a class="back-to-student-list" href="{{ route('admin.student-documents') }}">← Back to Student Documents</a>
             </section>
 
             <section class="submission-search-section">
 
                 <div class="submission-search">
-                    <img src="{{ asset('icons/search-light.svg') }}" alt="Search">
+                    <img src="{{ asset('icons/search-light.svg') }}" data-light-theme-icon="{{ asset('icons/search-light.svg') }}" data-dark-theme-icon="{{ asset('icons/search-dark.svg') }}" alt="Search">
                     <input id="adminStudentDocumentSearch" type="text" placeholder="Search Document" aria-label="Search documents">
                 </div>
 
-                <button type="button" class="filter-button">
-                    <img src="{{ asset('icons/filter-light.svg') }}" alt="Filter">
+                <button type="button" class="filter-button" data-filter-toggle aria-expanded="true" aria-controls="documentStatusFilters">
+                    <img src="{{ asset('icons/filter-light.svg') }}" data-light-theme-icon="{{ asset('icons/filter-light.svg') }}" data-dark-theme-icon="{{ asset('icons/filter-dark.svg') }}" alt="Filter">
                 </button>
 
             </section>
 
-            </section>
-
-            <section class="documents-filters">
+            <section class="documents-filters" id="documentStatusFilters" data-filter-panel>
                 <button type="button" class="filter-chip active" data-status-filter="all" aria-pressed="true">All</button>
                 <button type="button" class="filter-chip" data-status-filter="verified" aria-pressed="false">Verified</button>
                 <button type="button" class="filter-chip" data-status-filter="pending" aria-pressed="false">Pending</button>
@@ -70,7 +78,12 @@
                                 aria-expanded="false"
                                 aria-controls="admin-document-actions-{{ $document->id }}"
                             >
-                                <img src="{{ asset('icons/more-light.svg') }}" alt="">
+                                <img
+                                    src="{{ asset('icons/more-light.svg') }}"
+                                    data-light-icon="{{ asset('icons/more-light.svg') }}"
+                                    data-dark-icon="{{ asset('icons/more-dark.svg') }}"
+                                    alt=""
+                                >
                             </button>
 
                             <div class="document-actions-menu" id="admin-document-actions-{{ $document->id }}" role="menu" hidden>

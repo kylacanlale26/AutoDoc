@@ -106,8 +106,10 @@
     flex-wrap: wrap;
     gap: 8px;
     margin-top: 8px;
-    margin-bottom: 16px;
+    margin-bottom: 0;
 }
+
+.documents-filters[hidden] { display: none; }
 
 .filter-chip {
     padding: 3px 9px;
@@ -133,6 +135,7 @@
 /* Document List */
 .documents-list-section {
     width: 100%;
+    margin-top: 16px;
 }
 
 .documents-table {
@@ -167,8 +170,23 @@
     justify-content: space-between;
     gap: 16px;
     padding: 14px 10px;
+    border-left: 4px solid transparent;
     border-bottom: 1px solid #cccccc;
+    box-sizing: border-box;
     color: black;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.document-item:hover,
+.document-item:focus-visible {
+    background-color: #fbe9e9;
+    border-left-color: #951f1c;
+}
+
+.document-item:focus-visible {
+    outline: 2px solid #951f1c;
+    outline-offset: -2px;
 }
 
 .document-info {

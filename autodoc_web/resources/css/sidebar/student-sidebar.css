@@ -21,7 +21,11 @@
 .sidebar-link {
     display: flex;
     align-items: center;
-    padding: 12px 15px;
+    margin: 0 8px;
+    padding: 12px 12px 12px 8px;
+    border-left: 4px solid transparent;
+    border-radius: 9px;
+    box-sizing: border-box;
     color: #000000;
     text-decoration: none;
     font-size: 17px;
@@ -31,11 +35,15 @@
 
 .sidebar-link:hover {
     color: #b51f24;
+    background-color: #fbe9e9;
+    border-left-color: #b51f24;
 }
 
 .sidebar-link.active {
     color: #951f1c;
     font-weight: 600;
+    background-color: #f5dddd;
+    border-left-color: #951f1c;
 }
 
 /* nav - bottom part */
@@ -43,7 +51,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 45px 0 15px;
+    gap: 8px;
+    padding: 0 15px;
 }
 
 .sidebar-user-info {
@@ -62,7 +71,9 @@
 .sidebar-profile-icon {
     width: 45px;
     height: 45px;
-    object-fit: contain;
+    border: 1px solid #d9d9d9;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 /* Student profile logout menu */

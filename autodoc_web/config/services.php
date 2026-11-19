@@ -40,5 +40,7 @@ return [
         'client_secret' => env('MICROSOFT_CLIENT_SECRET'),
         'redirect' => env('MICROSOFT_REDIRECT_URI'),
         'tenant' => env('MICROSOFT_TENANT_ID'),
+        'mobile_android_redirect_uri' => env('MICROSOFT_MOBILE_ANDROID_REDIRECT_URI'),
+        'mobile_ios_redirect_uri' => env('MICROSOFT_MOBILE_IOS_REDIRECT_URI'),
     ],
 ];

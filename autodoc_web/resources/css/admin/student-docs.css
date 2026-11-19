@@ -23,8 +23,14 @@
 
 /* Page Header */
 .student-docs-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
     margin-bottom: 13px;
 }
+
+.student-docs-heading-group { min-width: 0; }
 
 .student-docs-header h1 {
     margin: 0;
@@ -41,6 +47,31 @@
 
 .student-docs-header p span {
     font-weight: 400;
+}
+
+.back-to-student-list {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+    margin-top: 3px;
+    padding: 9px 13px;
+    border: 1px solid #951f1c;
+    border-radius: 9px;
+    color: #951f1c;
+    text-decoration: none;
+    transition: background-color .18s ease, color .18s ease;
+}
+.back-to-student-list:hover,
+.back-to-student-list:focus-visible { background: #fbe9e9; outline: none; }
+.student-docs-profile { display: flex; align-items: center; gap: 12px; margin: 8px 0 0; }
+.student-docs-profile img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
+.student-docs-profile p { margin: 0; }
+.student-docs-profile small { display: block; margin-top: 3px; font-size: 13px; }
+[data-filter-panel][hidden] { display: none; }
+
+@media (max-width: 640px) {
+    .student-docs-header { flex-direction: column; }
+    .back-to-student-list { align-self: flex-end; margin-top: 0; }
 }
 
 

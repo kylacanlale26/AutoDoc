@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const filterButtons = document.querySelectorAll('[data-status-filter]');
     const rows = document.querySelectorAll('.student-document-item[data-status]');
     const emptyMessage = document.getElementById('adminStudentDocumentFilterEmpty');
+    const filterToggle = document.querySelector('[data-filter-toggle]');
+    const filterPanel = document.getElementById('documentStatusFilters');
     let activeFilter = 'all';
 
     function applyFilters() {
@@ -39,6 +41,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     searchInput?.addEventListener('input', applyFilters);
+    filterToggle?.addEventListener('click', () => {
+        const expanded = filterToggle.getAttribute('aria-expanded') === 'true';
+        filterToggle.setAttribute('aria-expanded', String(!expanded));
+        if (filterPanel) filterPanel.hidden = expanded;
+    });
 
     const closeMenus = (except = null) => {
         document.querySelectorAll('.document-actions-menu').forEach((menu) => {

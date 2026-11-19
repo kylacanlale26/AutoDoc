@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const filterButtons = document.querySelectorAll('[data-status-filter]');
     const rows = document.querySelectorAll('.document-item[data-status]');
     const emptyMessage = document.getElementById('filterEmpty');
+    const filterToggle = document.querySelector('[data-filter-toggle]');
+    const filterPanel = document.getElementById('studentDocumentFilters');
     let activeFilter = 'all';
 
     function applyFilters() {
@@ -42,6 +44,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     searchInput?.addEventListener('input', applyFilters);
 
+    filterToggle?.addEventListener('click', () => {
+        const expanded = filterToggle.getAttribute('aria-expanded') === 'true';
+        filterToggle.setAttribute('aria-expanded', String(!expanded));
+        if (filterPanel) filterPanel.hidden = expanded;
+    });
+
     const closeMenus = (except = null) => {
         document.querySelectorAll('.document-actions-menu').forEach((menu) => {
             if (menu === except) return;
@@ -62,6 +70,12 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        const row = event.target.closest('.document-item[data-document-url]');
+        if (row && !event.target.closest('.document-actions, a, button')) {
+            window.location.assign(row.dataset.documentUrl);
+            return;
+        }
+
         if (!event.target.closest('.document-actions')) {
             closeMenus();
         }
@@ -69,5 +83,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') closeMenus();
+
+        const row = event.target.closest('.document-item[data-document-url]');
+        if (row && event.target === row && (event.key === 'Enter' || event.key === ' ')) {
+            event.preventDefault();
+            window.location.assign(row.dataset.documentUrl);
+        }
     });
 });

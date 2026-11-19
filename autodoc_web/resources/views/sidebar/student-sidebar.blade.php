@@ -1,3 +1,14 @@
+@php
+    $student = auth()->user();
+    $studentNameParts = preg_split('/\s+/', trim((string) $student->name), -1, PREG_SPLIT_NO_EMPTY) ?: [];
+    $studentFirstName = trim((string) ($student->first_name ?: ($studentNameParts[0] ?? '')));
+    $studentLastName = trim((string) ($student->last_name ?: (count($studentNameParts) > 1 ? end($studentNameParts) : '')));
+    $studentSidebarName = trim($studentFirstName . ' ' . strtoupper($studentLastName)) ?: 'Student';
+    $studentProfilePicture = auth()->user()->profile_picture_path
+        ? \Illuminate\Support\Facades\Storage::disk('s3')->temporaryUrl(auth()->user()->profile_picture_path, now()->addMinutes(30))
+        : asset('icons/profile.svg');
+@endphp
+
 <aside class="sidebar">
 
     <nav class="sidebar-nav">
@@ -8,7 +19,7 @@
         </a>
 
         <a href="{{ route('student.documents') }}"
-           class="sidebar-link {{ request()->routeIs('student.documents') ? 'active' : '' }}">
+           class="sidebar-link {{ request()->routeIs('student.documents', 'student.documents.*') ? 'active' : '' }}">
             My Documents
         </a>
 
@@ -32,8 +43,7 @@
     <div class="sidebar-user">
 
         <div class="sidebar-user-info">
-            <span>Logged in as:</span>
-            <strong>STUDENT</strong>
+            <strong>{{ $studentSidebarName }}</strong>
         </div>
 
         <div class="sidebar-profile-menu">
@@ -44,7 +54,7 @@
                 aria-expanded="false"
                 aria-controls="profileLogoutMenu"
             >
-                <img src="{{ asset('icons/profile.svg') }}" alt="" class="sidebar-profile-icon" id="profileToggle">
+                <img src="{{ $studentProfilePicture }}" alt="" class="sidebar-profile-icon" id="profileToggle">
             </button>
 
             <div class="sidebar-logout-menu" id="profileLogoutMenu" hidden>

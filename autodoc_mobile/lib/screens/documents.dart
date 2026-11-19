@@ -1,46 +1,26 @@
-
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class DocumentItem {
-  final String name;
-  final String date;
-  final String status;
-
-  DocumentItem({
-    required this.name,
-    required this.date,
-    required this.status,
-  });
-}
+import '../services/api_client.dart';
 
 class MyDocuments extends StatefulWidget {
-  final List<DocumentItem> documents;
-
-  const MyDocuments({
-    super.key,
-    this.documents = const [],
-  });
-
+  const MyDocuments({super.key, required this.onOpenDocument});
+  final Future<void> Function(String id, {String? message}) onOpenDocument;
   @override
   State<MyDocuments> createState() => _MyDocumentsState();
 }
 
 class _MyDocumentsState extends State<MyDocuments> {
-  final TextEditingController searchController = TextEditingController();
-
+  final searchController = TextEditingController();
+  List<Map<String, dynamic>> documents = [];
   String selectedFilter = 'All';
-
-  List<DocumentItem> get filteredDocuments {
-    return widget.documents.where((document) {
-      bool matchesSearch = document.name
-          .toLowerCase()
-          .contains(searchController.text.toLowerCase());
-
-      bool matchesFilter = selectedFilter == 'All' ||
-          document.status == selectedFilter;
-
-      return matchesSearch && matchesFilter;
-    }).toList();
+  bool loading = true, showFilters = false;
+  String? error;
+  static const filters = ['All', 'Verified', 'Pending', 'Needs Correction'];
+  @override
+  void initState() {
+    super.initState();
+    _load();
   }
 
   @override
@@ -49,244 +29,221 @@ class _MyDocumentsState extends State<MyDocuments> {
     super.dispose();
   }
 
+  Future<void> _load() async {
+    setState(() {
+      loading = true;
+      error = null;
+    });
+    try {
+      final response = await ApiClient.instance.get('/mobile/documents');
+      documents = List<Map<String, dynamic>>.from(
+        (response['documents'] as List? ?? const []).whereType<Map>().map(
+          (e) => Map<String, dynamic>.from(e),
+        ),
+      );
+    } catch (e) {
+      error = e.toString();
+    } finally {
+      if (mounted) setState(() => loading = false);
+    }
+  }
+
+  String _normal(String value) =>
+      value.toLowerCase().replaceAll('_', ' ').replaceAll('-', ' ').trim();
+  List<Map<String, dynamic>> get filtered {
+    final q = searchController.text.trim().toLowerCase();
+    return documents
+        .where(
+          (d) =>
+              ((d['document_name']?.toString().toLowerCase().contains(q) ??
+                      false) ||
+                  (d['document_type']?.toString().toLowerCase().contains(q) ??
+                      false)) &&
+              (selectedFilter == 'All' ||
+                  _normal(d['status']?.toString() ?? '') ==
+                      _normal(selectedFilter)),
+        )
+        .toList();
+  }
+
+  Future<void> _openFile(Map<String, dynamic> d, String disposition) async {
+    try {
+      final response = await ApiClient.instance.get(
+        '/mobile/documents/${d['id']}/file?disposition=$disposition',
+      );
+      final uri = Uri.tryParse(response['url']?.toString() ?? '');
+      if (uri == null ||
+          !await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+        throw const ApiException('Could not open the document.');
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(e.toString())));
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Column(
-          children: [
-
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 12),
-
-                    const Text(
-                      'My Documents',
-                      style: TextStyle(
-                        fontSize: 29,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+    final scheme = Theme.of(context).colorScheme;
+    final items = filtered;
+    return SafeArea(
+      child: RefreshIndicator(
+        onRefresh: _load,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 12),
+              Text(
+                'My Documents',
+                style: Theme.of(context).textTheme.headlineSmall
+                    ?.copyWith(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 14),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: searchController,
+                      onChanged: (_) => setState(() {}),
+                      decoration: InputDecoration(
+                        hintText: 'Search documents',
+                        prefixIcon: const Icon(Icons.search),
+                        contentPadding: const EdgeInsets.symmetric(vertical: 8),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
                       ),
                     ),
-
-                    const SizedBox(height: 10),
-
-                    Row(
-                      children: [
-                        Expanded(
-                          child: SizedBox(
-                            height: 40,
-                            child: TextField(
-                              controller: searchController,
-                              onChanged: (value) {
-                                setState(() {});
-                              },
-                              decoration: InputDecoration(
-                                hintText: 'Search Document',
-                                hintStyle: const TextStyle(
-                                  fontSize: 15,
-                                  letterSpacing: 1,
-                                ),
-                                prefixIcon: const Icon(
-                                  Icons.search,
-                                  color: Colors.black,
-                                ),
-                                contentPadding:
-                                    const EdgeInsets.symmetric(vertical: 8),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                    color: Colors.black,
-                                  ),
-                                ),
+                  ),
+                  IconButton(
+                    tooltip: 'Show or hide filters',
+                    onPressed: () => setState(() => showFilters = !showFilters),
+                    icon: Icon(
+                      showFilters
+                          ? Icons.filter_alt
+                          : Icons.filter_alt_outlined,
+                    ),
+                  ),
+                ],
+              ),
+              if (showFilters)
+                SizedBox(
+                  height: 48,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: filters
+                        .map(
+                          (f) => Padding(
+                            padding: const EdgeInsets.only(right: 7),
+                            child: ChoiceChip(
+                              label: Text(f),
+                              selected: selectedFilter == f,
+                              selectedColor: const Color(0xFFD32F2F),
+                              labelStyle: TextStyle(
+                                color: selectedFilter == f
+                                    ? Colors.white
+                                    : scheme.onSurface,
+                              ),
+                              onSelected: (_) =>
+                                  setState(() => selectedFilter = f),
+                            ),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
+              if (!showFilters) const SizedBox(height: 10),
+              if (error != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Text(error!, style: TextStyle(color: scheme.error)),
+                ),
+              Expanded(
+                child: loading && documents.isEmpty
+                    ? const Center(child: CircularProgressIndicator())
+                    : items.isEmpty
+                    ? Center(
+                        child: Text(
+                          documents.isEmpty
+                              ? 'No documents have been uploaded yet.'
+                              : 'No documents match your search or filter.',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: scheme.onSurface),
+                        ),
+                      )
+                    : ListView.separated(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        padding: const EdgeInsets.only(top: 10, bottom: 18),
+                        itemCount: items.length,
+                        separatorBuilder: (_, _) => const SizedBox(height: 8),
+                        itemBuilder: (context, index) {
+                          final d = items[index];
+                          final status = d['status']?.toString() ?? 'pending';
+                          return Container(
+                            decoration: BoxDecoration(
+                              color: scheme.surface,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: Theme.of(context).dividerColor,
                               ),
                             ),
-                          ),
-                        ),
-
-                        const SizedBox(width: 5),
-
-                        PopupMenuButton<String>(
-                          icon: const Icon(
-                            Icons.filter_alt_outlined,
-                            color: Colors.black,
-                            size: 27,
-                          ),
-                          onSelected: (value) {
-                            setState(() {
-                              selectedFilter = value;
-                            });
-                          },
-                          itemBuilder: (context) => [
-                            const PopupMenuItem(
-                              value: 'All',
-                              child: Text('All'),
-                            ),
-                            const PopupMenuItem(
-                              value: 'Verified',
-                              child: Text('Verified'),
-                            ),
-                            const PopupMenuItem(
-                              value: 'Pending',
-                              child: Text('Pending'),
-                            ),
-                            const PopupMenuItem(
-                              value: 'Needs Correction',
-                              child: Text('Needs Correction'),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-
-                    const SizedBox(height: 8),
-
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          'All',
-                          'Verified',
-                          'Pending',
-                          'Needs Correction',
-                        ].map((filter) {
-                          return Padding(
-                            padding: const EdgeInsets.only(right: 5),
-                            child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  selectedFilter = filter;
-                                });
+                            child: ListTile(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              title: Text(
+                                d['document_type']?.toString() ?? 'Document',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              subtitle: Text(
+                                '${d['document_name'] ?? ''}\n${_date(d['created_at'])} · ${status.replaceAll('_', ' ')}',
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              isThreeLine: true,
+                              onTap: () async {
+                                await widget.onOpenDocument(d['id'].toString());
+                                await _load();
                               },
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 10,
-                                  vertical: 3,
+                              trailing: PopupMenuButton<String>(
+                                onSelected: (v) => _openFile(
+                                  d,
+                                  v == 'download' ? 'attachment' : 'inline',
                                 ),
-                                decoration: BoxDecoration(
-                                  color: selectedFilter == filter
-                                      ? const Color(0xFFCCCCCC)
-                                      : const Color(0xFFE5E5E5),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Text(
-                                  filter,
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.black,
+                                itemBuilder: (_) => const [
+                                  PopupMenuItem(
+                                    value: 'preview',
+                                    child: Text('Preview File'),
                                   ),
-                                ),
+                                  PopupMenuItem(
+                                    value: 'download',
+                                    child: Text('Download/Export File'),
+                                  ),
+                                ],
                               ),
                             ),
                           );
-                        }).toList(),
+                        },
                       ),
-                    ),
-
-                    const SizedBox(height: 15),
-
-                    Expanded(
-                      child: filteredDocuments.isEmpty
-                          ? Center(
-                              child: Text(
-                                widget.documents.isEmpty
-                                    ? 'No Document Uploaded'
-                                    : 'No matching documents found.',
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            )
-                          : ListView.builder(
-                              itemCount: filteredDocuments.length,
-                              itemBuilder: (context, index) {
-                                final document = filteredDocuments[index];
-
-                                return ListTile(
-                                  contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 6,
-                                  ),
-                                  title: Text(
-                                    document.name,
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  subtitle: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        document.date,
-                                        style: const TextStyle(
-                                          fontSize: 10,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      Text(
-                                        document.status,
-                                        style: const TextStyle(
-                                          fontSize: 10,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  trailing: PopupMenuButton<String>(
-                                    icon: const Icon(
-                                      Icons.more_vert,
-                                      color: Colors.black,
-                                      size: 18,
-                                    ),
-                                    onSelected: (value) {
-                                      if (value == 'View') {
-                                        // Open document
-                                      } else if (value == 'Delete') {
-                                        // Delete document
-                                      }
-                                    },
-                                    itemBuilder: (context) => [
-                                      const PopupMenuItem(
-                                        value: 'View',
-                                        child: Text('View'),
-                                      ),
-                                      const PopupMenuItem(
-                                        value: 'Delete',
-                                        child: Text('Delete'),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            ),
-                    ),
-                  ],
-                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  String _date(dynamic value) {
+    final d = DateTime.tryParse(value?.toString() ?? '');
+    if (d == null) return '';
+    return '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
   }
 }

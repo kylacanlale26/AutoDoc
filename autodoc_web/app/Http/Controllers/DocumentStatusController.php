@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Document;
 use App\Notifications\DocumentStatusUpdated;
+use App\Services\DocumentAnalysisClient;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -11,11 +12,14 @@ use Illuminate\View\View;
 
 class DocumentStatusController extends Controller
 {
-    public function show(Document $document): View
+    public function show(Document $document, DocumentAnalysisClient $analysisClient): View
     {
         $this->ensureAdmin();
 
-        $document->load('student');
+        $document->load(['student', 'analysis']);
+        if ($document->analysis) {
+            $analysisClient->refreshPending($document->analysis);
+        }
 
         return view('admin.review', compact('document'));
     }

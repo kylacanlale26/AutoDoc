@@ -29,15 +29,25 @@
             <section class="student-search-section">
 
                 <div class="student-search">
-                    <img src="{{ asset('icons/search-light.svg') }}" alt="Search">
+                    <img src="{{ asset('icons/search-light.svg') }}" data-light-theme-icon="{{ asset('icons/search-light.svg') }}" data-dark-theme-icon="{{ asset('icons/search-dark.svg') }}" alt="Search">
                     <input id="studentAccountSearch" type="search" placeholder="Search student" aria-label="Search student name, number, or email">
                 </div>
 
-                <button type="button" class="filter-button">
-                    <img src="{{ asset('icons/filter-light.svg') }}" alt="Filter">
+                <button type="button" class="filter-button" data-filter-toggle aria-expanded="false" aria-controls="accountCourseFilterPanel">
+                    <img src="{{ asset('icons/filter-light.svg') }}" data-light-theme-icon="{{ asset('icons/filter-light.svg') }}" data-dark-theme-icon="{{ asset('icons/filter-dark.svg') }}" alt="Filter">
                 </button>
 
             </section>
+
+            <div class="account-course-filter" id="accountCourseFilterPanel" data-filter-panel hidden>
+                <label for="accountCourseFilter">Filter by program</label>
+                <select id="accountCourseFilter">
+                    <option value="">All programs</option>
+                    @foreach (($students ?? collect())->pluck('course')->filter()->unique()->sort() as $course)
+                        <option value="{{ $course }}">{{ $course }}</option>
+                    @endforeach
+                </select>
+            </div>
 
             <section class="student-accounts-list">
 
@@ -48,10 +58,12 @@
                     @endphp
                     <div
                         class="student-account-item"
+                        data-course="{{ $student->course ?? '' }}"
                         data-student-search="{{ $studentName }} {{ $student->student_number ?? '' }} {{ $student->email }}"
                     >
 
                         <div class="account-student-name">
+                            <img class="student-account-avatar" src="{{ $student->profile_picture_url ?? asset('icons/profile_placeholder.svg') }}" alt="">
                             <h2>{{ $studentName !== '' ? $studentName : '—' }}</h2>
                         </div>
 

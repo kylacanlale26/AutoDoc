@@ -16,6 +16,12 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'student_number',
+        'course',
+        'year_level',
+        'section',
+        'profile_picture_path',
+        'profile_completed_at',
+        'terms_accepted_at',
         'email',
         'password',
         'microsoft_id',
@@ -32,6 +38,8 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'profile_completed_at' => 'datetime',
+            'terms_accepted_at' => 'datetime',
         ];
     }
 }

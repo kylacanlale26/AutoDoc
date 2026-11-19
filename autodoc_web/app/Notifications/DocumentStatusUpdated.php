@@ -26,6 +26,7 @@ class DocumentStatusUpdated extends Notification
         return [
             'document_id' => $this->document->id,
             'document_name' => $this->document->document_name,
+            'document_type' => $this->document->document_type,
             'status' => $this->document->status,
             'review_notes' => $this->document->review_notes,
             'message' => "Your document status changed to {$status}.",

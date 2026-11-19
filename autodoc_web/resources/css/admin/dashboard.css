@@ -218,3 +218,24 @@
     border-color: #b51f24;
     color: #b51f24;
 }
+
+:root[data-theme="dark"] .admin-dashboard-header :is(h1, p),
+:root[data-theme="dark"] .admin-summary-card :is(span, h2),
+:root[data-theme="dark"] .recent-submissions h2,
+:root[data-theme="dark"] .submission-info :is(h3, p),
+:root[data-theme="dark"] .admin-quick-actions h2,
+:root[data-theme="dark"] .empty-submissions {
+    color: #f1f3f5;
+}
+
+:root[data-theme="dark"] :is(.admin-summary-card, .recent-submissions, .admin-quick-actions) {
+    background-color: #22262a;
+    border: 1px solid #41474d;
+}
+
+:root[data-theme="dark"] .submission-item { border-color: #41474d; }
+:root[data-theme="dark"] .quick-action-link { color: #f1f3f5; border-color: #aab1b7; }
+:root[data-theme="dark"] .quick-action-link:hover { background: #3a2021; border-color: #ff8f89; color: #ffb8b5; }
+:root[data-theme="dark"] .submission-status.verified { color: #59d58a; }
+:root[data-theme="dark"] .submission-status.pending { color: #ffd75e; }
+:root[data-theme="dark"] .submission-status.flagged { color: #ff8f89; }

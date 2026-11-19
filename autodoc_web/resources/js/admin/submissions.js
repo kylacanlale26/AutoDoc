@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const filterButtons = document.querySelectorAll('[data-status-filter]');
     const rows = document.querySelectorAll('.student-submission-item[data-status]');
     const emptyMessage = document.getElementById('submissionFilterEmpty');
+    const filterToggle = document.querySelector('[data-filter-toggle]');
+    const filterPanel = document.getElementById('submissionFilters');
     let activeFilter = 'all';
 
     function applyFilters() {
@@ -39,4 +41,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     searchInput?.addEventListener('input', applyFilters);
+
+    filterToggle?.addEventListener('click', () => {
+        const expanded = filterToggle.getAttribute('aria-expanded') === 'true';
+        filterToggle.setAttribute('aria-expanded', String(!expanded));
+        if (filterPanel) filterPanel.hidden = expanded;
+    });
 });

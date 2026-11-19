@@ -9,7 +9,7 @@
 
 @section('content')
 @php
-    $acceptedFormats = $uploadSettings->accepted_formats ?? ['pdf', 'png', 'jpg', 'jpeg'];
+    $acceptedFormats = ['pdf', 'png', 'jpg', 'jpeg'];
     $acceptExtensions = implode(',', array_map(fn ($format) => '.' . $format, $acceptedFormats));
     $acceptedFormatLabels = array_values(array_unique(array_map(
         fn ($format) => in_array(strtolower($format), ['jpg', 'jpeg'], true) ? 'JPEG' : strtoupper($format),
@@ -30,11 +30,20 @@
                 <h1>Upload Documents</h1>
 
                 <p>Choose a document category and upload the required file.</p>
+                <p class="upload-capture-note">Capture or scan each document clearly, with all text and signatures visible, to avoid incorrect data or an invalid submission.</p>
+                <p class="upload-limit-note">Upload one file per document type. If it needs correction, you can upload a replacement.</p>
             
             </section>
 
             @if (session('success'))
-                <p role="status">{{ session('success') }}</p>
+                <dialog id="uploadSuccessDialog" class="upload-success-dialog" aria-labelledby="uploadSuccessTitle">
+                    <div class="upload-success-content">
+                        <span class="upload-success-icon" aria-hidden="true">✓</span>
+                        <h2 id="uploadSuccessTitle">Upload successful</h2>
+                        <p role="status">{{ session('success') }}</p>
+                        <button type="button" id="closeUploadSuccess">OK</button>
+                    </div>
+                </dialog>
             @endif
 
             @if ($errors->any())
@@ -59,8 +68,11 @@
                         <select name="document_type" id="documentType" required>
                             <option value="" disabled @selected(old('document_type') === null)>Select document type</option>
                             @foreach ($documentTypes ?? [] as $documentType)
-                                <option value="{{ $documentType->name }}" @selected(old('document_type') === $documentType->name)>
-                                    {{ $documentType->name }}
+                                @php
+                                    $documentTypeUnavailable = in_array($documentType->name, $unavailableDocumentTypes ?? [], true);
+                                @endphp
+                                <option value="{{ $documentType->name }}" @if ($documentTypeUnavailable) disabled @endif @if (old('document_type') === $documentType->name) selected @endif>
+                                    {{ $documentType->name }}{{ $documentTypeUnavailable ? ' — Already submitted' : '' }}
                                 </option>
                             @endforeach
                         </select>
@@ -88,12 +100,11 @@
                                 type="file"
                                 name="documents[]"
                                 accept="{{ $acceptExtensions }}"
-                                multiple
                                 required
                                 aria-describedby="uploadError"
                             >
                             <label for="documentFiles" class="browse-input-wrapper">
-                                <span>Browse Files</span>
+                                <span>Browse One File</span>
                             </label>
                         </div>
 
@@ -126,21 +137,33 @@
 </div>
 @endsection
 
+@php
+    $uploadRulesForJs = [
+        'maxFileSizeBytes' => $uploadSettings->max_file_size_mb * 1024 * 1024,
+        'maxFileSizeMb' => $uploadSettings->max_file_size_mb,
+        'allowedFormats' => $acceptedFormats,
+        'allowedFormatLabels' => $acceptedFormatLabels,
+    ];
+@endphp
+
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+    const successDialog = document.getElementById('uploadSuccessDialog');
+    if (successDialog instanceof HTMLDialogElement && !successDialog.open) {
+        successDialog.showModal();
+        document.getElementById('closeUploadSuccess')?.addEventListener('click', () => {
+            successDialog.close();
+        });
+    }
+
     const input = document.getElementById('documentFiles');
     const dropzone = document.querySelector('.upload-dropzone');
     const filesList = document.querySelector('.selected-files');
     const errorMessage = document.getElementById('uploadError');
     if (!input || !dropzone || !filesList || !errorMessage) return;
 
-    const uploadRules = @json([
-        'maxFileSizeBytes' => $uploadSettings->max_file_size_mb * 1024 * 1024,
-        'maxFileSizeMb' => $uploadSettings->max_file_size_mb,
-        'allowedFormats' => $acceptedFormats,
-        'allowedFormatLabels' => $acceptedFormatLabels,
-    ]);
+    const uploadRules = @json($uploadRulesForJs);
     const maxFileSize = uploadRules.maxFileSizeBytes;
     const allowedFormats = uploadRules.allowedFormats.map((format) => format.toLowerCase());
     let selectedFiles = [];
@@ -184,27 +207,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    const acceptFiles = (files, append = false) => {
-        const accepted = [];
-        let rejected = false;
-        for (const file of files) {
-            const extension = file.name.split('.').pop()?.toLowerCase() ?? '';
-            const hasAllowedFormat = allowedFormats.includes(extension);
-            if (!hasAllowedFormat || file.size > maxFileSize) {
-                rejected = true;
-                continue;
-            }
-            const duplicate = selectedFiles.some((existing) =>
-                existing.name === file.name && existing.size === file.size &&
-                existing.lastModified === file.lastModified
-            );
-            if (!duplicate) accepted.push(file);
+    const acceptFiles = (files) => {
+        const incomingFiles = Array.from(files);
+        if (incomingFiles.length > 1) {
+            selectedFiles = [];
+            syncInput();
+            renderFiles();
+            errorMessage.textContent = 'Choose only one file for this document type.';
+            return;
         }
 
-        selectedFiles = append ? [...selectedFiles, ...accepted] : accepted;
+        const file = incomingFiles[0];
+        const extension = file?.name.split('.').pop()?.toLowerCase() ?? '';
+        const hasAllowedFormat = allowedFormats.includes(extension);
+        const valid = file && hasAllowedFormat && file.size <= maxFileSize;
+        selectedFiles = valid ? [file] : [];
         syncInput();
-        errorMessage.textContent = rejected
-            ? `Only ${uploadRules.allowedFormatLabels.join(', ')} files up to ${uploadRules.maxFileSizeMb} MB each can be selected.`
+        errorMessage.textContent = file && !valid
+            ? `Choose a ${uploadRules.allowedFormatLabels.join(', ')} file no larger than ${uploadRules.maxFileSizeMb} MB.`
             : '';
         renderFiles();
     };
@@ -221,7 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
     dropzone.addEventListener('drop', (event) => {
         event.preventDefault();
         dropzone.classList.remove('drag-over');
-        acceptFiles(Array.from(event.dataTransfer?.files || []), true);
+        acceptFiles(Array.from(event.dataTransfer?.files || []));
     });
 });
 </script>

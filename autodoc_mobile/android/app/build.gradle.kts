@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.example.autodoc_mobile"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
@@ -27,13 +27,20 @@ android {
         // flag during build.
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+
+        manifestPlaceholders += mapOf("appAuthRedirectScheme" to "msauth")
     }
 
     buildTypes {
+        debug {
+            manifestPlaceholders["cleartextTrafficPermitted"] = "true"
+        }
+
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("debug")
+            manifestPlaceholders["cleartextTrafficPermitted"] = "false"
         }
     }
 }

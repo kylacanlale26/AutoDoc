@@ -28,17 +28,17 @@
             <section class="documents-search-section">
 
                 <div class="documents-search">
-                    <img src="{{ asset('icons/search-light.svg') }}" alt="Search">
+                    <img src="{{ asset('icons/search-light.svg') }}" data-light-theme-icon="{{ asset('icons/search-light.svg') }}" data-dark-theme-icon="{{ asset('icons/search-dark.svg') }}" alt="Search">
                     <input id="documentSearch" type="text" placeholder="Search Document">
                 </div>
 
-                <button type="button" class="filter-button">
-                    <img src="{{ asset('icons/filter-light.svg') }}" alt="Filter">
+                <button type="button" class="filter-button" data-filter-toggle aria-expanded="false" aria-controls="studentDocumentFilters">
+                    <img src="{{ asset('icons/filter-light.svg') }}" data-light-theme-icon="{{ asset('icons/filter-light.svg') }}" data-dark-theme-icon="{{ asset('icons/filter-dark.svg') }}" alt="Filter">
                 </button>
 
             </section>
 
-            <section class="documents-filters">
+            <section class="documents-filters" id="studentDocumentFilters" data-filter-panel hidden>
 
                 <button type="button" class="filter-chip active" data-status-filter="all" aria-pressed="true">
                     All
@@ -64,7 +64,12 @@
 
                     @forelse(($documents ?? []) as $uploads)
 
-                        <div class="document-item" data-status="{{ strtolower(str_replace([' ', '-'], '_', $uploads->status)) }}">
+                        <div class="document-item"
+                             data-status="{{ strtolower(str_replace([' ', '-'], '_', $uploads->status)) }}"
+                             data-document-url="{{ route('student.documents.show', $uploads) }}"
+                             role="link"
+                             tabindex="0"
+                             aria-label="View {{ $uploads->document_name }} details">
 
                             <div class="document-info">
                                 <h3>{{ $uploads->document_name }}</h3>
@@ -81,7 +86,12 @@
                                     aria-expanded="false"
                                     aria-controls="document-actions-menu-{{ $uploads->id }}"
                                 >
-                                    <img src="{{ asset('icons/more-light.svg') }}" alt="">
+                                    <img
+                                        src="{{ asset('icons/more-light.svg') }}"
+                                        data-light-icon="{{ asset('icons/more-light.svg') }}"
+                                        data-dark-icon="{{ asset('icons/more-dark.svg') }}"
+                                        alt=""
+                                    >
                                 </button>
 
                                 <div
@@ -102,7 +112,7 @@
                         </div>
 
                     @empty
-                        <div class="empty-documents" style="display: none;">
+                        <div class="empty-documents">
                             No Document Uploaded
                         </div>
                     @endforelse

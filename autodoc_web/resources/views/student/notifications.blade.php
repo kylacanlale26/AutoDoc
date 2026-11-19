@@ -31,17 +31,19 @@
 
                 @forelse (($notifications ?? []) as $notification)
 
-                    <div class="notification-item">
+                    <a class="notification-item {{ $notification->read_at === null ? 'is-unread' : '' }}"
+                       href="{{ route('student.notifications.open', $notification->id) }}">
 
                         <div class="notification-content">
-                            <h2>{{ $notification->data['document_name'] ?? 'Document status updated' }}</h2>
-                            <p>{{ $notification->data['message'] ?? 'There is an update to your document.' }}</p>
-                            @if (!empty($notification->data['status']))
-                                <p>Status: {{ str_replace('_', ' ', ucfirst($notification->data['status'])) }}</p>
-                            @endif
-                            @if (!empty($notification->data['review_notes']))
-                                <p>Admin note: {{ $notification->data['review_notes'] }}</p>
-                            @endif
+                            <h2 class="notification-status-heading">
+                                {{ isset($notification->data['status']) ? str_replace('_', ' ', ucfirst($notification->data['status'])) : 'Document update' }}
+                            </h2>
+                            <p>
+                                {{ $notification->data['document_type'] ?? 'Document' }}
+                                @if (!empty($notification->data['document_name']))
+                                    · {{ $notification->data['document_name'] }}
+                                @endif
+                            </p>
                             <span class="notification-time">{{ $notification->created_at->diffForHumans() }}</span>
                         </div>
 
@@ -49,7 +51,7 @@
                             <img src="{{ asset('icons/unread.svg') }}" alt="Unread" class="unread-indicator">
                         @endif
 
-                    </div>
+                    </a>
 
                 @empty
                     <div class="empty-notifications">No Notifications</div>

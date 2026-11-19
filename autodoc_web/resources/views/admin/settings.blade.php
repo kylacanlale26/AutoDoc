@@ -115,11 +115,7 @@
             </section>
 
             @php
-                $acceptedFormats = $uploadSettings->accepted_formats ?? ['pdf', 'png', 'jpg', 'jpeg'];
-                $displayFormats = array_values(array_unique(array_map(
-                    fn ($format) => in_array(strtolower($format), ['jpg', 'jpeg'], true) ? 'JPEG' : strtoupper($format),
-                    $acceptedFormats
-                )));
+                $displayFormats = ['PDF', 'PNG', 'JPEG'];
             @endphp
 
             <form method="POST" action="{{ route('admin.settings.upload-rules.update') }}">

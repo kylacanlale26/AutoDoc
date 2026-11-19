@@ -56,7 +56,7 @@
 
                 @if ($errors->any())
                     <div class="error">
-                        @foreach($errors->any() as $error)
+                        @foreach($errors->all() as $error)
                             <p>{{$error}}</p>
                         @endforeach
                     </div>
